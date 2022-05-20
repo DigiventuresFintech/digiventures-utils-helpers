@@ -1,10 +1,17 @@
 import SecretManager from "./services/SecretManager";
 import log4js from "log4js";
 
+interface MODEL_STRING_ALIAS_STRING {
+  [key: string]: string;
+}
+
 export default class ConfigLoader {
   readonly logger = log4js.getLogger("ConfigLoader");
 
-  readonly references = { production: "prod", develop: "dev" };
+  readonly references = {
+    production: "prod",
+    develop: "dev"
+  } as MODEL_STRING_ALIAS_STRING;
 
   readonly secrets = process.env.API_CONFIGURATION_SECRETS || "";
 
