@@ -1,14 +1,18 @@
 {
-  "name": "digiventures-utils-helpers",
+  "name": "@digiventures/utils-helper",
   "version": "1.0.0",
-  "description": "",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Fast, generic javascript utility functions",
   "main": "index.js",
   "scripts": {
     "build": "pika-pack build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "repository": "https://github.com/DigiventuresFintech/digiventures-utils-helpers",
+  "author": "Digiventures",
+  "license": "MIT",
   "devDependencies": {
     "typescript": "^4.6.4"
   },
