@@ -1,13 +1,10 @@
 import SecretManager from "./services/SecretManager";
-import log4js from "log4js";
 
 interface MODEL_STRING_ALIAS_STRING {
   [key: string]: string;
 }
 
 export default class ConfigLoader {
-  readonly logger = log4js.getLogger("ConfigLoader");
-
   readonly references = {
     production: "prod",
     develop: "dev"
@@ -25,7 +22,7 @@ export default class ConfigLoader {
 
     const secretManager: SecretManager = new SecretManager();
     if (ref) {
-      this.logger.trace("loading secrets for environment", ref);
+      console.trace("loading secrets for environment", ref);
 
       const pending = this.secrets
         .split(",")
@@ -38,7 +35,7 @@ export default class ConfigLoader {
           process.env = { ...process.env, ...(res as any) };
         })
         .catch((err) => {
-          this.logger.error("error loading secret configuration", err);
+          console.error("error loading secret configuration", err);
         });
     }
   }
