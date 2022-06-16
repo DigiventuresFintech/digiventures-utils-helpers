@@ -1,9 +1,6 @@
 import { SecretsManager } from "aws-sdk";
-import log4js from "log4js";
 
 export default class SecretManager {
-  readonly logger = log4js.getLogger("SecretManager");
-
   readonly region = "us-east-1";
 
   private secretsManager: SecretsManager;
@@ -20,7 +17,7 @@ export default class SecretManager {
         { SecretId: secretArn },
         (err, data) => {
           if (err) {
-            this.logger.error(err);
+            console.error(err);
             reject(err);
             return;
           }
@@ -37,7 +34,7 @@ export default class SecretManager {
           try {
             resolve(JSON.parse(res));
           } catch (e) {
-            this.logger.error(e);
+            console.error(e);
             reject(e);
             return;
           }
