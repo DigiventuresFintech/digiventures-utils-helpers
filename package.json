@@ -1,11 +1,11 @@
 {
   "name": "@digiventures.stack/utils-helper",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "publishConfig": {
     "access": "public"
   },
   "description": "Fast, generic javascript utility functions",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "build": "pika-pack build",
     "test": "echo \"Error: no test specified\" && exit 1"

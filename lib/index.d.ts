@@ -1,2 +1,3 @@
 import ConfigLoader from "./ConfigLoader";
-export { ConfigLoader };
+import SecretManager from "./services/SecretManager";
+export { ConfigLoader, SecretManager };
