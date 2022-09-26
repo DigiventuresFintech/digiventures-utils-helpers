@@ -9,5 +9,6 @@ export default class ConfigLoader {
      * SecretsLoader loads a list of secret manager by comma separated config, filtering by env
      */
     secretsLoader(): Promise<void>;
+    load(): Promise<void>;
 }
 export {};

@@ -4,3 +4,4 @@ import { PhoneUtils } from "./PhoneUtils";
 import SecretManager from "./services/SecretManager";
 import { AesEncryption } from "./encryption/AesEncryption";
 export { ConfigLoader, SecretManager, JSONUtils, AesEncryption, PhoneUtils };
+export * from "./services/athorization/JWTAuthorization";
