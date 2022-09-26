@@ -39,4 +39,18 @@ export default class ConfigLoader {
         });
     }
   }
+
+  async load() {
+    const AUTHENTICATION_ARN = process.env.AUTHENTICATION_ARN;
+    if (!AUTHENTICATION_ARN) {
+      throw new Error(`secret not defined`)
+    }
+    const secretManager = new SecretManager();
+    try {
+      process.env.AUTHENTICATION_DATA = await secretManager.getSecret(AUTHENTICATION_ARN)
+    } catch (e) {
+      console.error(`error loading credentials`, e);
+      throw e
+    }
+  }
 }
