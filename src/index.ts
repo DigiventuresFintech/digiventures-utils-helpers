@@ -6,3 +6,4 @@ import { AesEncryption }    from "./encryption/AesEncryption"
 export { ConfigLoader, SecretManager, JSONUtils, AesEncryption, PhoneUtils };
 
 export * from "./services/athorization/JWTAbstractAuthorization"
+export * from "./services/athorization/JWTAuthorization"
