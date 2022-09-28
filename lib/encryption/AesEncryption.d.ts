@@ -1,4 +1,4 @@
-declare type Encryption = "aes-256-cbc" | "des-ede3";
+declare type Encryption = 'aes-256-cbc' | 'des-ede3';
 export declare class AesEncryption {
     private readonly AesKey;
     private readonly AesIV;

@@ -1,16 +1,16 @@
-import {UnauthorizedError} from "./error/errors";
+import { UnauthorizedError } from './error/errors';
 import jwt from 'jsonwebtoken';
 
 interface JWTPayload {
-    [key: string]:   string
-    expiration:      string
+    [key: string]: string;
+    expiration: string;
 }
 
 export class JWTAbstractAuthorization {
-    readonly token: string
+    readonly token: string;
 
     constructor(_token: string) {
-        this.token = _token
+        this.token = _token;
     }
 
     /**
@@ -18,30 +18,29 @@ export class JWTAbstractAuthorization {
      * @param token Generated JWT
      */
     public verify(token: string): any {
-        if (!token) throw new Error(`token not defined`)
+        if (!token) throw new Error(`token not defined`);
 
-        let payload:JWTPayload
+        let payload: JWTPayload;
         try {
             payload = <JWTPayload>jwt.verify(token, this.token);
         } catch (e) {
-            console.error("jwt verification error", e)
-            if (e instanceof jwt.JsonWebTokenError ||
-                e instanceof jwt.TokenExpiredError) {
-                throw new UnauthorizedError()
+            console.error('jwt verification error', e);
+            if (
+                e instanceof jwt.JsonWebTokenError ||
+                e instanceof jwt.TokenExpiredError
+            ) {
+                throw new UnauthorizedError();
             }
-            throw new Error(`jwt cannot be verified`)
+            throw new Error(`jwt cannot be verified`);
         }
 
-        return payload
+        return payload;
     }
 
     /**
      * Generate a JWT with expiration as payload param
      */
     public sign(payload: any): string {
-        return jwt.sign(payload,
-            this.token,
-            { expiresIn: "2h" }
-        )
+        return jwt.sign(payload, this.token, { expiresIn: '2h' });
     }
 }
