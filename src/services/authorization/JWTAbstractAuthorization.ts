@@ -9,7 +9,7 @@ interface JWTPayload {
 export class JWTAbstractAuthorization {
     readonly token: string
 
-    protected constructor(_token: string) {
+    constructor(_token: string) {
         this.token = _token
     }
 
