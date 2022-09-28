@@ -6,14 +6,11 @@ interface JWTPayload {
     expiration:      string
 }
 
-export class JWTAuthorization {
-    readonly tokenSecret: string
+export class JWTAbstractAuthorization {
+    readonly token: string
 
-    /**
-     * @param _secret JWT secret token
-     */
-    constructor(_secret: string) {
-        this.tokenSecret = _secret
+    constructor(_token: string) {
+        this.token = _token
     }
 
     /**
@@ -25,7 +22,7 @@ export class JWTAuthorization {
 
         let payload:JWTPayload
         try {
-            payload = <JWTPayload>jwt.verify(token, this.tokenSecret);
+            payload = <JWTPayload>jwt.verify(token, this.token);
         } catch (e) {
             console.error("jwt verification error", e)
             if (e instanceof jwt.JsonWebTokenError ||
@@ -43,7 +40,7 @@ export class JWTAuthorization {
      */
     public sign(payload: any): string {
         return jwt.sign(payload,
-            this.tokenSecret,
+            this.token,
             { expiresIn: "2h" }
         )
     }
