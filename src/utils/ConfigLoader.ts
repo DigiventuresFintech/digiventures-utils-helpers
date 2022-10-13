@@ -1,4 +1,4 @@
-import { SecretManager } from "../services/secret/SecretManager";
+import { SecretManager } from '../services/secret/SecretManager';
 
 interface MODEL_STRING_ALIAS_STRING {
     [key: string]: string;
@@ -10,8 +10,8 @@ export class ConfigLoader {
         develop: 'dev',
     } as MODEL_STRING_ALIAS_STRING;
 
-    readonly secrets    = process.env.API_CONFIGURATION_SECRETS || '';
-    readonly env        = process.env.ENVIRONMENT;
+    readonly secrets = process.env.API_CONFIGURATION_SECRETS || '';
+    readonly env = process.env.ENVIRONMENT;
 
     /**
      * SecretsLoader loads a list of secret manager by comma separated config,
@@ -45,16 +45,18 @@ export class ConfigLoader {
      */
     async loadJwtAuthData() {
         const AUTHENTICATION_ARN = process.env.AUTHENTICATION_ARN;
-        if (!AUTHENTICATION_ARN) throw new Error(`secret not defined`)
+        if (!AUTHENTICATION_ARN) throw new Error(`secret not defined`);
 
         const secretManager = new SecretManager();
         try {
-            const { secret_token: token } = await secretManager.getSecret(AUTHENTICATION_ARN)
-            process.env.JWT_SECRET_TOKEN = token
+            const { secret_token: token } = await secretManager.getSecret(
+                AUTHENTICATION_ARN,
+            );
+            process.env.JWT_SECRET_TOKEN = token;
         } catch (e) {
             console.error(`Error loading jwt secret configuration`, e);
-            throw e
+            throw e;
         }
-        console.trace("secret configuration loaded successfully")
+        console.trace('secret configuration loaded successfully');
     }
 }

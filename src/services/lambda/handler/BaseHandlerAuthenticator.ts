@@ -2,11 +2,11 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { IRequestHandler } from './IRequestHandler';
 import { RequestInfo } from './RequestInfo';
 import { IAuthenticator } from '../authenticator/IAuthenticator';
-import { LambdaException } from "../errors/LambdaException";
+import { LambdaException } from '../errors/LambdaException';
 
 export abstract class BaseHandlerAuthenticator<I, O>
-    implements IRequestHandler<APIGatewayProxyEvent, APIGatewayProxyResult> {
-
+    implements IRequestHandler<APIGatewayProxyEvent, APIGatewayProxyResult>
+{
     /**
      * Main method that be used as lambda entry point
      * @param event Lambda input
@@ -36,12 +36,12 @@ export abstract class BaseHandlerAuthenticator<I, O>
                 statusCode: 200,
                 body: JSON.stringify(output),
             };
-        } catch (e) {
-            if (e instanceof LambdaException) {
-                console.error(e.trace)
-                return this.buildLambdaException(e);
+        } catch (error: any) {
+            if (error instanceof LambdaException) {
+                console.error(error.trace);
+                return error.buildApiResponse;
             }
-            return this.buildExceptionError(e);
+            return this.buildExceptionError(error);
         }
     }
 
@@ -61,22 +61,6 @@ export abstract class BaseHandlerAuthenticator<I, O>
             statusCode: e.code ? e.code : 400,
             body: JSON.stringify({
                 message: e.message ? e.message : 'Unknown error',
-            }),
-        };
-    }
-
-    /**
-     * This method generate an error response using a custom lambda exception
-     * @param e exception data
-     * @private
-     */
-    private buildLambdaException(e: LambdaException): APIGatewayProxyResult {
-        return {
-            statusCode: 400,
-            body: JSON.stringify({
-                message: e.message ? e.message : 'Unknown error',
-                internalError: e.internalError ? e.internalError : '',
-                body: e.body ? JSON.stringify(e.body) : '',
             }),
         };
     }

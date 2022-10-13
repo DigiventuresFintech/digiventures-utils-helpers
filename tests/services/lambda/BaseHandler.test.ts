@@ -1,22 +1,27 @@
-import "dotenv/config";
-import { BaseHandlerAuthenticator, JWTAbstractAuthorization, JwtAuthenticator } from "../../../src";
-import { IAuthenticator } from "../../../src/services/lambda/authenticator/IAuthenticator";
-import { RequestInfo } from "../../../src/services/lambda/handler/RequestInfo";
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
+import 'dotenv/config';
+import {
+    BaseHandlerAuthenticator,
+    JWTAbstractAuthorization,
+    JwtAuthenticator,
+} from '../../../src';
+import { IAuthenticator } from '../../../src/services/lambda/authenticator/IAuthenticator';
+import { RequestInfo } from '../../../src/services/lambda/handler/RequestInfo';
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
+import { LambdaException } from "../../../lib/services/lambda/errors/LambdaException";
 
 describe('Base handler suite', function () {
     const JWTUtil: JWTAbstractAuthorization = new JWTAbstractAuthorization(
-      'bf4c1a0d46b76bd5210f8ffa9f810f1a6c9a2318b23a4acf385d4cfca6f58397',
+        'bf4c1a0d46b76bd5210f8ffa9f810f1a6c9a2318b23a4acf385d4cfca6f58397',
     );
 
     const input = {
-        name: "Juan"
-    }
+        name: 'Juan',
+    };
     const event: APIGatewayProxyEvent = {
         httpMethod: 'get',
         body: JSON.stringify(input),
         headers: {
-            Authorization: JWTUtil.sign({})
+            Authorization: JWTUtil.sign({}),
         },
         isBase64Encoded: false,
         multiValueHeaders: {},
@@ -81,9 +86,12 @@ describe('Base handler suite', function () {
         }
     }
 
-    class BaseHandlerFailedTest extends BaseHandlerAuthenticator<Input, Output> {
+    class BaseHandlerFailedTest extends BaseHandlerAuthenticator<
+        Input,
+        Output
+    > {
         handler(input: RequestInfo<Input>): Promise<Output> {
-            throw new Error(`error`)
+            throw new Error(`error`);
         }
 
         getAuthenticator(): IAuthenticator {
@@ -91,45 +99,78 @@ describe('Base handler suite', function () {
         }
     }
 
-    test("test lambda authorized success", async () => {
-        const baseEvent:APIGatewayProxyEvent = Object.assign({}, event);
-        const handler: BaseHandlerTest = new BaseHandlerTest()
-        const output: APIGatewayProxyResult = await handler.requestHandler(baseEvent)
-        expect(output).not.toBeUndefined()
-        expect(output.statusCode).toEqual(200)
-        expect(output.body).toEqual("{\"status\":200}")
-    })
-
-    test("test when auth token is invalid", async () => {
-        let baseEvent:APIGatewayProxyEvent = Object.assign({}, event);
-        baseEvent.headers = {}
-
-        const handler: BaseHandlerTest = new BaseHandlerTest()
-        const output: APIGatewayProxyResult = await handler.requestHandler(baseEvent)
-        expect(output).not.toBeUndefined()
-        expect(output.statusCode).toEqual(401)
-        expect(output.body).toEqual("{\"message\":\"Unauthorized\"}")
-    })
-
-    test("test when jwt token is invalid", async () => {
-        let baseEvent:APIGatewayProxyEvent = Object.assign({}, event);
-        baseEvent.headers = {
-            Authorization: "1234"
+    class BaseHandlerFailedLambdaException extends BaseHandlerAuthenticator<
+      Input,
+      Output
+      > {
+        handler(input: RequestInfo<Input>): Promise<Output> {
+            throw new LambdaException(`error`, 154, { "name": "juan" });
         }
 
-        const handler: BaseHandlerTest = new BaseHandlerTest()
-        const output: APIGatewayProxyResult = await handler.requestHandler(baseEvent)
-        expect(output).not.toBeUndefined()
-        expect(output.statusCode).toEqual(401)
-        expect(output.body).toEqual("{\"message\":\"Unauthorized\"}")
-    })
+        getAuthenticator(): IAuthenticator {
+            return new JwtAuthenticator();
+        }
+    }
 
-    test("test handler error propagation", async () => {
-        const baseEvent:APIGatewayProxyEvent = Object.assign({}, event);
-        const handler: BaseHandlerFailedTest = new BaseHandlerFailedTest()
-        const output: APIGatewayProxyResult = await handler.requestHandler(baseEvent)
-        expect(output).not.toBeUndefined()
-        expect(output.statusCode).toEqual(400)
-        expect(output.body).toEqual("{\"message\":\"error\"}")
-    })
+
+    test('test lambda authorized success', async () => {
+        const baseEvent: APIGatewayProxyEvent = Object.assign({}, event);
+        const handler: BaseHandlerTest = new BaseHandlerTest();
+        const output: APIGatewayProxyResult = await handler.requestHandler(
+            baseEvent,
+        );
+        expect(output).not.toBeUndefined();
+        expect(output.statusCode).toEqual(200);
+        expect(output.body).toEqual('{"status":200}');
+    });
+
+    test('test when auth token is invalid', async () => {
+        let baseEvent: APIGatewayProxyEvent = Object.assign({}, event);
+        baseEvent.headers = {};
+
+        const handler: BaseHandlerTest = new BaseHandlerTest();
+        const output: APIGatewayProxyResult = await handler.requestHandler(
+            baseEvent,
+        );
+        expect(output).not.toBeUndefined();
+        expect(output.statusCode).toEqual(401);
+        expect(output.body).toEqual('{"message":"Unauthorized"}');
+    });
+
+    test('test when jwt token is invalid', async () => {
+        let baseEvent: APIGatewayProxyEvent = Object.assign({}, event);
+        baseEvent.headers = {
+            Authorization: '1234',
+        };
+
+        const handler: BaseHandlerTest = new BaseHandlerTest();
+        const output: APIGatewayProxyResult = await handler.requestHandler(
+            baseEvent,
+        );
+        expect(output).not.toBeUndefined();
+        expect(output.statusCode).toEqual(401);
+        expect(output.body).toEqual('{"message":"Unauthorized"}');
+    });
+
+    test('test handler error propagation', async () => {
+        const baseEvent: APIGatewayProxyEvent = Object.assign({}, event);
+        const handler: BaseHandlerFailedTest = new BaseHandlerFailedTest();
+        const output: APIGatewayProxyResult = await handler.requestHandler(
+            baseEvent,
+        );
+        expect(output).not.toBeUndefined();
+        expect(output.statusCode).toEqual(400);
+        expect(output.body).toEqual('{"message":"error"}');
+    });
+
+    test('test handler lambda exception', async () => {
+        const baseEvent: APIGatewayProxyEvent = Object.assign({}, event);
+        const handler: BaseHandlerFailedLambdaException = new BaseHandlerFailedLambdaException();
+        const output: APIGatewayProxyResult = await handler.requestHandler(
+          baseEvent,
+        );
+        expect(output).not.toBeUndefined();
+        expect(output.statusCode).toEqual(400);
+        expect(output.body).toEqual('{"message":"error"}');
+    });
 });

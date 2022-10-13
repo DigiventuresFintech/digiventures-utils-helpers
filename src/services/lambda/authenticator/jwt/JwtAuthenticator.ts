@@ -10,7 +10,8 @@ export class JwtAuthenticator implements IAuthenticator {
     }
 
     authenticate(input: APIGatewayProxyEventHeaders): void {
-        const authToken: string|undefined = input.authorization as string || input.Authorization as string;
+        const authToken: string | undefined =
+            (input.authorization as string) || (input.Authorization as string);
         if (!authToken) {
             throw new Error('authorization header not defined');
         }

@@ -11,8 +11,6 @@ export default {
     collectCoverage: false,
     coverageDirectory: 'coverage',
     coverageProvider: 'v8',
-    testMatch: [
-      '**/?(*.)+(spec|test).ts'
-    ],
+    testMatch: ['**/?(*.)+(spec|test).ts'],
     testTimeout: 60 * 1000,
 };
