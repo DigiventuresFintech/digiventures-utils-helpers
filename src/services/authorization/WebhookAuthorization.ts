@@ -1,7 +1,7 @@
 import axios from "axios";
 import { WebhookAuthorizationModel } from "./model/WebhookAuthorizationModel";
 
-class WebhookAuthorization {
+export class WebhookAuthorization {
     readonly authUrl: { [index: string]: any } = {
       prod: '',
       dev: '',
