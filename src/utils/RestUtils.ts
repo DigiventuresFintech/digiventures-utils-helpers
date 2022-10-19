@@ -32,7 +32,7 @@ export class RestUtils {
      * Gets a public file by url and convert it into a base64 string
      * @param document File to load
      */
-    public async getBase64FileAsString(document: string): Promise<any> {
+    public async getBase64FileAsString(document: string): Promise<string> {
         if (!document) {
             throw new Error(`Document not defined`);
         }

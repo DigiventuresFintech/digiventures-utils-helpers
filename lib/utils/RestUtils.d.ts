@@ -8,7 +8,7 @@ export declare class RestUtils {
      * Gets a public file by url and convert it into a base64 string
      * @param document File to load
      */
-    getBase64FileAsString(document: string): Promise<any>;
+    getBase64FileAsString(document: string): Promise<string>;
     /**
      * Get mimetype based on end of string
      * @param file
