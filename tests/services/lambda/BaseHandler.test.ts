@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import {
     BaseHandlerAuthenticator,
-    JWTAbstractAuthorization,
+    JWTBaseAuthorization,
     JwtAuthenticator,
 } from '../../../src';
 import { IAuthenticator } from '../../../src/services/lambda/authenticator/IAuthenticator';
@@ -10,7 +10,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { LambdaException } from "../../../lib/services/lambda/errors/LambdaException";
 
 describe('Base handler suite', function () {
-    const JWTUtil: JWTAbstractAuthorization = new JWTAbstractAuthorization(
+    const JWTUtil: JWTBaseAuthorization = new JWTBaseAuthorization(
         'bf4c1a0d46b76bd5210f8ffa9f810f1a6c9a2318b23a4acf385d4cfca6f58397',
     );
 

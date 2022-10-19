@@ -1,6 +1,6 @@
-export declare class JWTAbstractAuthorization {
+export declare class JWTBaseAuthorization {
     readonly token: string;
-    protected constructor(_token: string);
+    constructor(_token: string);
     /**
      * Verify a JWT token generated and validates if it is not expired
      * @param token Generated JWT

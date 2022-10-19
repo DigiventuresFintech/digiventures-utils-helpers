@@ -1,7 +1,7 @@
-import { JWTAbstractAuthorization } from '../../../src';
+import { JWTBaseAuthorization } from '../../../src';
 
 describe('JWT utility class test', function () {
-    const JWTUtil: JWTAbstractAuthorization = new JWTAbstractAuthorization(
+    const JWTUtil: JWTBaseAuthorization = new JWTBaseAuthorization(
         'bf4c1a0d46b76bd5210f8ffa9f810f1a6c9a2318b23a4acf385d4cfca6f58397',
     );
 

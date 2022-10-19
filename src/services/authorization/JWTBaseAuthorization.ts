@@ -6,7 +6,7 @@ interface JWTPayload {
     expiration: string;
 }
 
-export class JWTAbstractAuthorization {
+export class JWTBaseAuthorization {
     readonly token: string;
 
     constructor(_token: string) {
