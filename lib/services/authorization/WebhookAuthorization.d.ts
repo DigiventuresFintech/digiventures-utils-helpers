@@ -1,4 +1,4 @@
-import { WebhookAuthorizationModel } from "./model/WebhookAuthorizationModel";
+import { WebhookAuthorizationModel } from './model/WebhookAuthorizationModel';
 export declare class WebhookAuthorization {
     readonly authUrl: {
         [index: string]: any;

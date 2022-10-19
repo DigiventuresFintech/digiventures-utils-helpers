@@ -7,7 +7,7 @@ import {
 import { IAuthenticator } from '../../../src/services/lambda/authenticator/IAuthenticator';
 import { RequestInfo } from '../../../src/services/lambda/handler/RequestInfo';
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-import { LambdaException } from "../../../lib/services/lambda/errors/LambdaException";
+import { LambdaException } from '../../../lib/services/lambda/errors/LambdaException';
 
 describe('Base handler suite', function () {
     const JWTUtil: JWTBaseAuthorization = new JWTBaseAuthorization(
@@ -100,18 +100,17 @@ describe('Base handler suite', function () {
     }
 
     class BaseHandlerFailedLambdaException extends BaseHandlerAuthenticator<
-      Input,
-      Output
-      > {
+        Input,
+        Output
+    > {
         handler(input: RequestInfo<Input>): Promise<Output> {
-            throw new LambdaException(`error`, 154, { "name": "juan" });
+            throw new LambdaException(`error`, 154, { name: 'juan' });
         }
 
         getAuthenticator(): IAuthenticator {
             return new JwtAuthenticator();
         }
     }
-
 
     test('test lambda authorized success', async () => {
         const baseEvent: APIGatewayProxyEvent = Object.assign({}, event);
@@ -165,9 +164,10 @@ describe('Base handler suite', function () {
 
     test('test handler lambda exception', async () => {
         const baseEvent: APIGatewayProxyEvent = Object.assign({}, event);
-        const handler: BaseHandlerFailedLambdaException = new BaseHandlerFailedLambdaException();
+        const handler: BaseHandlerFailedLambdaException =
+            new BaseHandlerFailedLambdaException();
         const output: APIGatewayProxyResult = await handler.requestHandler(
-          baseEvent,
+            baseEvent,
         );
         expect(output).not.toBeUndefined();
         expect(output.statusCode).toEqual(400);

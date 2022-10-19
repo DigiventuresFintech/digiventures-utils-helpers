@@ -10,8 +10,8 @@ export class LambdaException extends Error {
         body: any = null,
     ) {
         super();
-        this.name = "LambdaException"
-        this.message = message
+        this.name = 'LambdaException';
+        this.message = message;
         this._internalError = internalError;
         this._body = body;
         Object.setPrototypeOf(this, LambdaException.prototype);

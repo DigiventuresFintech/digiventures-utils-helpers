@@ -1,4 +1,4 @@
 export interface WebhookAuthorizationModel {
-  applicationId: string
-  secret: string
+    applicationId: string;
+    secret: string;
 }
