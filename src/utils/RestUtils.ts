@@ -14,7 +14,7 @@ export class RestUtils {
         const encoding = this.getFileMimetype(document);
         let pdfResponse: any;
         try {
-            pdfResponse = axios.get(document, {
+            pdfResponse = await axios.get(document, {
                 responseType: 'arraybuffer',
                 responseEncoding: 'binary',
                 headers: {
@@ -40,7 +40,7 @@ export class RestUtils {
         const encoding = this.getFileMimetype(document);
         let response: any;
         try {
-            response = axios.get(document, {
+            response = await axios.get(document, {
                 responseType: 'arraybuffer',
                 responseEncoding: 'binary',
                 headers: {
