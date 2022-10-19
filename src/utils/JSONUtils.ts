@@ -1,3 +1,7 @@
+interface acc {
+    [key: string]: [string];
+}
+
 export class JSONUtils {
     /**
      * Traverse JSON as BTree
@@ -24,5 +28,15 @@ export class JSONUtils {
                 );
             }
         }
+    }
+
+    public static flattenObject(obj: any, prefix = "information.documentacion") {
+        return Object.keys(obj).reduce((acc: acc, k) => {
+            const pre: any = prefix.length ? prefix + "." : "";
+            if (typeof obj[k] === "object" && !Array.isArray(obj[k]))
+                Object.assign(acc, this.flattenObject(obj[k], pre + k));
+            else acc[pre + k] = obj[k];
+            return acc;
+        }, {});
     }
 }
