@@ -1,6 +1,7 @@
 export * from './utils/ConfigLoader';
 export * from './utils/JSONUtils';
 export * from './utils/PhoneUtils';
+export * from './utils/RestUtils';
 export * from './encryption/AesEncryption';
 export * from './encryption/AesEncryption';
 export * from './services/secret/SecretManager';
