@@ -3,7 +3,8 @@ import { IAuthenticator } from '../IAuthenticator';
 import axios from 'axios';
 
 export class WebhookAuthenticator implements IAuthenticator {
-    readonly API_WEBHOOKS_URL: string|undefined = process.env.API_WEBHOOKS_URL
+    readonly API_WEBHOOKS_URL: string | undefined =
+        process.env.API_WEBHOOKS_URL;
 
     /**
      * Authentication method
@@ -34,9 +35,7 @@ export class WebhookAuthenticator implements IAuthenticator {
             throw new Error('authentication headers not defined');
         }
 
-        const url = `${this.API_WEBHOOKS_URL}/authorization/${
-            input['applicationId']
-        }/${input['secret']}`;
+        const url = `${this.API_WEBHOOKS_URL}/authorization/${input['applicationId']}/${input['secret']}`;
 
         let response = null;
         try {

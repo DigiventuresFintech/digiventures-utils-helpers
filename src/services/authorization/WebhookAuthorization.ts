@@ -2,11 +2,10 @@ import axios from 'axios';
 import { WebhookAuthorizationModel } from './model/WebhookAuthorizationModel';
 
 export class WebhookAuthorization {
-    readonly authUrl: { [index: string]: any } = {
-        prod: '',
-        dev: '',
-        local: '',
-    };
+    readonly API_WEBHOOKS_URL: string | undefined =
+        process.env.API_WEBHOOKS_URL;
+    readonly API_WEBHOOKS_DEFAULT_URL: string =
+        'https://api.qa.digiventures.la';
 
     /**
      * Authentication method
@@ -27,12 +26,13 @@ export class WebhookAuthorization {
         if (!env) {
             throw new Error('environment not defined');
         }
+        if (!this.API_WEBHOOKS_URL) {
+            throw new Error('api webhooks url not defined');
+        }
 
-        const baseUrl: string =
-            this.authUrl[env.toLowerCase()] || this.authUrl.local;
-        const url = `${baseUrl.trim()}/authorization/${input.applicationId}/${
-            input.secret
-        }`;
+        const url = `${
+            this.API_WEBHOOKS_URL || this.API_WEBHOOKS_DEFAULT_URL
+        }/authorization/${input.applicationId}/${input.secret}`;
 
         let response = null;
         try {

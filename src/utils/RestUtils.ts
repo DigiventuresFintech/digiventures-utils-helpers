@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 export class RestUtils {
-
     /**
      * Gets public file by url as arraybuffer
      * @param document File to load
@@ -59,9 +58,9 @@ export class RestUtils {
      * @param file
      */
     public getFileMimetype(file: string): string {
-        if (file.endsWith("pdf")) {
+        if (file.endsWith('pdf')) {
             return 'application/pdf';
-        } else if (file.endsWith("png")) {
+        } else if (file.endsWith('png')) {
             return 'image/png';
         }
         return 'application/pdf';
