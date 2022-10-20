@@ -20,23 +20,30 @@ export abstract class BaseHandlerAuthenticator<I, O>
             event.headers,
             event.queryStringParameters,
         );
+        console.log("input received", JSON.stringify(event.body))
 
-        const auth = this.getAuthenticator();
+        const auth:IAuthenticator | undefined = this.getAuthenticator();
         if (auth) {
+            console.log("using authenticator")
             try {
                 await auth.authenticate(request.headers);
             } catch (e) {
+                console.error("service unauthorized", e)
                 return this.buildGatewayError(401, 'Unauthorized');
             }
         }
 
         try {
             const output: O = await this.handler(request);
+            const response = JSON.stringify(output)
+
+            console.log("lambda generates output", response)
             return {
                 statusCode: 200,
-                body: JSON.stringify(output),
+                body: response,
             };
         } catch (error: any) {
+            console.error("lambda execution error", error)
             if (error instanceof LambdaException) {
                 console.error(error.trace);
                 return error.buildApiResponse;
