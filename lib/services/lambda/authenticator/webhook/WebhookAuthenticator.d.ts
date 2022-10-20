@@ -1,9 +1,7 @@
 import { APIGatewayProxyEventHeaders } from 'aws-lambda/trigger/api-gateway-proxy';
 import { IAuthenticator } from '../IAuthenticator';
 export declare class WebhookAuthenticator implements IAuthenticator {
-    readonly authUrl: {
-        [index: string]: any;
-    };
+    readonly API_WEBHOOKS_URL: string | undefined;
     /**
      * Authentication method
      * @param input Api gateway request header

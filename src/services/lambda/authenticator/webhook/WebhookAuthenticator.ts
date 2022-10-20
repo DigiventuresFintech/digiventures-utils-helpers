@@ -3,11 +3,7 @@ import { IAuthenticator } from '../IAuthenticator';
 import axios from 'axios';
 
 export class WebhookAuthenticator implements IAuthenticator {
-    readonly authUrl: { [index: string]: any } = {
-        prod: '',
-        dev: '',
-        local: '',
-    };
+    readonly API_WEBHOOKS_URL: string|undefined = process.env.API_WEBHOOKS_URL
 
     /**
      * Authentication method
@@ -28,6 +24,9 @@ export class WebhookAuthenticator implements IAuthenticator {
         if (!env) {
             throw new Error('environment not defined');
         }
+        if (!this.API_WEBHOOKS_URL) {
+            throw new Error('authentication webhook url not defined');
+        }
         if (
             !input.hasOwnProperty('applicationId') ||
             !input.hasOwnProperty('secret')
@@ -35,9 +34,7 @@ export class WebhookAuthenticator implements IAuthenticator {
             throw new Error('authentication headers not defined');
         }
 
-        const baseUrl: string =
-            this.authUrl[env.toLowerCase()] || this.authUrl.local;
-        const url = `${baseUrl.trim()}/authorization/${
+        const url = `${this.API_WEBHOOKS_URL}/authorization/${
             input['applicationId']
         }/${input['secret']}`;
 
