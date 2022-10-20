@@ -33,5 +33,5 @@ export declare abstract class BaseHandlerAuthenticator<I, O> implements IRequest
     /**
      * Authenticator definition
      */
-    abstract getAuthenticator(): IAuthenticator;
+    abstract getAuthenticator(): IAuthenticator | undefined;
 }

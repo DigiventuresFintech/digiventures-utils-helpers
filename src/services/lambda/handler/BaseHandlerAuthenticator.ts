@@ -90,5 +90,5 @@ export abstract class BaseHandlerAuthenticator<I, O>
     /**
      * Authenticator definition
      */
-    abstract getAuthenticator(): IAuthenticator;
+    public abstract getAuthenticator(): IAuthenticator | undefined;
 }
