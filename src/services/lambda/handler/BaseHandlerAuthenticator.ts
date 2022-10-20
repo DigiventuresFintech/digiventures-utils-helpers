@@ -11,46 +11,46 @@ export abstract class BaseHandlerAuthenticator<I, O>
      * Main method that be used as lambda entry point
      * @param event Lambda input
      */
-    async requestHandler(
+    public requestHandler = async (
         event: APIGatewayProxyEvent,
-    ): Promise<APIGatewayProxyResult> {
+    ): Promise<APIGatewayProxyResult> => {
         const body: I = JSON.parse(event.body || '');
         const request: RequestInfo<I> = new RequestInfo(
             body,
             event.headers,
             event.queryStringParameters,
         );
-        console.log("input received", JSON.stringify(event.body))
+        console.log('input received', event.body);
 
-        const auth:IAuthenticator | undefined = this.getAuthenticator();
+        const auth: IAuthenticator | undefined = this.getAuthenticator();
         if (auth) {
-            console.log("using authenticator")
+            console.log('using authenticator');
             try {
                 await auth.authenticate(request.headers);
             } catch (e) {
-                console.error("service unauthorized", e)
+                console.error('service unauthorized', e);
                 return this.buildGatewayError(401, 'Unauthorized');
             }
         }
 
         try {
             const output: O = await this.handler(request);
-            const response = JSON.stringify(output)
+            const response = JSON.stringify(output);
 
-            console.log("lambda generates output", response)
+            console.log('lambda generates output', response);
             return {
                 statusCode: 200,
                 body: response,
             };
         } catch (error: any) {
-            console.error("lambda execution error", error)
+            console.error('lambda execution error', error);
             if (error instanceof LambdaException) {
                 console.error(error.trace);
                 return error.buildApiResponse;
             }
             return this.buildExceptionError(error);
         }
-    }
+    };
 
     /**
      * Base handler function

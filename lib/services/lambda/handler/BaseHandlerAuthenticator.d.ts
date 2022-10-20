@@ -7,7 +7,7 @@ export declare abstract class BaseHandlerAuthenticator<I, O> implements IRequest
      * Main method that be used as lambda entry point
      * @param event Lambda input
      */
-    requestHandler(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult>;
+    requestHandler: (event: APIGatewayProxyEvent) => Promise<APIGatewayProxyResult>;
     /**
      * Base handler function
      * @param input value that be used as input
