@@ -1,5 +1,6 @@
 import { APIGatewayProxyEventHeaders, APIGatewayProxyEventQueryStringParameters } from 'aws-lambda/trigger/api-gateway-proxy';
-export declare class RequestInfo<B> {
+import { RequestDataBody } from "./RequestDataBody";
+export declare class RequestInfo<B extends RequestDataBody> {
     private readonly _body;
     private readonly _headers;
     private readonly _queryStringParameters;

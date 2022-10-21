@@ -1,8 +1,9 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { IRequestHandler } from './IRequestHandler';
-import { RequestInfo } from './RequestInfo';
+import { RequestInfo } from "./RequestInfo";
 import { IAuthenticator } from '../authenticator/IAuthenticator';
-export declare abstract class BaseHandlerAuthenticator<I, O> implements IRequestHandler<APIGatewayProxyEvent, APIGatewayProxyResult> {
+import { RequestDataBody } from "./RequestDataBody";
+export declare abstract class BaseHandlerAuthenticator<I extends RequestDataBody, O> implements IRequestHandler<APIGatewayProxyEvent, APIGatewayProxyResult> {
     /**
      * Main method that be used as lambda entry point
      * @param event Lambda input

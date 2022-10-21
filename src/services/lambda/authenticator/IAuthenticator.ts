@@ -1,4 +1,4 @@
-import { APIGatewayProxyEventHeaders } from 'aws-lambda/trigger/api-gateway-proxy';
+import { APIGatewayProxyEvent } from 'aws-lambda';
 
 export interface IAuthenticator {
     /**
@@ -6,5 +6,5 @@ export interface IAuthenticator {
      * authentication methods
      * @param input Input necessary to authenticate a request
      */
-    authenticate(input: APIGatewayProxyEventHeaders): any;
+    authenticate(input: APIGatewayProxyEvent): any;
 }

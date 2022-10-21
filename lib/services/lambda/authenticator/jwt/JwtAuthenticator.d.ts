@@ -1,8 +1,8 @@
 import { IAuthenticator } from '../IAuthenticator';
-import { APIGatewayProxyEventHeaders } from 'aws-lambda/trigger/api-gateway-proxy';
 import { JWTAuthorization } from '../../../authorization/JWTAuthorization';
+import { APIGatewayProxyEvent } from 'aws-lambda';
 export declare class JwtAuthenticator implements IAuthenticator {
     readonly authorizer: JWTAuthorization;
     constructor();
-    authenticate(input: APIGatewayProxyEventHeaders): void;
+    authenticate(input: APIGatewayProxyEvent): void;
 }

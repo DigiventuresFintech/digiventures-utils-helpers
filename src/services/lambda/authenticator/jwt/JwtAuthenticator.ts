@@ -1,6 +1,7 @@
 import { IAuthenticator } from '../IAuthenticator';
 import { APIGatewayProxyEventHeaders } from 'aws-lambda/trigger/api-gateway-proxy';
 import { JWTAuthorization } from '../../../authorization/JWTAuthorization';
+import { APIGatewayProxyEvent } from 'aws-lambda';
 
 export class JwtAuthenticator implements IAuthenticator {
     readonly authorizer: JWTAuthorization;
@@ -9,9 +10,10 @@ export class JwtAuthenticator implements IAuthenticator {
         this.authorizer = new JWTAuthorization();
     }
 
-    authenticate(input: APIGatewayProxyEventHeaders): void {
+    authenticate(input: APIGatewayProxyEvent): void {
         const authToken: string | undefined =
-            (input.authorization as string) || (input.Authorization as string);
+            (input.headers.authorization as string) ||
+            (input.headers.Authorization as string);
         if (!authToken) {
             throw new Error('authorization header not defined');
         }

@@ -1,10 +1,11 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { IRequestHandler } from './IRequestHandler';
-import { RequestInfo } from './RequestInfo';
+import { RequestInfo } from "./RequestInfo";
 import { IAuthenticator } from '../authenticator/IAuthenticator';
 import { LambdaException } from '../errors/LambdaException';
+import { RequestDataBody } from "./RequestDataBody";
 
-export abstract class BaseHandlerAuthenticator<I, O>
+export abstract class BaseHandlerAuthenticator<I extends RequestDataBody, O>
     implements IRequestHandler<APIGatewayProxyEvent, APIGatewayProxyResult>
 {
     /**
@@ -26,7 +27,7 @@ export abstract class BaseHandlerAuthenticator<I, O>
         if (auth) {
             console.log('using authenticator');
             try {
-                await auth.authenticate(request.headers);
+                await auth.authenticate(event);
             } catch (e) {
                 console.error('service unauthorized', e);
                 return this.buildGatewayError(401, 'Unauthorized');
