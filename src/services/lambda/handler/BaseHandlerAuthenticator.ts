@@ -3,9 +3,8 @@ import { IRequestHandler } from './IRequestHandler';
 import { RequestInfo } from "./RequestInfo";
 import { IAuthenticator } from '../authenticator/IAuthenticator';
 import { LambdaException } from '../errors/LambdaException';
-import { RequestDataBody } from "./RequestDataBody";
 
-export abstract class BaseHandlerAuthenticator<I extends RequestDataBody, O>
+export abstract class BaseHandlerAuthenticator<I, O>
     implements IRequestHandler<APIGatewayProxyEvent, APIGatewayProxyResult>
 {
     /**
