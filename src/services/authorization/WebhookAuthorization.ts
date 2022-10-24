@@ -26,9 +26,6 @@ export class WebhookAuthorization {
         if (!env) {
             throw new Error('environment not defined');
         }
-        if (!this.API_WEBHOOKS_URL) {
-            throw new Error('api webhooks url not defined');
-        }
 
         const url = `${
             this.API_WEBHOOKS_URL || this.API_WEBHOOKS_DEFAULT_URL
