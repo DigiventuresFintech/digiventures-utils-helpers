@@ -12,6 +12,5 @@ export * from './services/lambda/authenticator/jwt/JwtAuthenticator';
 export * from './services/lambda/authenticator/webhook/WebhookAuthenticator';
 export * from './services/lambda/handler/IRequestHandler';
 export * from './services/lambda/handler/RequestInfo';
-export * from './services/lambda/handler/RequestDataBody';
 export * from './services/lambda/authenticator/IAuthenticator';
 export * from './services/lambda/handler/BaseHandlerAuthenticator';
