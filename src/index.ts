@@ -8,6 +8,7 @@ export * from './encryption/AesEncryption';
 export * from './encryption/AesEncryption';
 
 export * from './services/secret/SecretManager';
+export * from './services/s3/S3Helper';
 
 export * from './services/authorization/JWTBaseAuthorization';
 export * from './services/authorization/JWTAuthorization';
