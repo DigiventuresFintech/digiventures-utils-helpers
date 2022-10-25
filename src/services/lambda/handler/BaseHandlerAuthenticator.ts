@@ -1,6 +1,6 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { IRequestHandler } from './IRequestHandler';
-import { RequestInfo } from "./RequestInfo";
+import { RequestInfo } from './RequestInfo';
 import { IAuthenticator } from '../authenticator/IAuthenticator';
 import { LambdaException } from '../errors/LambdaException';
 
