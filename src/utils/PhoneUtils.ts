@@ -1,3 +1,5 @@
+import parsePhoneNumber from 'libphonenumber-js';
+
 const twoDigitsCountryCodes = ['11'];
 
 const fourDigitsCountryCodes = [
@@ -320,4 +322,39 @@ export class PhoneUtils {
         }
         return phoneWithoutCountry.substring(0, 4);
     }
+
+    parsePhoneNumber(phone: string, country: any = 'AR') {
+        const result: any = {};
+        try {
+            if (!phone) return {};
+            const parsedPhoneNumber = parsePhoneNumber(phone, country);
+            if (parsedPhoneNumber) {
+                const formattedPhoneNumber =
+                    parsedPhoneNumber.formatInternational();
+
+                const splitPhoneNumber = formattedPhoneNumber.split(' ');
+                const arrLength = splitPhoneNumber.length;
+
+                if (arrLength === 2) {
+                    const [areaCode, phoneNumber] = splitPhoneNumber;
+                    if (areaCode) result.areaCode = areaCode;
+                    if (phoneNumber) result.phoneNumber = phoneNumber;
+                } else if (arrLength === 4) {
+                    const areaCode = splitPhoneNumber
+                        .slice(arrLength - 3, arrLength - 2)
+                        ?.join('');
+                    const phoneNumber = splitPhoneNumber
+                        .slice(arrLength - 2, arrLength)
+                        ?.join('');
+
+                    if (areaCode) result.areaCode = areaCode;
+                    if (phoneNumber) result.phoneNumber = phoneNumber;
+                }
+            }
+        } catch (error) {
+            console.error(error);
+            return {};
+        }
+        return result;
+    };
 }
