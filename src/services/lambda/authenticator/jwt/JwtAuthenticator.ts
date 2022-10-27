@@ -1,5 +1,4 @@
 import { IAuthenticator } from '../IAuthenticator';
-import { APIGatewayProxyEventHeaders } from 'aws-lambda/trigger/api-gateway-proxy';
 import { JWTAuthorization } from '../../../authorization/JWTAuthorization';
 import { APIGatewayProxyEvent } from 'aws-lambda';
 

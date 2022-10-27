@@ -1,30 +1,36 @@
 import AWS from 'aws-sdk';
 import S3, { GetObjectRequest } from 'aws-sdk/clients/s3';
 import * as fs from 'fs';
+import { Credentials, CredentialsOptions } from 'aws-sdk/lib/credentials';
 
 export class S3Helper {
     readonly aws_default_region: string = 'us-east-1';
+    readonly aws_default_profile_name: string = 'digiventures-operaciones-prod';
+    readonly s3Instance: S3;
 
-    constructor() {}
+    constructor(
+        credentials?: Credentials | CredentialsOptions,
+        region?: string,
+    ) {
+        if (credentials) {
+            this.s3Instance = new S3({
+                credentials: credentials,
+                region: region || this.aws_default_region,
+            });
+        } else {
+            this.s3Instance = new S3({
+                region: region || this.aws_default_region,
+            });
+        }
+    }
 
     /**
      * Generate aws credentials by profile
      * @returns Credentials object
      */
-    private static getCredentials(): any {
+    private getCredentials(profile?: string): any {
         return new AWS.SharedIniFileCredentials({
-            profile: 'digiventures-operaciones-prod',
-        });
-    }
-
-    /**
-     * Get S3 instance
-     * @returns
-     */
-    private static getS3Bucket(): S3 {
-        return new S3({
-            //credentials: S3Helper.getCredentials(),
-            region: 'us-east-1',
+            profile: profile || this.aws_default_profile_name,
         });
     }
 
@@ -39,7 +45,7 @@ export class S3Helper {
         bucket_key: string,
     ): Promise<any> {
         try {
-            const data = await S3Helper.getS3Bucket()
+            const data = await this.s3Instance
                 .getObject({
                     Bucket: bucket_name,
                     Key: bucket_key,
@@ -72,7 +78,7 @@ export class S3Helper {
 
             const file = fs.createWriteStream(file_name);
             return new Promise<void>((resolve, reject) => {
-                S3Helper.getS3Bucket()
+                this.s3Instance
                     .getObject(params)
                     .createReadStream()
                     .on('end', () => {
@@ -105,20 +111,13 @@ export class S3Helper {
     ): Promise<any> {
         try {
             console.log(`Creating writeable zip file ${file_path}`);
-            const writeStream = fs.createWriteStream(file_path);
-            const data = await S3Helper.getS3Bucket()
+            const data = await this.s3Instance
                 .getObject({
                     Bucket: bucket_name,
                     Key: bucket_key,
                 })
-                .promise()
-                .then(async data => {
-                    // const zip = await JSZip.loadAsync(data.Body);
-                    // fs.writeFileSync(file_path, data.Body);
-                });
-
+                .promise();
             console.log('File created');
-
             return data;
         } catch (e) {
             console.error(`get_s3_file_as_zip + ${e}`);
@@ -138,7 +137,7 @@ export class S3Helper {
         file: Buffer,
     ): Promise<any> {
         try {
-            await S3Helper.getS3Bucket()
+            await this.s3Instance
                 .upload({
                     Bucket: bucket_name,
                     Key: bucket_key,
@@ -165,7 +164,7 @@ export class S3Helper {
     ): Promise<any> {
         try {
             const stream = fs.createReadStream(file_path);
-            await S3Helper.getS3Bucket()
+            await this.s3Instance
                 .upload({
                     Bucket: bucket_name,
                     Key: bucket_key,
@@ -185,7 +184,7 @@ export class S3Helper {
      */
     public s3_file_exist = async (bucket_name: string, bucket_key: string) => {
         try {
-            await S3Helper.getS3Bucket()
+            await this.s3Instance
                 .headObject({
                     Bucket: bucket_name,
                     Key: bucket_key,

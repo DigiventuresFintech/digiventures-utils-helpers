@@ -96,7 +96,7 @@ export class RestUtils {
         } else if (file.endsWith('png')) {
             return 'image/png';
         }
-        return 'application/pdf';
+        return 'application/pdf'; // << rly?
     }
 
     /**

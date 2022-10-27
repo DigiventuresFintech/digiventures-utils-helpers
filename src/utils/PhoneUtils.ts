@@ -356,5 +356,5 @@ export class PhoneUtils {
             return {};
         }
         return result;
-    };
+    }
 }
