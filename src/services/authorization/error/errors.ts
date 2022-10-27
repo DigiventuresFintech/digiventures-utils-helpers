@@ -2,7 +2,6 @@
  * Class for manage unauthorized error
  */
 export class UnauthorizedError extends Error {
-
     constructor() {
         super();
         this.message = 'Unauthorized';
@@ -11,5 +10,7 @@ export class UnauthorizedError extends Error {
     /**
      * Error trace property (string).
      */
-    public get trace() { return this.message; }
+    public get trace() {
+        return this.message;
+    }
 }

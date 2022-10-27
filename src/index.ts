@@ -1,9 +1,25 @@
-import ConfigLoader         from "./ConfigLoader";
-import JSONUtils            from "./JSONUtils";
-import { PhoneUtils }       from "./PhoneUtils";
-import SecretManager        from "./services/SecretManager"
-import { AesEncryption }    from "./encryption/AesEncryption"
-export { ConfigLoader, SecretManager, JSONUtils, AesEncryption, PhoneUtils };
+export * from './utils/ConfigLoader';
+export * from './utils/JSONUtils';
+export * from './utils/PhoneUtils';
 
-export * from "./services/authorization/JWTAbstractAuthorization"
-export * from "./services/authorization/JWTAuthorization"
+export * from './utils/RestUtils';
+
+export * from './encryption/AesEncryption';
+export * from './encryption/AesEncryption';
+
+export * from './services/secret/SecretManager';
+export * from './services/s3/S3Helper';
+
+export * from './services/authorization/JWTBaseAuthorization';
+export * from './services/authorization/JWTAuthorization';
+export * from './services/authorization/WebhookAuthorization';
+
+export * from './services/lambda/authenticator/jwt/JwtAuthenticator';
+export * from './services/lambda/authenticator/webhook/WebhookAuthenticator';
+export * from './services/lambda/handler/IRequestHandler';
+
+export * from './services/lambda/handler/RequestInfo';
+
+export * from './services/lambda/authenticator/IAuthenticator';
+
+export * from './services/lambda/handler/BaseHandlerAuthenticator';
