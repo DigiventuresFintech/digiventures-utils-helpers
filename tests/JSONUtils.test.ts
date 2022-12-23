@@ -1,10 +1,15 @@
 import { JSONUtils } from '../lib';
 
 describe('Suit for json difference method', function () {
-
     test('happy path', () => {
         const result: any = {};
-        JSONUtils.jsonDifference({ val1: 'Juan' }, { val1: 'Pedro' }, '', result);
+        JSONUtils.jsonDifference(
+            { val1: 'Juan' },
+            { val1: 'Pedro' },
+            '',
+            result,
+        );
+
         expect(result).not.toBeUndefined();
         expect(result.val1).toEqual('Pedro');
     });
@@ -17,6 +22,7 @@ describe('Suit for json difference method', function () {
             '',
             result,
         );
+
         expect(result).not.toBeUndefined();
         expect(result.obj1).not.toBeUndefined();
         expect(result.obj1.obj2).not.toBeUndefined();
@@ -67,30 +73,31 @@ describe('Suit for json difference method', function () {
     test('test when json has nested attributes and array', () => {
         const result: any = {};
         JSONUtils.jsonDifference(
-          {
-              managment: {
-                  participants: [
-                      {
-                          key: "A"
-                      }
-                  ]
-              }
-          },
-          {
-              managment: {
-                  participants: [
-                      {
-                          key: "B"
-                      }
-                  ]
-              }
-          },
-          '',
-          result,
+            {
+                managment: {
+                    participants: [
+                        {
+                            key: 'A',
+                        },
+                    ],
+                },
+            },
+            {
+                managment: {
+                    participants: [
+                        {
+                            key: 'B',
+                        },
+                    ],
+                },
+            },
+            '',
+            result,
         );
+
         expect(result).not.toBeUndefined();
         expect(result.managment).not.toBeUndefined();
         expect(result.managment.participants).not.toBeUndefined();
-        expect(result.managment.participants[0].key).toEqual("B")
+        expect(result.managment.participants[0].key).toEqual('B');
     });
 });

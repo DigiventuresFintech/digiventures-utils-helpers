@@ -66,7 +66,9 @@ export class JSONUtils {
                 }
             } else {
                 if (jsonB.hasOwnProperty(key)) {
-                    const pKey: string = parentKey ? `${parentKey}.${key}` : key;
+                    const pKey: string = parentKey
+                        ? `${parentKey}.${key}`
+                        : key;
                     if (
                         typeof jsonB[key] == 'string' &&
                         typeof jsonA[key] == 'string'
