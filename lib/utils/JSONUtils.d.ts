@@ -16,7 +16,8 @@ export declare class JSONUtils {
      * @param jsonB JSON B
      * @param parentKey JSON recursive parent key
      * @param result Resulting differences
+     * @param options
      */
-    static jsonDifference(jsonA: any, jsonB: any, parentKey?: string, result?: any): void;
+    static jsonDifference(jsonA: any, jsonB: any, parentKey?: string, result?: any, options?: any): void;
 }
 export {};

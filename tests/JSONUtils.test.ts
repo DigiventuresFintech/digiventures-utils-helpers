@@ -100,4 +100,74 @@ describe('Suit for json difference method', function () {
         expect(result.managment.participants).not.toBeUndefined();
         expect(result.managment.participants[0].key).toEqual('B');
     });
+
+    test('test when json has missing attributes option happy path', () => {
+        const result: any = {};
+        JSONUtils.jsonDifference(
+            { val1: 'Juan', val7: 'JotaEme' },
+            { val1: 'Pedro' },
+            '',
+            result,
+            {
+                onlyAttributes: 1,
+            },
+        );
+        expect(result).not.toBeUndefined();
+        expect(result.val7).toEqual('JotaEme');
+    });
+
+    test('test when json has missing attributes option with more than one attributes', () => {
+        const result: any = {};
+        JSONUtils.jsonDifference(
+            {
+                val1: 'Juan',
+                val6: 'JotaEme',
+                val10: 'JotaEme',
+                val7: 'JotaEme',
+            },
+            {
+                val1: 'Pedro',
+            },
+            '',
+            result,
+            {
+                onlyAttributes: 1,
+            },
+        );
+        expect(result).not.toBeUndefined();
+        expect(result.val1).toBeUndefined();
+        expect(result.val6).toEqual('JotaEme');
+        expect(result.val10).toEqual('JotaEme');
+        expect(result.val7).toEqual('JotaEme');
+    });
+
+    test('test when json has missing attributes option with more than one attributes and nested objects', () => {
+        const result: any = {};
+        JSONUtils.jsonDifference(
+            {
+                val1: 'Juan',
+                val6: {
+                    val1: {
+                        val10: 'JotaEme',
+                    },
+                },
+                val10: {
+                    val10: 'JotaEme',
+                },
+                val7: 'JotaEme',
+            },
+            {
+                val1: 'Pedro',
+            },
+            '',
+            result,
+            {
+                onlyAttributes: 1,
+            },
+        );
+        expect(result).not.toBeUndefined();
+        expect(result.val6.val1.val10).toEqual('JotaEme');
+        expect(result.val10.val10).toEqual('JotaEme');
+        expect(result.val7).toEqual('JotaEme');
+    });
 });
