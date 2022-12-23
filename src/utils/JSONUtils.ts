@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 interface acc {
     [key: string]: [string];
 }
@@ -41,5 +43,53 @@ export class JSONUtils {
             else acc[pre + k] = obj[k];
             return acc;
         }, {});
+    }
+
+    /**
+     * Calculate the differences between two jsons keys
+     * @param jsonA JSON A
+     * @param jsonB JSON B
+     * @param parentKey JSON recursive parent key
+     * @param result Resulting differences
+     */
+    public static jsonDifference(
+        jsonA: any,
+        jsonB: any,
+        parentKey: string = '',
+        result: any = {},
+    ): void {
+        for (const key in jsonA) {
+            if (jsonA[key] != null && typeof jsonA[key] === 'object') {
+                const pKey: string = parentKey ? `${parentKey}.${key}` : key;
+                if (jsonB.hasOwnProperty(key)) {
+                    this.jsonDifference(jsonA[key], jsonB[key], pKey, result);
+                }
+            } else {
+                if (jsonB.hasOwnProperty(key)) {
+                    const pKey: string = parentKey ? `${parentKey}.${key}` : key;
+                    if (
+                        typeof jsonB[key] == 'string' &&
+                        typeof jsonA[key] == 'string'
+                    ) {
+                        const aValue: string = jsonA[key];
+                        const bValue: string = jsonB[key];
+                        if (aValue.toLowerCase() != bValue.toLowerCase()) {
+                            _.set(result, pKey, bValue);
+                            return;
+                        }
+                    } else if (
+                        typeof jsonB[key] == 'number' &&
+                        typeof jsonA[key] == 'number'
+                    ) {
+                        const aValue: number = jsonA[key];
+                        const bValue: number = jsonB[key];
+                        if (aValue != bValue) {
+                            _.set(result, pKey, bValue);
+                            return;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
