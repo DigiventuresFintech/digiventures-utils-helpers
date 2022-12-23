@@ -77,7 +77,6 @@ export class JSONUtils {
                         const bValue: string = jsonB[key];
                         if (aValue.toLowerCase() != bValue.toLowerCase()) {
                             _.set(result, pKey, bValue);
-                            return;
                         }
                     } else if (
                         typeof jsonB[key] == 'number' &&
@@ -87,7 +86,6 @@ export class JSONUtils {
                         const bValue: number = jsonB[key];
                         if (aValue != bValue) {
                             _.set(result, pKey, bValue);
-                            return;
                         }
                     }
                 }
