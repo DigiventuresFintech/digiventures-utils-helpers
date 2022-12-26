@@ -144,7 +144,7 @@ export class S3Helper {
                     Bucket: bucket_name,
                     Key: bucket_key,
                     Body: file,
-                    ContentType: content_type
+                    ContentType: content_type,
                 })
                 .promise();
         } catch (error) {

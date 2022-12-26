@@ -1,0 +1,52 @@
+name: Release Drafter
+on:
+  push:
+    branches: [
+      "main",
+      "master"
+    ]
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  update_release_draft:
+    permissions:
+      contents: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # Configure Git
+      - name: Git configuration
+        run: |
+          git config --global user.email "github.actions@digiventures.la"
+          git config --global user.name "GitHub Actions"
+
+      # Upgrade version
+      - name: Bump release version
+        run: |
+          echo "NEW_VERSION=$(npm --no-git-tag-version version $RELEASE_TYPE)" >> $GITHUB_ENV
+          echo "RELEASE_TAG=latest" >> $GITHUB_ENV
+        env:
+          RELEASE_TYPE: "patch"
+
+      # Commit changes
+      - name: Commit CHANGELOG.md and package.json changes and create tag
+        run: |
+          git add "package.json"
+          git commit -m "release ${{ env.NEW_VERSION }}"
+          git tag ${{ env.NEW_VERSION }}
+
+      # Push repository changes
+      - name: Push changes to repository
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git push origin HEAD:main --force && git push --tags
+
+      # Draft new release
+      - uses: release-drafter/release-drafter@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
