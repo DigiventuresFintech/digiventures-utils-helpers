@@ -139,7 +139,7 @@ export class S3Helper {
         content_type = 'text/plain',
     ): Promise<any> {
         try {
-            await this.s3Instance
+            return await this.s3Instance
                 .upload({
                     Bucket: bucket_name,
                     Key: bucket_key,
@@ -167,7 +167,7 @@ export class S3Helper {
     ): Promise<any> {
         try {
             const stream = fs.createReadStream(file_path);
-            await this.s3Instance
+            return await this.s3Instance
                 .upload({
                     Bucket: bucket_name,
                     Key: bucket_key,
