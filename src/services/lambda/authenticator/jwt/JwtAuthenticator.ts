@@ -4,9 +4,11 @@ import { APIGatewayProxyEvent } from 'aws-lambda';
 
 export class JwtAuthenticator implements IAuthenticator {
     readonly authorizer: JWTAuthorization;
+    private authData: any;
 
     constructor() {
         this.authorizer = new JWTAuthorization();
+        this.authData = null;
     }
 
     authenticate(input: APIGatewayProxyEvent): void {
@@ -18,9 +20,17 @@ export class JwtAuthenticator implements IAuthenticator {
         }
 
         try {
-            this.authorizer.verify(authToken);
+            this.authData = this.authorizer.verify(authToken);
         } catch (e) {
             throw e;
         }
     }
+
+    getAuthData(): any {
+        if (this.authData == null) {
+            throw new Error("unauthorized")
+        }
+        return this.authData;
+    }
+
 }

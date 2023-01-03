@@ -3,8 +3,14 @@ import axios from 'axios';
 import { APIGatewayProxyEvent } from 'aws-lambda';
 
 export class WebhookAuthenticator implements IAuthenticator {
+    private authData: any;
+
     readonly API_WEBHOOKS_URL: string | undefined =
         process.env.API_WEBHOOKS_URL;
+
+    constructor() {
+        this.authData = null;
+    }
 
     /**
      * Authentication method
@@ -51,10 +57,18 @@ export class WebhookAuthenticator implements IAuthenticator {
             throw new Error(`authorization error`);
         }
 
+        this.authData = response.data;
         if (response && response.status == 200 && response.data.authorization) {
             return response.data.authorization;
         }
 
         throw new Error(`authorization service response an unknown error`);
+    }
+
+    getAuthData(): any {
+        if (this.authData == null) {
+            throw new Error("unauthorized")
+        }
+        return this.authData;
     }
 }
