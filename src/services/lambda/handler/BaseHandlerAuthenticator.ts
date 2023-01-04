@@ -2,7 +2,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { IRequestHandler } from './IRequestHandler';
 import { RequestInfo } from './RequestInfo';
 import { IAuthenticator } from '../authenticator/IAuthenticator';
-import { LambdaException } from '../errors/LambdaException';
+import isLambdaError from "../../authorization/error/utils";
 
 export abstract class BaseHandlerAuthenticator<I, O>
     implements IRequestHandler<APIGatewayProxyEvent, APIGatewayProxyResult>
@@ -44,7 +44,7 @@ export abstract class BaseHandlerAuthenticator<I, O>
             };
         } catch (error: any) {
             console.error('lambda execution error', error);
-            if (error instanceof LambdaException) {
+            if (isLambdaError(error)) {
                 console.error(error.trace);
                 return error.buildApiResponse;
             }
