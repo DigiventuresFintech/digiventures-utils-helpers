@@ -6,4 +6,8 @@ export interface IAuthenticator {
      * @param input Input necessary to authenticate a request
      */
     authenticate(input: APIGatewayProxyEvent): any;
+    /**
+     * Authorization data getter
+     */
+    getAuthData(): any;
 }
