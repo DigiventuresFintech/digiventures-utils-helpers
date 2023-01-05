@@ -2,7 +2,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { IRequestHandler } from './IRequestHandler';
 import { RequestInfo } from './RequestInfo';
 import { IAuthenticator } from '../authenticator/IAuthenticator';
-import isLambdaError from "../../authorization/error/utils";
+import isLambdaError from '../../authorization/error/utils';
 
 export abstract class BaseHandlerAuthenticator<I, O>
     implements IRequestHandler<APIGatewayProxyEvent, APIGatewayProxyResult>

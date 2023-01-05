@@ -28,9 +28,8 @@ export class JwtAuthenticator implements IAuthenticator {
 
     getAuthData(): any {
         if (this.authData == null) {
-            throw new Error("unauthorized")
+            throw new Error('unauthorized');
         }
         return this.authData;
     }
-
 }
