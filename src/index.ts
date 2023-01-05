@@ -23,3 +23,4 @@ export * from './services/lambda/handler/RequestInfo';
 export * from './services/lambda/authenticator/IAuthenticator';
 
 export * from './services/lambda/handler/BaseHandlerAuthenticator';
+export * from './services/lambda/errors/LambdaException';
