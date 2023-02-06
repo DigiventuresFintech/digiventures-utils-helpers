@@ -1,5 +1,4 @@
 import axios from 'axios';
-import qs from 'query-string';
 
 export class ApiWebhooksService {
     readonly API_WEBHOOKS_BASE_URL: string | undefined =
@@ -33,8 +32,8 @@ export class ApiWebhooksService {
             throw `api webhooks url not defined`;
         }
 
-        const queryParams = qs.stringify(params);
-        const url = `${this.API_WEBHOOKS_BASE_URL}/1.0/legajo/${legajoId}?authorization=${authKey}&${queryParams}`;
+        //const queryParams = qs.stringify(params);
+        const url = `${this.API_WEBHOOKS_BASE_URL}/1.0/legajo/${legajoId}?authorization=${authKey}&${params}`;
 
         let response = null;
         try {
