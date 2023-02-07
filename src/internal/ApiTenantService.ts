@@ -15,7 +15,7 @@ export class ApiTenantService {
     }
 
     const queryParams: string = path ? `?select=${path}` : ""
-    const url = `${this.API_TENANTS_BASE_URL}/workspace/${id}${queryParams}`;
+    const url = `${this.API_TENANTS_BASE_URL}/tenant/${id}${queryParams}`;
     let response: any;
     try {
       response = await axios.get(url);
