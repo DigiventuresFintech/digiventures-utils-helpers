@@ -7,13 +7,15 @@ export class ApiTenantService {
   /**
    * Get tenant by id
    * @param id Tenant id
+   * @param path Paths to get comma separated
    */
-  async getById(id: string): Promise<any> {
+  async getById(id: string, path?: string): Promise<any> {
     if (!this.API_TENANTS_BASE_URL) {
       throw `api tenants url not defined`;
     }
 
-    const url = `${this.API_TENANTS_BASE_URL}/workspace/${id}`;
+    const queryParams: string = path ? `?select=${path}` : ""
+    const url = `${this.API_TENANTS_BASE_URL}/workspace/${id}${queryParams}`;
     let response: any;
     try {
       response = await axios.get(url);

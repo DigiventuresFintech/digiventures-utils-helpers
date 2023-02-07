@@ -3,6 +3,7 @@ export declare class ApiTenantService {
     /**
      * Get tenant by id
      * @param id Tenant id
+     * @param path Paths to get comma separated
      */
-    getById(id: string): Promise<any>;
+    getById(id: string, path?: string): Promise<any>;
 }
