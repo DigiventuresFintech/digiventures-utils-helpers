@@ -31,7 +31,7 @@ export class ApiDocumentsService {
                 },
             );
             console.log('Updated legajo:', response.data);
-            return response?.data
+            return response?.data;
         } catch (e) {
             console.error('Error update legajo:', e);
             throw e;
