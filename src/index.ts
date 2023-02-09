@@ -27,3 +27,4 @@ export * from './services/lambda/errors/LambdaException';
 
 export * from './internal/ApiWebhooksService';
 export * from './internal/ApiTenantService';
+export * from './internal/ApiDocumentsService';
