@@ -10,7 +10,7 @@ export class ApiDocumentsService {
         data: any,
         prefix: string,
         workspace?: string,
-    ) {
+    ): Promise<any> {
         if (!this.API_DOCUMENTS_BASE_URL) {
             throw `api documents url not defined`;
         }
@@ -31,6 +31,7 @@ export class ApiDocumentsService {
                 },
             );
             console.log('Updated legajo:', response.data);
+            return response?.data
         } catch (e) {
             console.error('Error update legajo:', e);
             throw e;
