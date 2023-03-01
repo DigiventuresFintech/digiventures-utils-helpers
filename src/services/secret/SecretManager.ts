@@ -11,7 +11,7 @@ export class SecretManager {
         });
     }
 
-    getSecret = async (secretArn: string): Promise<any> => {
+    async getSecret(secretArn: string): Promise<any> {
         return new Promise((resolve, reject) => {
             this.secretsManager.getSecretValue(
                 { SecretId: secretArn },
@@ -42,5 +42,5 @@ export class SecretManager {
                 },
             );
         });
-    };
+    }
 }
