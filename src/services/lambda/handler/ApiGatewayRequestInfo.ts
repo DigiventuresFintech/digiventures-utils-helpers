@@ -22,9 +22,7 @@ export class ApiGatewayRequestInfo<B> extends RequestInfo<B> {
         return this._headers;
     }
 
-    get queryStringParameters():
-        | APIGatewayProxyEventQueryStringParameters
-        | null {
+    get queryStringParameters(): APIGatewayProxyEventQueryStringParameters | null {
         return this._queryStringParameters;
     }
 }

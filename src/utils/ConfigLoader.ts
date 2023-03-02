@@ -49,10 +49,10 @@ export class ConfigLoader {
 
         const secretManager = new SecretManager();
         try {
-            const { secret_token: token } = await secretManager.getSecret(
-                AUTHENTICATION_ARN,
-            );
+            const { secret_token: token, old_secret_token: old_token } =
+                await secretManager.getSecret(AUTHENTICATION_ARN);
             process.env.JWT_SECRET_TOKEN = token;
+            process.env.JWT_OLD_SECRET_TOKEN = old_token;
         } catch (e) {
             console.error(`Error loading jwt secret configuration`, e);
             throw e;
