@@ -7,7 +7,7 @@ import {
 } from 'aws-lambda';
 import { RequestInfo } from './RequestInfo';
 
-export abstract class SQSBaseHandler<I, O>
+export abstract class SQSBaseHandler<I>
     implements IRequestHandler<SQSEvent, void>
 {
     /**
@@ -35,5 +35,5 @@ export abstract class SQSBaseHandler<I, O>
      * Base handler function
      * @param input value that be used as input
      */
-    abstract handler(input: RequestInfo<I>): Promise<O>;
+    abstract handler(input: RequestInfo<I>): Promise<void>;
 }
