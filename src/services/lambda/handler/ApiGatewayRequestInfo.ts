@@ -5,27 +5,26 @@ import {
 } from 'aws-lambda/trigger/api-gateway-proxy';
 
 export class ApiGatewayRequestInfo<B> extends RequestInfo<B> {
-    private readonly _headers?: APIGatewayProxyEventHeaders;
-    private readonly _queryStringParameters?: APIGatewayProxyEventQueryStringParameters | null;
+    private readonly _headers: APIGatewayProxyEventHeaders;
+    private readonly _queryStringParameters: APIGatewayProxyEventQueryStringParameters | null;
 
     constructor(
         body: B,
-        headers?: APIGatewayProxyEventHeaders,
-        queryStringParameters?: APIGatewayProxyEventQueryStringParameters | null,
+        headers: APIGatewayProxyEventHeaders,
+        queryStringParameters: APIGatewayProxyEventQueryStringParameters | null,
     ) {
         super(body);
         this._headers = headers;
         this._queryStringParameters = queryStringParameters;
     }
 
-    get headers(): APIGatewayProxyEventHeaders | undefined {
+    get headers(): APIGatewayProxyEventHeaders {
         return this._headers;
     }
 
     get queryStringParameters():
         | APIGatewayProxyEventQueryStringParameters
-        | null
-        | undefined {
+        | null {
         return this._queryStringParameters;
     }
 }
