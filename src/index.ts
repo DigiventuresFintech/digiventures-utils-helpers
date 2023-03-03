@@ -4,6 +4,8 @@ export * from './utils/PhoneUtils';
 
 export * from './utils/RestUtils';
 
+export * from './utils/FileUtils'
+
 export * from './encryption/AesEncryption';
 export * from './encryption/AesEncryption';
 

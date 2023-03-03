@@ -49,7 +49,9 @@ export class ConfigLoader {
 
         const secretManager = new SecretManager();
         try {
-            const output: any = await secretManager.getSecret(AUTHENTICATION_ARN);
+            const output: any = await secretManager.getSecret(
+                AUTHENTICATION_ARN,
+            );
             process.env.JWT_SECRET_TOKEN = output?.secret_token;
             process.env.JWT_OLD_SECRET_TOKEN = output?.old_secret_token;
 
