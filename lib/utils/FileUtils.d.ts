@@ -5,10 +5,10 @@ export declare class FileUtils {
      * @ref https://stackoverflow.com/questions/57976898/how-to-get-mime-type-from-base-64-string
      * @param base64 Base64 encoded string
      */
-    static get_base64_mimetype: (base64: string) => string;
+    static get_base64_mimetype(base64: string): string;
     /**
      * Converts mimetype to file extension
      * @param mimetype Decoded mimetype
      */
-    static mimetype_to_extension: (mimetype: string) => string;
+    static mimetype_to_extension(mimetype: string): string;
 }

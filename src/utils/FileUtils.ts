@@ -5,7 +5,7 @@ export class FileUtils {
      * @ref https://stackoverflow.com/questions/57976898/how-to-get-mime-type-from-base-64-string
      * @param base64 Base64 encoded string
      */
-    public static get_base64_mimetype = (base64: string): string => {
+    public static get_base64_mimetype(base64: string): string  {
         const signatures = {
             JVBERi0: 'application/pdf',
             iVBORw0KGgo: 'image/png',
@@ -23,7 +23,7 @@ export class FileUtils {
      * Converts mimetype to file extension
      * @param mimetype Decoded mimetype
      */
-     public static mimetype_to_extension = (mimetype: string): string => {
+     public static mimetype_to_extension(mimetype: string): string {
         const extensions = {
             'application/pdf': 'pdf',
             'image/png': 'png',
