@@ -4,6 +4,26 @@ export class ApiWebhooksService {
     readonly API_WEBHOOKS_BASE_URL: string | undefined =
         process.env.API_WEBHOOKS_BASE_URL;
 
+    async createDocument(data: any, authKey: string): Promise<any> {
+        if (!this.API_WEBHOOKS_BASE_URL) {
+            throw `api webhooks url not defined`;
+        }
+        const url = `${this.API_WEBHOOKS_BASE_URL}/1.0/legajo/`;
+
+        let response = null;
+        try {
+            response = axios.post(url, data, {
+                headers: {
+                    authorization: authKey
+                }
+            });
+        } catch (error) {
+            console.log('Error creating document', error);
+            throw error;
+        }
+        return response;
+    }
+
     async getDocumentById(legajoId: string, authKey: string) {
         if (!this.API_WEBHOOKS_BASE_URL) {
             throw `api webhooks url not defined`;
