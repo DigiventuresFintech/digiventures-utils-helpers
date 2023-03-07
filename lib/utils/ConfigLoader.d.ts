@@ -13,6 +13,6 @@ export declare class ConfigLoader {
     /**
      * Method that loads jwt information for authenticate request
      */
-    loadJwtAuthData(): Promise<void>;
+    loadJwtAuthData(): Promise<any>;
 }
 export {};

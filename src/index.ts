@@ -4,6 +4,8 @@ export * from './utils/PhoneUtils';
 
 export * from './utils/RestUtils';
 
+export * from './utils/FileUtils'
+
 export * from './encryption/AesEncryption';
 export * from './encryption/AesEncryption';
 
@@ -19,10 +21,12 @@ export * from './services/lambda/authenticator/webhook/WebhookAuthenticator';
 export * from './services/lambda/handler/IRequestHandler';
 
 export * from './services/lambda/handler/RequestInfo';
+export * from './services/lambda/handler/ApiGatewayRequestInfo';
 
 export * from './services/lambda/authenticator/IAuthenticator';
 
 export * from './services/lambda/handler/BaseHandlerAuthenticator';
+export * from './services/lambda/handler/SQSBaseHandler';
 export * from './services/lambda/errors/LambdaException';
 
 export * from './internal/ApiWebhooksService';

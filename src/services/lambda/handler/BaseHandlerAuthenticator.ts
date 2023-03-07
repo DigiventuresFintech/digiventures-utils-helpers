@@ -1,8 +1,8 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { IRequestHandler } from './IRequestHandler';
-import { RequestInfo } from './RequestInfo';
 import { IAuthenticator } from '../authenticator/IAuthenticator';
 import isLambdaError from '../../authorization/error/utils';
+import { ApiGatewayRequestInfo } from './ApiGatewayRequestInfo';
 
 export abstract class BaseHandlerAuthenticator<I, O>
     implements IRequestHandler<APIGatewayProxyEvent, APIGatewayProxyResult>
@@ -15,7 +15,7 @@ export abstract class BaseHandlerAuthenticator<I, O>
         event: APIGatewayProxyEvent,
     ): Promise<APIGatewayProxyResult> => {
         const body: I = JSON.parse(event.body || '');
-        const request: RequestInfo<I> = new RequestInfo(
+        const request: ApiGatewayRequestInfo<I> = new ApiGatewayRequestInfo(
             body,
             event.headers,
             event.queryStringParameters,
@@ -56,7 +56,7 @@ export abstract class BaseHandlerAuthenticator<I, O>
      * Base handler function
      * @param input value that be used as input
      */
-    abstract handler(input: RequestInfo<I>): Promise<O>;
+    abstract handler(input: ApiGatewayRequestInfo<I>): Promise<O>;
 
     /**
      * Method for build a formatted error
