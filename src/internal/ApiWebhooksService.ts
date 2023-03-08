@@ -29,7 +29,7 @@ export class ApiWebhooksService {
         return response?.data;
     }
 
-    async getDocumentById(legajoId: string, options: any = {}): Promise<any> {
+    async getDocumentById(legajoId: string, options: any): Promise<any> {
         if (!this.API_WEBHOOKS_BASE_URL) {
             throw `api webhooks url not defined`;
         }
