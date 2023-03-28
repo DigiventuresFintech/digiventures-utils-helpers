@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { JSONUtils } from "../utils/JSONUtils";
+import { JSONUtils } from '../utils/JSONUtils';
 
 export class ApiWebhooksService {
     readonly API_WEBHOOKS_BASE_URL: string | undefined =
@@ -12,15 +12,15 @@ export class ApiWebhooksService {
         options = Object.assign(options, {
             'Content-Type': 'application/json',
             workspace: options?.workspace || '62195d46c8b99af141555eb6',
-        })
+        });
 
         const url = `${this.API_WEBHOOKS_BASE_URL}/1.0/legajo/`;
         let response = null;
         try {
             response = await axios.post(url, data, {
                 headers: {
-                    ...options
-                }
+                    ...options,
+                },
             });
         } catch (error) {
             console.log('Error creating document', error);
@@ -36,7 +36,7 @@ export class ApiWebhooksService {
         options = Object.assign(options, {
             'Content-Type': 'application/json',
             workspace: options?.workspace || '62195d46c8b99af141555eb6',
-        })
+        });
 
         const url = `${this.API_WEBHOOKS_BASE_URL}/1.0/legajo/${legajoId}`;
 
@@ -44,8 +44,8 @@ export class ApiWebhooksService {
         try {
             response = await axios.get(url, {
                 headers: {
-                    ...options
-                }
+                    ...options,
+                },
             });
         } catch (error) {
             console.log('Document error: ', error);
@@ -58,7 +58,7 @@ export class ApiWebhooksService {
         legajoId: string,
         data: any,
         prefix: string,
-        options:any = {}
+        options: any = {},
     ): Promise<any> {
         if (!this.API_WEBHOOKS_BASE_URL) {
             throw `api webhooks url not defined`;
@@ -66,7 +66,7 @@ export class ApiWebhooksService {
         options = Object.assign(options, {
             'Content-Type': 'application/json',
             workspace: options?.workspace || '62195d46c8b99af141555eb6',
-        })
+        });
 
         const flattenedObject = JSONUtils.flattenObject(data, prefix);
         console.log('Document to update', flattenedObject);
@@ -76,8 +76,8 @@ export class ApiWebhooksService {
         try {
             response = await axios.put(url, flattenedObject, {
                 headers: {
-                    ...options
-                }
+                    ...options,
+                },
             });
         } catch (error) {
             console.log('Error updating document', error);
