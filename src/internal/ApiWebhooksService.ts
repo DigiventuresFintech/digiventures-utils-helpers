@@ -57,7 +57,6 @@ export class ApiWebhooksService {
     async updateDocumentById(
         legajoId: string,
         data: any,
-        prefix: string,
         options: any = {},
     ): Promise<any> {
         if (!this.API_WEBHOOKS_BASE_URL) {
@@ -68,13 +67,10 @@ export class ApiWebhooksService {
             workspace: options?.workspace || '62195d46c8b99af141555eb6',
         });
 
-        const flattenedObject = JSONUtils.flattenObject(data, prefix);
-        console.log('Document to update', flattenedObject);
-
         const url = `${this.API_WEBHOOKS_BASE_URL}/1.0/legajo/${legajoId}`;
         let response = null;
         try {
-            response = await axios.put(url, flattenedObject, {
+            response = await axios.put(url, data, {
                 headers: {
                     ...options,
                 },
