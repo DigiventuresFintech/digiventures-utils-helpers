@@ -33,7 +33,6 @@ describe(__filename, () => {
     await new ApiWebhooksService().updateDocumentById(
       '640a1087996b7b0012f7c6a7',
       data,
-      'thirdParty',
       Object.assign({}, credentials)
     );
   })
