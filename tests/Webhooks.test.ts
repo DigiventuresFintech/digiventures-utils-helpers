@@ -40,11 +40,11 @@ describe(__filename, () => {
   it('should update document', async () => {
     process.env.API_WEBHOOKS_BASE_URL = 'https://api.qa.digiventures.la'
 
-    const results = await new ApiWebhooksService().getDocumentByQuery(
-      'idNumber=48218526',
+    const output = await new ApiWebhooksService().getDocumentByQuery(
+      'idNumber=482185266',
       Object.assign({}, credentials)
     );
 
-    console.log(results[0] || [])
+    console.log(output.results[0] || [])
   })
 })
