@@ -1,7 +1,9 @@
 import { IRequestHandler } from './IRequestHandler';
 import { SQSEvent } from 'aws-lambda';
 import { RequestInfo } from './RequestInfo';
-export declare abstract class SQSBaseHandler<I> implements IRequestHandler<SQSEvent, void> {
+export declare abstract class SQSBaseHandler<I>
+    implements IRequestHandler<SQSEvent, void>
+{
     /**
      * Entry point used by SQS lambda trigger
      * @param event SQS Event

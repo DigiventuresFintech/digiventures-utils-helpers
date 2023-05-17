@@ -1,0 +1,76 @@
+import { ConnectOptions, Mongoose } from 'mongoose';
+import { SecretManager } from '../services/secret/SecretManager';
+import { IBaseMongoDBConnection } from './IBaseMongoDBConnection';
+import * as mongoose from 'mongoose';
+
+export class BaseMongoDBConnection implements IBaseMongoDBConnection {
+    /**
+     * Mongodb connection instance
+     */
+    private readonly conn: Mongoose | null;
+    /**
+     * Current workspace, by default is "default"
+     */
+    private readonly workspace: string;
+    /**
+     * Secret manager where credentials are stored
+     */
+    private readonly credentialsArn: string;
+    /**
+     * Default credentials arn
+     */
+    private readonly DEFAULT_MONGODB_CREDENTIALS_ARN =
+        'arn:aws:secretsmanager:us-east-1:810659965432:secret:mongodb_credentials_dev-8eqHbp';
+
+    constructor(options?: any) {
+        this.conn = null;
+        this.workspace = options?.workspace || 'default';
+        this.credentialsArn =
+            options?.credentialsArn ||
+            process.env.MONGODB_CREDENTIALS_ARN ||
+            this.DEFAULT_MONGODB_CREDENTIALS_ARN;
+    }
+
+    async connect(): Promise<void> {
+        if (!this.conn) {
+            const { mongodb } = await this.getCredentials();
+
+            const options = mongodb?.connection?.options;
+            try {
+                await mongoose.connect(mongodb?.connection?.string);
+                console.log('mongodb successfully connected');
+            } catch (e) {
+                console.error('error mongodb connection', e);
+                throw e;
+            }
+        }
+    }
+
+    /**
+     * Close existing mongoose client connection
+     */
+    async close(): Promise<void> {
+        if (this.conn) {
+            await this.conn.connection.close();
+        }
+    }
+
+    /**
+     * Retrieves credentials asynchronously.
+     *
+     * @return A Promise representing the credentials.
+     * @throws Exception If an error occurs while retrieving the credentials.
+     */
+    private async getCredentials(): Promise<any> {
+        let credentials;
+        try {
+            credentials = await new SecretManager().getSecret(
+                this.credentialsArn,
+            );
+        } catch (e) {
+            console.error('mongodb credentials error', e);
+            throw e;
+        }
+        return credentials[this.workspace] || credentials;
+    }
+}
