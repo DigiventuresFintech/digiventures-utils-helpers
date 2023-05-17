@@ -1,4 +1,4 @@
-import { ConnectOptions, Mongoose } from 'mongoose';
+import { Mongoose } from 'mongoose';
 import { SecretManager } from '../services/secret/SecretManager';
 import { IBaseMongoDBConnection } from './IBaseMongoDBConnection';
 import * as mongoose from 'mongoose';
