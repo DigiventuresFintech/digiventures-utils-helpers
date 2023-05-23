@@ -1,9 +1,9 @@
 import { Mongoose } from 'mongoose';
-import { SecretManager } from '../services/secret/SecretManager';
-import { IBaseMongoDBConnection } from './IBaseMongoDBConnection';
+import { SecretManager } from '../../services/secret/SecretManager';
+import { IBaseClientConnection } from '../IBaseClientConnection';
 import * as mongoose from 'mongoose';
 
-export class BaseMongoDBConnection implements IBaseMongoDBConnection {
+export class MongoDBConnection implements IBaseClientConnection {
     /**
      * Mongodb connection instance
      */
@@ -31,7 +31,7 @@ export class BaseMongoDBConnection implements IBaseMongoDBConnection {
             this.DEFAULT_MONGODB_CREDENTIALS_ARN;
     }
 
-    async connect(): Promise<void> {
+    async connect(): Promise<any> {
         if (!this.conn) {
             const { mongodb } = await this.getCredentials();
 
@@ -44,6 +44,7 @@ export class BaseMongoDBConnection implements IBaseMongoDBConnection {
                 throw e;
             }
         }
+        return this.conn;
     }
 
     /**

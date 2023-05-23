@@ -16,6 +16,7 @@
   "author": "Juan M. Beccaceci <Digiventures Tech>",
   "license": "MIT",
   "dependencies": {
+    "@elastic/elasticsearch": "^8.7.0",
     "axios": "^0.27.2",
     "jsonwebtoken": "^8.5.1",
     "libphonenumber-js": "^1.9.17",

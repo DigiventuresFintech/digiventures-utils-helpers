@@ -1,11 +1,11 @@
-import { IBaseMongoDBConnection } from '../../src/mongodb/IBaseMongoDBConnection';
-import { BaseMongoDBConnection } from '../../src/mongodb/BaseMongoDBConnection';
-import { DocumentManagerImpl } from '../../src/mongodb/impl/DocumentManagerImpl';
-import { IDocumentManager } from '../../src/mongodb/impl/IDocumentManager';
+import { IBaseClientConnection } from '../../src/client/IBaseClientConnection';
+import { MongoDBConnection } from '../../src/client/mongodb/MongoDBConnection';
+import { DocumentManagerImpl } from '../../src/client/mongodb/impl/DocumentManagerImpl';
+import { IDocumentManager } from '../../src/client/mongodb/impl/IDocumentManager';
 
 describe(__filename, () => {
     test.skip('should success get document by id', async () => {
-        const connection: IBaseMongoDBConnection = new BaseMongoDBConnection();
+        const connection: IBaseClientConnection = new MongoDBConnection();
         await connection.connect();
 
         const documentManager: IDocumentManager = new DocumentManagerImpl();

@@ -34,13 +34,23 @@ export * from './internal/ApiWebhooksService';
 export * from './internal/ApiTenantService';
 export * from './internal/ApiDocumentsService';
 
-export * from './mongodb/impl/DocumentManagerImpl';
-export * from './mongodb/impl/IDocumentManager';
+export * from './client/mongodb/impl/DocumentManagerImpl';
+export * from './client/mongodb/impl/IDocumentManager';
+export * from './client/mongodb/models/Document';
+export * from './client/mongodb/MongoDBConnection';
+export * from './client/mongodb/IBaseRepository';
+export * from './client/IBaseClientConnection';
+export * from './client/mongodb/BaseMongooseRepositoryImpl';
 
-export * from './mongodb/models/Document';
+export * from './client/elasticsearch/manager/ElasticDocumentManagerImpl'
+export * from './client/elasticsearch/manager/IElasticDocumentManager'
+export * from './client/elasticsearch/models/Document'
+export * from './client/elasticsearch/repository/IElasticBaseRepository'
+export * from './client/elasticsearch/repository/BaseElasticRepositoryImpl'
+export * from './client/elasticsearch/ElasticSearchConnection'
 
-export * from './mongodb/BaseMongoDBConnection';
-export * from './mongodb/IBaseRepository';
-export * from './mongodb/IBaseMongoDBConnection';
-export * from './mongodb/BaseMongooseRepositoryImpl';
+
+
+
+
 

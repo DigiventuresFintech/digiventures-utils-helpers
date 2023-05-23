@@ -5,4 +5,8 @@ export interface IBaseRepository<T> {
         condition: Record<string, any>,
         params: Record<string, any>,
     ): Promise<any>;
+    updateOne(
+      condition: Record<string, any>,
+      params: Record<string, any>,
+    ): Promise<T>;
 }
