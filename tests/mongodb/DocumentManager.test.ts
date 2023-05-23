@@ -2,9 +2,10 @@ import { IBaseClientConnection } from '../../src/client/IBaseClientConnection';
 import { MongoDBConnection } from '../../src/client/mongodb/MongoDBConnection';
 import { DocumentManagerImpl } from '../../src/client/mongodb/impl/DocumentManagerImpl';
 import { IDocumentManager } from '../../src/client/mongodb/impl/IDocumentManager';
+import { IDocument } from "../../src/client/mongodb/models/Document";
 
 describe(__filename, () => {
-    test.skip('should success get document by id', async () => {
+    test('should success get document by id', async () => {
         const connection: IBaseClientConnection = new MongoDBConnection();
         await connection.connect();
 
@@ -32,6 +33,8 @@ describe(__filename, () => {
             },
             firstUserModifier: { $exists: false },
         };
+        const query1Result: IDocument[] = await documentManager.getBy(conditions);
+
         await documentManager.updateMany(conditions, updateAttributes);
 
         //  Query 3 (OK)

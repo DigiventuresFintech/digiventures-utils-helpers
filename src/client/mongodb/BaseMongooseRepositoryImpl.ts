@@ -1,5 +1,5 @@
 import { FilterQuery, Model, ProjectionType, UpdateQuery } from "mongoose";
-import { IBaseRepository } from './IBaseRepository';
+import { IBaseRepository } from "./IBaseRepository";
 
 export class BaseMongooseRepositoryImpl<T extends object>
     implements IBaseRepository<T>
@@ -26,13 +26,11 @@ export class BaseMongooseRepositoryImpl<T extends object>
     }
 
     async getBy(condition: Record<string, any>, projection?: Record<string, any>): Promise<T[]> {
-        const entities = await this.model.find(condition as FilterQuery<T>, projection as ProjectionType<T> || {});
+        //if (entities.length == 0) {
+        //    throw new Error('entities not found');
+        //}
 
-        if (entities.length == 0) {
-            throw new Error('entities not found');
-        }
-
-        return entities;
+        return this.model.find(condition as FilterQuery<T>, projection as ProjectionType<T> || {});
     }
 
     async updateMany(
