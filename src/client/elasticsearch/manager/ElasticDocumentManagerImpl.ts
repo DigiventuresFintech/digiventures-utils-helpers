@@ -1,6 +1,7 @@
 import { IElasticDocumentManager } from "./IElasticDocumentManager";
 import { BaseElasticRepositoryImpl } from "../repository/BaseElasticRepositoryImpl";
 import { Client } from "@elastic/elasticsearch";
+import { ElasticSearch } from "../models/Document";
 
 export class ElasticDocumentManagerImpl extends BaseElasticRepositoryImpl<ElasticSearch.Document> implements IElasticDocumentManager {
 
