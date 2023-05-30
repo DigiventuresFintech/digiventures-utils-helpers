@@ -7,7 +7,7 @@ export class MongoDBConnection implements IBaseClientConnection {
     /**
      * Mongodb connection instance
      */
-    private readonly conn: Mongoose | null;
+    private conn: Mongoose | null;
     /**
      * Current workspace, by default is "default"
      */
@@ -37,7 +37,7 @@ export class MongoDBConnection implements IBaseClientConnection {
 
             const options = mongodb?.connection?.options;
             try {
-                await mongoose.connect(mongodb?.connection?.string);
+                this.conn = await mongoose.connect(mongodb?.connection?.string);
                 console.log('mongodb successfully connected');
             } catch (e) {
                 console.error('error mongodb connection', e);

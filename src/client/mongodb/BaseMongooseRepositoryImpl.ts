@@ -26,10 +26,6 @@ export class BaseMongooseRepositoryImpl<T extends object>
     }
 
     async getBy(condition: Record<string, any>, projection?: Record<string, any>): Promise<T[]> {
-        //if (entities.length == 0) {
-        //    throw new Error('entities not found');
-        //}
-
         return this.model.find(condition as FilterQuery<T>, projection as ProjectionType<T> || {});
     }
 
