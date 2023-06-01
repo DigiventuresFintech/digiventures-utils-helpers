@@ -3,9 +3,16 @@ import { MongoDBConnection } from '../../src/client/mongodb/MongoDBConnection';
 import { DocumentManagerImpl } from '../../src/client/mongodb/impl/DocumentManagerImpl';
 import { IDocumentManager } from '../../src/client/mongodb/impl/IDocumentManager';
 import { IDocument } from "../../src/client/mongodb/models/Document";
+import { S3Helper } from "../../src";
 
 describe(__filename, () => {
     test('should success get document by id', async () => {
+
+        await new S3Helper().s3_file_exist('digiventures-onboarding', 'builds/digiventures-global-mirror/external-process-aws-lambda/1.0.32/external-process-aws-lambda.zip')
+
+
+
+/*
         const connection: IBaseClientConnection = new MongoDBConnection();
         await connection.connect();
 
@@ -60,6 +67,6 @@ describe(__filename, () => {
             ],
         };
         await documentManager.updateMany(conditions4, updateAttributes);
-
+ */
     }, 500000);
 });

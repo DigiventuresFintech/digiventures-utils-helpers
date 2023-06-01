@@ -35,9 +35,13 @@ export class MongoDBConnection implements IBaseClientConnection {
         if (!this.conn) {
             const { mongodb } = await this.getCredentials();
 
-            const options = mongodb?.connection?.options;
+            const uri: string | undefined = mongodb?.connection?.string
+            if (!uri) {
+                throw new Error('mongodb uri not defined')
+            }
+
             try {
-                this.conn = await mongoose.connect(mongodb?.connection?.string);
+                this.conn = await mongoose.connect(uri);
                 console.log('mongodb successfully connected');
             } catch (e) {
                 console.error('error mongodb connection', e);
