@@ -40,7 +40,7 @@ export class MongoDBConnection implements IBaseClientConnection {
             }
 
             try {
-                await Mongoose.connect(uri);
+                //await Mongoose.connect(uri);
                 console.log('mongodb successfully connected');
             } catch (e) {
                 console.error('error mongodb connection', e);
