@@ -1,12 +1,12 @@
 import { SecretManager } from '../../services/secret/SecretManager';
 import { IBaseClientConnection } from '../IBaseClientConnection';
-import * as Mongoose from "mongoose";
+import * as mongoose from 'mongoose';
 
 export class MongoDBConnection implements IBaseClientConnection {
     /**
      * Mongodb connection instance
      */
-    //private conn: Mongoose | null;
+    private conn: mongoose.Mongoose | null;
     /**
      * Current workspace, by default is "default"
      */
@@ -22,7 +22,7 @@ export class MongoDBConnection implements IBaseClientConnection {
         'arn:aws:secretsmanager:us-east-1:810659965432:secret:mongodb_credentials_dev-8eqHbp';
 
     constructor(options?: any) {
-        //this.conn = null;
+        this.conn = null;
         this.workspace = options?.workspace || 'default';
         this.credentialsArn =
             options?.credentialsArn ||
@@ -31,7 +31,7 @@ export class MongoDBConnection implements IBaseClientConnection {
     }
 
     async connect(): Promise<any> {
-        //if (!this.conn) {
+        if (!this.conn) {
             const { mongodb } = await this.getCredentials();
 
             const uri: string | undefined = mongodb?.connection?.string
@@ -40,23 +40,23 @@ export class MongoDBConnection implements IBaseClientConnection {
             }
 
             try {
-                //await Mongoose.connect(uri);
+                this.conn = await mongoose.connect(uri);
                 console.log('mongodb successfully connected');
             } catch (e) {
                 console.error('error mongodb connection', e);
                 throw e;
             }
-        //}
-        //return this.conn;
+        }
+        return this.conn;
     }
 
     /**
      * Close existing mongoose client connection
      */
     async close(): Promise<void> {
-        //if (this.conn) {
-        //    await this.conn.connection.close();
-        //}
+        if (this.conn) {
+            await this.conn.connection.close();
+        }
     }
 
     /**

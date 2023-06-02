@@ -3,6 +3,7 @@ export declare class MongoDBConnection implements IBaseClientConnection {
     /**
      * Mongodb connection instance
      */
+    private conn;
     /**
      * Current workspace, by default is "default"
      */

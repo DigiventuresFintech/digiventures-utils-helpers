@@ -26,7 +26,13 @@ export class BaseMongooseRepositoryImpl<T extends object>
     }
 
     async getBy(condition: Record<string, any>, projection?: Record<string, any>): Promise<T[]> {
-        return this.model.find(condition as FilterQuery<T>, projection as ProjectionType<T> || {});
+        let output: any;
+        try {
+            output = await this.model.find(condition as FilterQuery<T>, projection as ProjectionType<T> || {})
+        } catch (e) {
+            console.error('mongoose getBy error', e)
+        }
+        return output
     }
 
     async updateMany(
