@@ -6,4 +6,8 @@ export interface IElasticDocumentManager extends IElasticBaseRepository<ElasticS
     id: string,
     body: Record<string, any>
   ): Promise<any>;
+  index(
+    id: string,
+    body: Record<string, any>
+  ): Promise<any>;
 }

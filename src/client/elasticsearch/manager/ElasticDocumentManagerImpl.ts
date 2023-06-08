@@ -13,6 +13,20 @@ export class ElasticDocumentManagerImpl extends BaseElasticRepositoryImpl<Elasti
     if (!body['updatedAt']) {
       body['updatedAt'] = new Date().toISOString()
     }
-    return this.updateById(id, body)
+    return this.updateById(id, {
+      doc: body
+    })
+  }
+
+  index(
+    id: string,
+    body: Record<string, any>
+  ): Promise<any> {
+    if (!body['updatedAt']) {
+      body['updatedAt'] = new Date().toISOString()
+    }
+    return this.updateByIndex(id, {
+      doc: body
+    })
   }
 }

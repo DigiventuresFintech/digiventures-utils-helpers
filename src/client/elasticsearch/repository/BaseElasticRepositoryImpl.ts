@@ -1,4 +1,4 @@
-import { IElasticBaseRepository } from "./IElasticBaseRepository";
+import { IElasticBaseRepository, TDoc } from "./IElasticBaseRepository";
 import { Client } from "@elastic/elasticsearch";
 
 export class BaseElasticRepositoryImpl<T> implements IElasticBaseRepository<T> {
@@ -10,22 +10,30 @@ export class BaseElasticRepositoryImpl<T> implements IElasticBaseRepository<T> {
     this.indexName = _indexName;
   }
 
-  async updateById(id: string, body: Record<string, any>): Promise<any> {
+  async updateById(id: string, body: TDoc): Promise<any> {
     try {
-      const result = await this.client.update({
+      return  await this.client.update({
         index: this.indexName,
         id: id,
-        body: {
-          doc: body
-        }
+        body
       })
-      console.log('result', result)
     } catch (e) {
       console.error('elasticsearch update error', e)
       throw e
     }
+  }
 
-    return Promise.resolve(undefined);
+  async updateByIndex(id: string, body: TDoc): Promise<any> {
+    try {
+      return await this.client.index({
+        index: this.indexName,
+        id: id,
+        body
+      })
+    } catch (e) {
+      console.error('elasticsearch index error', e)
+      throw e
+    }
   }
 
 }
