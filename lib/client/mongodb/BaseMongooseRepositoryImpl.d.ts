@@ -7,5 +7,5 @@ export declare class BaseMongooseRepositoryImpl<T extends object> implements IBa
     getById(id: string): Promise<T>;
     getBy(condition: Record<string, any>, projection?: Record<string, any>): Promise<T[]>;
     updateMany(condition: Record<string, any>, params: Record<string, any>): Promise<any>;
-    updateOne(condition: Record<string, any>, params: Record<string, any>): Promise<T>;
+    updateOne(condition: Record<string, any>, params: Record<string, any>, options?: any): Promise<T>;
 }

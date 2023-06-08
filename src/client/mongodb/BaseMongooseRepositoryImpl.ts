@@ -1,4 +1,4 @@
-import { FilterQuery, Model, ProjectionType, UpdateQuery } from "mongoose";
+import { FilterQuery, Model, ProjectionType, QueryOptions, UpdateQuery } from "mongoose";
 import { IBaseRepository } from "./IBaseRepository";
 
 export class BaseMongooseRepositoryImpl<T extends object>
@@ -51,10 +51,11 @@ export class BaseMongooseRepositoryImpl<T extends object>
         return output;
     }
 
-    async updateOne(condition: Record<string, any>, params: Record<string, any>): Promise<T> {
+    async updateOne(condition: Record<string, any>, params: Record<string, any>, options?: any): Promise<T> {
         const output = await this.model.updateOne(
           condition as FilterQuery<T>,
           params as UpdateQuery<T>,
+          options as QueryOptions<T> || null
         );
 
         if (!output) {
