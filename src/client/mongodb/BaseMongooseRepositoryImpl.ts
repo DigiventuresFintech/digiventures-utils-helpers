@@ -29,6 +29,7 @@ export class BaseMongooseRepositoryImpl<T extends object>
         let output: any;
         try {
             output = await this.model.find(condition as FilterQuery<T>, projection as ProjectionType<T> || {})
+              .lean()
         } catch (e) {
             console.error('mongoose getBy error', e)
         }

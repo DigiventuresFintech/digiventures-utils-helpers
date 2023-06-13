@@ -49,6 +49,7 @@ export interface IDocument extends mongoose.Document {
     numberInstallments: number;
     installmentValue: number;
     userDeviceInfo: Schema.Types.Mixed;
+    createdAt: Date;
     questionsAnswers: Schema.Types.Mixed;
     questionsAnswers2: Schema.Types.Mixed;
     amount: number;
