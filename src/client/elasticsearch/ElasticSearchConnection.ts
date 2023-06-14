@@ -26,7 +26,7 @@ export class ElasticSearchConnection implements IBaseClientConnection {
     this.workspace = options?.workspace || 'default';
     this.credentialsArn =
       options?.credentialsArn ||
-      process.env.MONGODB_CREDENTIALS_ARN ||
+      process.env.ELASTICSEARCH_CREDENTIALS_ARN ||
       this.DEFAULT_ELASTICSEARCH_CREDENTIALS_ARN;
   }
 
