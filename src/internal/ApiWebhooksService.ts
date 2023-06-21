@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { JSONUtils } from '../utils/JSONUtils';
 
 export class ApiWebhooksService {
     readonly API_WEBHOOKS_BASE_URL: string | undefined =
