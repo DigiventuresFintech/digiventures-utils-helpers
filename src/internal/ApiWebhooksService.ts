@@ -78,6 +78,30 @@ export class ApiWebhooksService {
         return response?.data;
     }
 
+    async exportDocumentToPdf(legajoId: string, fileId: string, mode: "backoffice"|"gdocs", options: any = {}): Promise<any> {
+        if (!this.API_WEBHOOKS_BASE_URL) {
+            throw `api webhooks url not defined`;
+        }
+        options = Object.assign(options, {
+            'Content-Type': 'application/json',
+            workspace: options?.workspace || '62195d46c8b99af141555eb6',
+        });
+        const url = `${this.API_WEBHOOKS_BASE_URL}/1.0/legajo/pdf/${mode}/${legajoId}/${fileId}`;
+
+        let response: any;
+        try {
+            response = await axios.get(url, {
+                headers: {
+                    ...options,
+                },
+            });
+        } catch (error) {
+            console.error('exportDocumentPdf error: ', error);
+            throw new Error('cannot export document to pdf');
+        }
+        return response?.data;
+    }
+
     async getDocumentByMongoDBQuery(query: string, options: any = {}): Promise<any> {
         if (!this.API_WEBHOOKS_BASE_URL) {
             throw `api webhooks url not defined`;
