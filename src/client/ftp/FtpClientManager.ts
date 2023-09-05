@@ -20,7 +20,7 @@ export class FtpClientManager implements IFtpClientManager {
       });
     } catch (e) {
       console.error('error connecting ftp client', e)
-      throw new Error(`error connecting ftp client`)
+      throw e
     }
 
     return this.sftp
