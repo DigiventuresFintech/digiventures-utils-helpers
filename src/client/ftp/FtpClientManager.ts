@@ -12,14 +12,15 @@ export class FtpClientManager implements IFtpClientManager {
 
   async connect(): Promise<any> {
     try {
+      this.options.port = parseInt(process.env.SFTP_PORT as string) ?? 22
       await this.sftp.connect({
         host: this.options.host || process.env.SFTP_HOST,
-        port: parseInt(process.env.SFTP_PORT as string) ?? 22,
+        port: this.options.port,
         username: this.options.username || process.env.SFTP_USER,
         password: this.options.password || process.env.SFTP_PASS
       });
     } catch (e) {
-      console.error('error connecting ftp client', e)
+      console.error(`error connecting ftp client ${this.options.host}:${this.options.port}`, e)
       throw e
     }
 
