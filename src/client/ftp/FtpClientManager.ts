@@ -1,9 +1,10 @@
 import { IFtpClientManager } from "./IFtpClientManager";
 import { dirname } from 'path';
-import SFTPClient from "ssh2-sftp-client";
+import { Client, AccessOptions } from 'basic-ftp';
+import { Readable } from "stream";
 
 export class FtpClientManager implements IFtpClientManager {
-  readonly sftp = new SFTPClient();
+  readonly client = new Client();
   private options: any
 
   constructor(options: any) {
@@ -12,28 +13,29 @@ export class FtpClientManager implements IFtpClientManager {
 
   async connect(): Promise<any> {
     try {
-      this.options.port = parseInt(process.env.SFTP_PORT as string) ?? 22
-      await this.sftp.connect({
+      const ftpOptions: AccessOptions = {
         host: this.options.host || process.env.SFTP_HOST,
-        port: this.options.port,
-        username: this.options.username || process.env.SFTP_USER,
-        password: this.options.password || process.env.SFTP_PASS
-      });
+        user: this.options.username || process.env.SFTP_USER,
+        password: this.options.password || process.env.SFTP_PASS,
+        port: parseInt(process.env.SFTP_PORT as string) ?? 22,
+        secure: "implicit"
+      };
+      await this.client.access(ftpOptions);
     } catch (e) {
       console.error(`error connecting ftp client ${this.options.host}:${this.options.port}`, e)
       throw e
     }
 
-    return this.sftp
+    return this.client
   }
 
-  async put(origin: Buffer | string, dest: string, createDir?: boolean): Promise<string> {
+  async put(origin: Readable | string, dest: string, createDir?: boolean): Promise<any> {
     if (createDir) {
       await this.createSftpDirs(dest)
     }
 
     try {
-      return await this.sftp.put(origin, dest)
+      return await this.client.uploadFrom(origin, dest)
     } catch (e) {
       console.error('error uploading file to sftp', e)
       throw e
@@ -42,16 +44,12 @@ export class FtpClientManager implements IFtpClientManager {
 
   async createSftpDirs(path: string): Promise<void> {
     const dirPath = dirname(path);
-    const dirExists = await this.sftp.exists(dirPath);
-
-    if (!dirExists) {
-      await this.sftp.mkdir(dirPath, true);
-    }
+    await this.client.ensureDir(dirPath);
   }
 
   async close(): Promise<void> {
-    if (this.sftp) {
-      await this.sftp.end();
+    if (this.client) {
+      this.client.close();
     }
   }
 }

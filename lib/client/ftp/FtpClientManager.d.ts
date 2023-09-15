@@ -1,12 +1,13 @@
 /// <reference types="node" />
 import { IFtpClientManager } from "./IFtpClientManager";
-import SFTPClient from "ssh2-sftp-client";
+import { Client } from 'basic-ftp';
+import { Readable } from "stream";
 export declare class FtpClientManager implements IFtpClientManager {
-    readonly sftp: SFTPClient;
+    readonly client: Client;
     private options;
     constructor(options: any);
     connect(): Promise<any>;
-    put(origin: Buffer | string, dest: string, createDir?: boolean): Promise<string>;
+    put(origin: Readable | string, dest: string, createDir?: boolean): Promise<any>;
     createSftpDirs(path: string): Promise<void>;
     close(): Promise<void>;
 }
