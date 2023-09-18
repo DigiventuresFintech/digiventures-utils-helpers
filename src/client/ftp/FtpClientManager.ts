@@ -20,6 +20,17 @@ export class FtpClientManager implements IFtpClientManager {
         port: parseInt(process.env.SFTP_PORT as string) ?? 22,
         secure: "implicit"
       };
+      //  Enable ftp debug logs
+      this.client.ftp.verbose = true
+
+      // Log progress for any transfer from now on.
+      this.client.trackProgress(info => {
+        console.log("File", info.name)
+        console.log("Type", info.type)
+        console.log("Transferred", info.bytes)
+        console.log("Transferred Overall", info.bytesOverall)
+      })
+
       await this.client.access(ftpOptions);
     } catch (e) {
       console.error(`error connecting ftp client ${this.options.host}:${this.options.port}`, e)
@@ -44,7 +55,13 @@ export class FtpClientManager implements IFtpClientManager {
 
   async createSftpDirs(path: string): Promise<void> {
     const normalizedPath: string = path.substring(0, path.lastIndexOf('/'))
-    await this.client.ensureDir(normalizedPath);
+    try {
+      console.log('trying to create ftp directory', normalizedPath)
+      await this.client.ensureDir(normalizedPath);
+    } catch (e) {
+      console.error('error creating ftp directory', normalizedPath, e)
+    }
+
   }
 
   async close(): Promise<void> {
