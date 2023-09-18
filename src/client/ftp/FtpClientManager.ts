@@ -1,14 +1,15 @@
 import { IFtpClientManager } from "./IFtpClientManager";
-import { dirname } from 'path';
 import { Client, AccessOptions } from 'basic-ftp';
 import { Readable } from "stream";
 
 export class FtpClientManager implements IFtpClientManager {
   readonly client = new Client();
   private options: any
+  private workingDirectory: string
 
   constructor(options: any) {
     this.options = options;
+    this.workingDirectory = ""
   }
 
   async connect(): Promise<any> {
@@ -41,28 +42,32 @@ export class FtpClientManager implements IFtpClientManager {
   }
 
   async put(origin: Readable | string, dest: string, createDir?: boolean): Promise<any> {
-    const filename: string = dest.substring(dest.lastIndexOf('/') + 1)
-    if (createDir) {
-      await this.createSftpDirs(dest)
+    const destFileName: string = dest.substring(dest.lastIndexOf('/') + 1)
+    const destFilePath: string = dest.substring(0, dest.lastIndexOf('/'))
+
+    if (this.workingDirectory !== destFilePath) {
+      if (this.workingDirectory.length > 0) {
+        await this.client.cd("/")
+      }
+      this.workingDirectory = await this.createSftpDirs(destFilePath)
     }
 
     try {
-      return await this.client.uploadFrom(origin, filename)
+      return await this.client.uploadFrom(origin, destFileName)
     } catch (e) {
       console.error('error uploading file to sftp', e)
       throw e
     }
   }
 
-  async createSftpDirs(path: string): Promise<void> {
-    const normalizedPath: string = path.substring(0, path.lastIndexOf('/'))
+  async createSftpDirs(path: string): Promise<string> {
     try {
-      console.log('trying to create ftp directory', normalizedPath)
-      await this.client.ensureDir(normalizedPath);
+      console.log('trying to create ftp directory', path)
+      await this.client.ensureDir(path);
     } catch (e) {
-      console.error('error creating ftp directory', normalizedPath, e)
+      console.error('error creating ftp directory', path, e)
     }
-
+    return path;
   }
 
   async close(): Promise<void> {
