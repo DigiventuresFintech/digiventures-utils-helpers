@@ -43,8 +43,8 @@ export class FtpClientManager implements IFtpClientManager {
   }
 
   async createSftpDirs(path: string): Promise<void> {
-    const dirPath = dirname(path);
-    await this.client.ensureDir(dirPath);
+    const normalizedPath: string = path.substring(0, path.lastIndexOf('/'))
+    await this.client.ensureDir(normalizedPath);
   }
 
   async close(): Promise<void> {
