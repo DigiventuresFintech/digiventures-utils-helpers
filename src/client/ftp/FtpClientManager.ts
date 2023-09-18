@@ -41,12 +41,13 @@ export class FtpClientManager implements IFtpClientManager {
   }
 
   async put(origin: Readable | string, dest: string, createDir?: boolean): Promise<any> {
+    const filename: string = dest.substring(dest.lastIndexOf('/') + 1)
     if (createDir) {
       await this.createSftpDirs(dest)
     }
 
     try {
-      return await this.client.uploadFrom(origin, dest)
+      return await this.client.uploadFrom(origin, filename)
     } catch (e) {
       console.error('error uploading file to sftp', e)
       throw e
