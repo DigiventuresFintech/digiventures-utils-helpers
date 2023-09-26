@@ -1,3 +1,3 @@
 export declare class DateUtils {
-    static getDateRange(difference: number): any;
+    static getDateRange(difference: number, timezone?: string): any;
 }
