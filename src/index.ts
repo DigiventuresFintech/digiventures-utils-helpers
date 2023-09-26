@@ -5,6 +5,7 @@ export * from './utils/PhoneUtils';
 export * from './utils/RestUtils';
 
 export * from './utils/FileUtils';
+export * from './utils/DateUtils'
 
 export * from './encryption/AesEncryption';
 export * from './encryption/AesEncryption';
@@ -48,6 +49,9 @@ export * from './client/elasticsearch/models/Document'
 export * from './client/elasticsearch/repository/IElasticBaseRepository'
 export * from './client/elasticsearch/repository/BaseElasticRepositoryImpl'
 export * from './client/elasticsearch/ElasticSearchConnection'
+
+export * from './client/ftp/IFtpClientManager'
+export * from './client/ftp/FtpClientManager'
 
 
 
