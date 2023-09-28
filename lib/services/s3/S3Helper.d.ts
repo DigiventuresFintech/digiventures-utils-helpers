@@ -56,4 +56,5 @@ export declare class S3Helper {
      * @param bucket_key
      */
     s3_file_exist: (bucket_name: string, bucket_key: string) => Promise<boolean>;
+    get_file_by_version(bucket_name: string, bucket_key: string, version?: string): Promise<any>;
 }

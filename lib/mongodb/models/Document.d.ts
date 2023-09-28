@@ -196,7 +196,7 @@ export interface IDocument extends mongoose.Document {
             title: string;
             content: string;
             attached: string;
-        }
+        },
     ];
     processed: boolean;
     mailSentStatus: {
@@ -242,7 +242,7 @@ export interface IDocument extends mongoose.Document {
                 reference: string;
                 status: boolean;
                 date: Date;
-            }
+            },
         ];
     };
     external: {
@@ -305,7 +305,7 @@ export interface IDocument extends mongoose.Document {
             {
                 _id: string;
                 name: string;
-            }
+            },
         ];
     };
     vouchers: Schema.Types.Mixed;

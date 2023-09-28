@@ -1,5 +1,11 @@
-import { FilterQuery, Model, ProjectionType, QueryOptions, UpdateQuery } from "mongoose";
-import { IBaseRepository } from "./IBaseRepository";
+import {
+    FilterQuery,
+    Model,
+    ProjectionType,
+    QueryOptions,
+    UpdateQuery,
+} from 'mongoose';
+import { IBaseRepository } from './IBaseRepository';
 
 export class BaseMongooseRepositoryImpl<T extends object>
     implements IBaseRepository<T>
@@ -25,15 +31,22 @@ export class BaseMongooseRepositoryImpl<T extends object>
         return entity as any;
     }
 
-    async getBy(condition: Record<string, any>, projection?: Record<string, any>): Promise<T[]> {
+    async getBy(
+        condition: Record<string, any>,
+        projection?: Record<string, any>,
+    ): Promise<T[]> {
         let output: any;
         try {
-            output = await this.model.find(condition as FilterQuery<T>, projection as ProjectionType<T> || {})
-              .lean()
+            output = await this.model
+                .find(
+                    condition as FilterQuery<T>,
+                    (projection as ProjectionType<T>) || {},
+                )
+                .lean();
         } catch (e) {
-            console.error('mongoose getBy error', e)
+            console.error('mongoose getBy error', e);
         }
-        return output
+        return output;
     }
 
     async updateMany(
@@ -52,11 +65,15 @@ export class BaseMongooseRepositoryImpl<T extends object>
         return output;
     }
 
-    async updateOne(condition: Record<string, any>, params: Record<string, any>, options?: any): Promise<T> {
+    async updateOne(
+        condition: Record<string, any>,
+        params: Record<string, any>,
+        options?: any,
+    ): Promise<T> {
         const output = await this.model.updateOne(
-          condition as FilterQuery<T>,
-          params as UpdateQuery<T>,
-          options as QueryOptions<T> || null
+            condition as FilterQuery<T>,
+            params as UpdateQuery<T>,
+            (options as QueryOptions<T>) || null,
         );
 
         if (!output) {

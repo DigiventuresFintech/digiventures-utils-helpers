@@ -51,7 +51,7 @@ export interface IDocument extends mongoose.Document {
     numberInstallments: number;
     installmentValue: number;
     userDeviceInfo: Schema.Types.Mixed;
-    createdAt: Date
+    createdAt: Date;
     /*
     location: {
         accuracy: number,
