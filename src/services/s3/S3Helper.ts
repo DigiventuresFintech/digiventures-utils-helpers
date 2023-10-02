@@ -245,8 +245,11 @@ export class S3Helper {
             }
 
             const getObjectResponse = await this.s3Instance
-                .getObject({ Bucket: bucket_name, Key: targetVersion.Key! })
-                .promise();
+                .getObject({
+                    Bucket: bucket_name,
+                    Key: targetVersion.Key!,
+                    VersionId: targetVersion.VersionId!
+                }).promise();
             return getObjectResponse.Body;
         } catch (error) {
             console.error('error get_file_by_version', error);
