@@ -54,8 +54,6 @@ export class ConfigLoader {
             );
             process.env.JWT_SECRET_TOKEN = output?.secret_token;
             process.env.JWT_OLD_SECRET_TOKEN = output?.old_secret_token;
-
-            console.trace('secret configuration loaded successfully');
             return output;
         } catch (e) {
             console.error(`Error loading jwt secret configuration`, e);
