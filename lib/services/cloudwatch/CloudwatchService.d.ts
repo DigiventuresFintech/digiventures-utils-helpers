@@ -1,6 +1,7 @@
+import { PutLogEventsCommandInput } from "@aws-sdk/client-cloudwatch-logs/dist-types/commands/PutLogEventsCommand";
 export declare class CloudwatchService {
     private client;
     private readonly region;
     constructor();
-    putLog(logEventMessage: string, logGroupName: string, logStreamName: string): Promise<any>;
+    putLog(input: PutLogEventsCommandInput): Promise<any>;
 }
