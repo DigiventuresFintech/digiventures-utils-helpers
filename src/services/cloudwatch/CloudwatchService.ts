@@ -1,4 +1,4 @@
-import { CloudWatchLogsClient, PutLogEventsCommand } from "@aws-sdk/client-cloudwatch-logs";
+import { CloudWatchLogsClient, CreateLogStreamCommand, PutLogEventsCommand } from "@aws-sdk/client-cloudwatch-logs";
 import { PutLogEventsCommandInput } from "@aws-sdk/client-cloudwatch-logs/dist-types/commands/PutLogEventsCommand";
 
 export class CloudwatchService {
@@ -12,6 +12,15 @@ export class CloudwatchService {
   }
 
   public async putLog(input: PutLogEventsCommandInput): Promise<any> {
+    try {
+      await this.client.send(new CreateLogStreamCommand({
+        logGroupName: input.logGroupName,
+        logStreamName: input.logGroupName
+      }));
+    } catch (error) {
+
+    }
+
     const command = new PutLogEventsCommand(input);
     try {
       return await this.client.send(command)
