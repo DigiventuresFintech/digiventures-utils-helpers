@@ -15,7 +15,7 @@ export class CloudwatchService {
     try {
       await this.client.send(new CreateLogStreamCommand({
         logGroupName: input.logGroupName,
-        logStreamName: input.logGroupName
+        logStreamName: input.logStreamName
       }));
     } catch (error) {
 
