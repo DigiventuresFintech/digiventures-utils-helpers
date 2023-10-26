@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 export class FileUtils {
     /**
      * Decode mimetype in Base64 string using "Magic Numbers"
@@ -36,4 +38,39 @@ export class FileUtils {
             extensions.default
         );
     }
+
+    public static generateCSV(csv: string, data: any): string {
+        const lines: string[] = csv.split('\n');
+
+        if (lines.length !== 2) {
+            throw new Error('CSV is invalid');
+        }
+
+        const trail: string = lines[0];
+        const lineData: string = lines[1];
+        const output: string[] = [trail];
+
+        function generateLine(data: any, line: string): string {
+            const fields: string[] = line.split(',');
+            let outputLine = '';
+
+            for (const field of fields) {
+                const value = _.get(data, field, '');
+                outputLine += value + ',';
+            }
+
+            return outputLine.substring(0, outputLine.length - 1);
+        }
+
+        if (Array.isArray(data)) {
+            for (const _data of data) {
+                output.push(generateLine(_data, lineData));
+            }
+        } else {
+            output.push(generateLine(data, lineData));
+        }
+
+        return output.join('\n');
+    }
+
 }
