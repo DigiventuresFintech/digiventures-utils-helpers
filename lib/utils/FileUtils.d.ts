@@ -11,4 +11,5 @@ export declare class FileUtils {
      * @param mimetype Decoded mimetype
      */
     static mimetype_to_extension(mimetype: string): string;
+    static generateCSV(csv: string, data: any): string;
 }
