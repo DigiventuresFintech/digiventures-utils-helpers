@@ -1,4 +1,4 @@
-import { FileUtils, S3Helper } from "../../src";
+import { FileUtils} from "../../src";
 import * as assert from "assert";
 
 describe(__filename, () => {
