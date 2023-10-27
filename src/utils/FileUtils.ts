@@ -56,7 +56,7 @@ export class FileUtils {
 
             for (const field of fields) {
                 const value = _.get(data, field, '');
-                outputLine += value + ',';
+                outputLine += value.trim() + ',';
             }
 
             return outputLine.substring(0, outputLine.length - 1);
