@@ -69,7 +69,7 @@ describe(__filename, () => {
     assert.strictEqual(output, 'name,lastname\nJuan1,Perez1\n,Perez2\nJuan3,Perez3')
   })
 
-  test('should generate csv from mongodb document successfully', async () => {
+  test('should generate csv from mongodb document successfully', () => {
     const legajo = {
       "_id": "651c1da9e59bd5006d415d2e",
       "authentication": {
@@ -297,9 +297,7 @@ describe(__filename, () => {
     }
     const csv = `DNI,nombre_apellido,fecha de nacimiento,cuil_cuit_cdi,sexoMF,estado_civil,mail,Telefono,nacionalidad,pais_nacimiento,calle,altura_Calle,piso,dpto,codigo_postal,provincia,localidad,actividad_principal,empresa,PEP,Sujeto Obligado,Limite\nidNumber,name,data.birthdate,information.datosbasicos.cuilCuit.answer.value,SEXO??,information.datosfamiliares.estadoCivil.answer,email,mobilePhone,information.datosbasicos.nacionalidad.answer,information.datosbasicos.paisNacimiento.answer,information.domicilio.calleDir.answer,information.domicilio.numeroDir.answer,information.domicilio.pisoDir.answer,information.domicilio.deptoDir.answer,information.domicilio.codPostalDir.answer,information.domicilio.provinciaDir.answer,information.domicilio.localidadDir.answer,information.datoslaborales.actividadPrincipal.answer,EMPRESA,information.legales.ppeRespuesta.answer,information.legales.sujObl.answer,information.datoslaborales.ingresoMensual.answer`
 
-    const s3Utils:Buffer = await new S3Helper().get_s3_file('digiventures-onboarding', 'itau/itau_csv_model.csv')
-
-    const output = FileUtils.generateCSV(s3Utils.toString(), legajo)
+    const output = FileUtils.generateCSV(csv, legajo)
     console.log(output)
   })
 })
