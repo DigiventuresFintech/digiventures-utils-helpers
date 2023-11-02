@@ -1,4 +1,4 @@
-import { IBaseClientConnection } from "../IBaseClientConnection";
+import { IBaseClientConnection } from '../IBaseClientConnection';
 export declare class ElasticSearchConnection implements IBaseClientConnection {
     /**
      * ElasticSearch client instance

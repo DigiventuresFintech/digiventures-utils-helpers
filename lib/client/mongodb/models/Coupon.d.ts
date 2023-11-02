@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 export declare enum Mode {
     Manual = "manual",
     Auto = "auto"

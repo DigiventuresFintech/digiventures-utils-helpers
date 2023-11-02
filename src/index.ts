@@ -1,5 +1,3 @@
-import { CouponManagerImpl } from "./client/mongodb/impl/coupons/CouponManagerImpl";
-
 export * from './utils/ConfigLoader';
 export * from './utils/JSONUtils';
 export * from './utils/PhoneUtils';
@@ -7,7 +5,7 @@ export * from './utils/PhoneUtils';
 export * from './utils/RestUtils';
 
 export * from './utils/FileUtils';
-export * from './utils/DateUtils'
+export * from './utils/DateUtils';
 
 export * from './encryption/AesEncryption';
 export * from './encryption/AesEncryption';
@@ -49,18 +47,12 @@ export * from './client/mongodb/IBaseRepository';
 export * from './client/IBaseClientConnection';
 export * from './client/mongodb/BaseMongooseRepositoryImpl';
 
-export * from './client/elasticsearch/manager/ElasticDocumentManagerImpl'
-export * from './client/elasticsearch/manager/IElasticDocumentManager'
-export * from './client/elasticsearch/models/Document'
-export * from './client/elasticsearch/repository/IElasticBaseRepository'
-export * from './client/elasticsearch/repository/BaseElasticRepositoryImpl'
-export * from './client/elasticsearch/ElasticSearchConnection'
+export * from './client/elasticsearch/manager/ElasticDocumentManagerImpl';
+export * from './client/elasticsearch/manager/IElasticDocumentManager';
+export * from './client/elasticsearch/models/Document';
+export * from './client/elasticsearch/repository/IElasticBaseRepository';
+export * from './client/elasticsearch/repository/BaseElasticRepositoryImpl';
+export * from './client/elasticsearch/ElasticSearchConnection';
 
-export * from './client/ftp/IFtpClientManager'
-export * from './client/ftp/FtpClientManager'
-
-
-
-
-
-
+export * from './client/ftp/IFtpClientManager';
+export * from './client/ftp/FtpClientManager';

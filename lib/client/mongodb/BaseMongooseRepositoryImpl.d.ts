@@ -1,5 +1,5 @@
-import { Model } from "mongoose";
-import { IBaseRepository } from "./IBaseRepository";
+import { Model } from 'mongoose';
+import { IBaseRepository } from './IBaseRepository';
 export declare class BaseMongooseRepositoryImpl<T extends object> implements IBaseRepository<T> {
     private model;
     protected populate: string[];

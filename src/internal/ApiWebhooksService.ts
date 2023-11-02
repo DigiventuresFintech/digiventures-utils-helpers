@@ -78,7 +78,12 @@ export class ApiWebhooksService {
         return response?.data;
     }
 
-    async exportDocumentToPdf(legajoId: string, fileId: string, mode: "backoffice"|"gdocs", options: any = {}): Promise<any> {
+    async exportDocumentToPdf(
+        legajoId: string,
+        fileId: string,
+        mode: 'backoffice' | 'gdocs',
+        options: any = {},
+    ): Promise<any> {
         if (!this.API_WEBHOOKS_BASE_URL) {
             throw `api webhooks url not defined`;
         }
@@ -102,7 +107,10 @@ export class ApiWebhooksService {
         return response?.data;
     }
 
-    async getDocumentByMongoDBQuery(query: string, options: any = {}): Promise<any> {
+    async getDocumentByMongoDBQuery(
+        query: string,
+        options: any = {},
+    ): Promise<any> {
         if (!this.API_WEBHOOKS_BASE_URL) {
             throw `api webhooks url not defined`;
         }

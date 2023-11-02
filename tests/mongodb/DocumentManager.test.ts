@@ -2,7 +2,7 @@ import { IBaseClientConnection } from '../../src/client/IBaseClientConnection';
 import { MongoDBConnection } from '../../src/client/mongodb/MongoDBConnection';
 import { DocumentManagerImpl } from '../../src/client/mongodb/impl/documents/DocumentManagerImpl';
 import { IDocumentManager } from '../../src/client/mongodb/impl/documents/IDocumentManager';
-import { IDocument } from "../../src/client/mongodb/models/Document";
+import { IDocument } from '../../src/client/mongodb/models/Document';
 
 describe(__filename, () => {
     test.skip('should success get document by id', async () => {
@@ -24,16 +24,16 @@ describe(__filename, () => {
                     tenantId: '5fd78a652ab79c000150e35b',
                 },
                 {
-                    "status": 'Nuevo'
+                    status: 'Nuevo',
                 },
             ],
         });
 
         let arrToUpdate: any[] = query1Result.map(e => e.createdAt);
         console.log(
-          'Query records',
-          query1Result.length,
-          JSON.stringify(arrToUpdate),
+            'Query records',
+            query1Result.length,
+            JSON.stringify(arrToUpdate),
         );
     }, 500000);
 });

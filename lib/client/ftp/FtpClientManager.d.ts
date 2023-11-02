@@ -1,7 +1,7 @@
 /// <reference types="node" />
-import { IFtpClientManager } from "./IFtpClientManager";
+import { IFtpClientManager } from './IFtpClientManager';
 import { Client } from 'basic-ftp';
-import { Readable } from "stream";
+import { Readable } from 'stream';
 export declare class FtpClientManager implements IFtpClientManager {
     readonly client: Client;
     private options;
