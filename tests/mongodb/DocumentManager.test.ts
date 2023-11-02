@@ -1,7 +1,7 @@
 import { IBaseClientConnection } from '../../src/client/IBaseClientConnection';
 import { MongoDBConnection } from '../../src/client/mongodb/MongoDBConnection';
-import { DocumentManagerImpl } from '../../src/client/mongodb/impl/DocumentManagerImpl';
-import { IDocumentManager } from '../../src/client/mongodb/impl/IDocumentManager';
+import { DocumentManagerImpl } from '../../src/client/mongodb/impl/documents/DocumentManagerImpl';
+import { IDocumentManager } from '../../src/client/mongodb/impl/documents/IDocumentManager';
 import { IDocument } from "../../src/client/mongodb/models/Document";
 
 describe(__filename, () => {

@@ -1,3 +1,5 @@
+import { CouponManagerImpl } from "./client/mongodb/impl/coupons/CouponManagerImpl";
+
 export * from './utils/ConfigLoader';
 export * from './utils/JSONUtils';
 export * from './utils/PhoneUtils';
@@ -35,8 +37,12 @@ export * from './internal/ApiWebhooksService';
 export * from './internal/ApiTenantService';
 export * from './internal/ApiDocumentsService';
 
-export * from './client/mongodb/impl/DocumentManagerImpl';
-export * from './client/mongodb/impl/IDocumentManager';
+export * from './client/mongodb/impl/documents/DocumentManagerImpl';
+export * from './client/mongodb/impl/documents/IDocumentManager';
+
+export * from './client/mongodb/impl/coupons/CouponManagerImpl';
+export * from './client/mongodb/impl/coupons/ICouponManager';
+
 export * from './client/mongodb/models/Document';
 export * from './client/mongodb/MongoDBConnection';
 export * from './client/mongodb/IBaseRepository';
