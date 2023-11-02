@@ -25,6 +25,19 @@ export class BaseMongooseRepositoryImpl<T extends object>
         return entity as any;
     }
 
+    async findOne(condition: Record<string, any>, projection?: Record<string, any>): Promise<T> {
+        const entity = await this.model
+          .findOne(condition as FilterQuery<T>, projection as ProjectionType<T> || {})
+          .populate(this.populate)
+          .lean();
+
+        if (!entity) {
+            throw new Error('entity not found');
+        }
+
+        return entity as any;
+    }
+
     async getBy(condition: Record<string, any>, projection?: Record<string, any>): Promise<T[]> {
         let output: any;
         try {

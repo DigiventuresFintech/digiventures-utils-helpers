@@ -1,5 +1,6 @@
 export interface IBaseRepository<T = any> {
     getById(id: string): Promise<T>;
+    findOne(condition: Record<string, any>, projection?: Record<string, any>): Promise<T>;
     getBy(condition: Record<string, any>): Promise<T[]>;
     updateMany(
         condition: Record<string, any>,
