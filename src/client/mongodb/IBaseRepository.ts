@@ -11,4 +11,9 @@ export interface IBaseRepository<T = any> {
       params: Record<string, any>,
       options?: any
     ): Promise<T>;
+    findOneAndUpdate(
+      condition: Record<string, any>,
+      params: Record<string, any>,
+      options?: any
+    ): Promise<T>;
 }

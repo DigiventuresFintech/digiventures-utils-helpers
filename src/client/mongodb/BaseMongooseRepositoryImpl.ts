@@ -78,4 +78,18 @@ export class BaseMongooseRepositoryImpl<T extends object>
 
         return output as any;
     }
+
+    async findOneAndUpdate(condition: Record<string, any>, params: Record<string, any>, options?: any): Promise<T> {
+        const output = await this.model.findOneAndUpdate(
+          condition as FilterQuery<T>,
+          params as UpdateQuery<T>,
+          options as QueryOptions<T> || null
+        );
+
+        if (!output) {
+            throw new Error('entities not found');
+        }
+
+        return output as any;
+    }
 }
