@@ -1,4 +1,4 @@
-export interface IBaseRepository<T> {
+export interface IBaseRepository<T = any> {
     getById(id: string): Promise<T>;
     getBy(condition: Record<string, any>): Promise<T[]>;
     updateMany(
