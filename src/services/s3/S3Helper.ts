@@ -1,5 +1,8 @@
 import AWS from 'aws-sdk';
-import S3, { GetObjectRequest } from 'aws-sdk/clients/s3';
+import S3, {
+    GetObjectRequest,
+    ListObjectVersionsOutput,
+} from 'aws-sdk/clients/s3';
 import * as fs from 'fs';
 import { Credentials, CredentialsOptions } from 'aws-sdk/lib/credentials';
 
@@ -202,4 +205,55 @@ export class S3Helper {
             throw err;
         }
     };
+
+    public async get_file_by_version(
+        bucket_name: string,
+        bucket_key: string,
+        version?: string,
+    ): Promise<any> {
+        try {
+            const listObjectVersionsResponse = await this.s3Instance
+                .listObjectVersions({ Bucket: bucket_name, Prefix: bucket_key })
+                .promise();
+
+            let targetVersion;
+
+            if (version) {
+                targetVersion = listObjectVersionsResponse.Versions?.find(
+                    v => v.VersionId === version,
+                );
+            }
+
+            if (!targetVersion) {
+                targetVersion = listObjectVersionsResponse.Versions?.reduce(
+                    (latest, version) => {
+                        if (
+                            !latest ||
+                            (version.LastModified &&
+                                latest.LastModified &&
+                                version.LastModified > latest.LastModified)
+                        ) {
+                            return version;
+                        }
+                        return latest;
+                    },
+                );
+            }
+
+            if (!targetVersion) {
+                throw new Error(`latest s3 file version not found`);
+            }
+
+            const getObjectResponse = await this.s3Instance
+                .getObject({
+                    Bucket: bucket_name,
+                    Key: targetVersion.Key!,
+                    VersionId: targetVersion.VersionId!
+                }).promise();
+            return getObjectResponse.Body;
+        } catch (error) {
+            console.error('error get_file_by_version', error);
+            throw error;
+        }
+    }
 }
