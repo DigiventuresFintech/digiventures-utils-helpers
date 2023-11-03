@@ -62,4 +62,22 @@ export class ConfigLoader {
             throw e;
         }
     }
+
+    async mongodbCredentialsLoader(): Promise<any> {
+        const MONGODB_CREDENTIALS_ARN = process.env.MONGODB_CREDENTIALS_ARN;
+        if (!MONGODB_CREDENTIALS_ARN)
+            throw new Error(`mongodb credentials not defined`);
+
+        const secretManager = new SecretManager();
+        try {
+            const output: any = await secretManager.getSecret(
+                MONGODB_CREDENTIALS_ARN,
+            );
+            console.trace('mongodb secret configuration loaded successfully');
+            return output;
+        } catch (e) {
+            console.error(`Error loading mongodb secret configuration`, e);
+            throw e;
+        }
+    }
 }

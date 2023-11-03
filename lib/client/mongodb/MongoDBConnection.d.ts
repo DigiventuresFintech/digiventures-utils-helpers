@@ -9,6 +9,10 @@ export declare class MongoDBConnection implements IBaseClientConnection {
      */
     private readonly workspace;
     /**
+     * Mongodb config options
+     */
+    private readonly options?;
+    /**
      * Secret manager where credentials are stored
      */
     private readonly credentialsArn;
