@@ -74,6 +74,8 @@ export class ConfigLoader {
                 MONGODB_CREDENTIALS_ARN,
             );
             console.trace('mongodb secret configuration loaded successfully');
+
+            process.env.MONGODB_CREDENTIALS = output
             return output;
         } catch (e) {
             console.error(`Error loading mongodb secret configuration`, e);
