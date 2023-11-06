@@ -29,6 +29,7 @@ export * from './client/mongodb/impl/documents/DocumentManagerImpl';
 export * from './client/mongodb/impl/documents/IDocumentManager';
 export * from './client/mongodb/impl/coupons/CouponManagerImpl';
 export * from './client/mongodb/impl/coupons/ICouponManager';
+export * from './client/mongodb/BaseAppServiceRepositoryImpl';
 export * from './client/mongodb/models/Document';
 export * from './client/mongodb/MongoDBConnection';
 export * from './client/mongodb/IBaseRepository';
