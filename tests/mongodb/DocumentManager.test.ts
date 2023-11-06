@@ -3,6 +3,8 @@ import { MongoDBConnection } from '../../src/client/mongodb/MongoDBConnection';
 import { DocumentManagerImpl } from '../../src/client/mongodb/impl/documents/DocumentManagerImpl';
 import { IDocumentManager } from '../../src/client/mongodb/impl/documents/IDocumentManager';
 import { IDocument } from '../../src/client/mongodb/models/Document';
+import { IBaseRepository } from '../../src';
+import { BaseAppServiceRepositoryImpl } from '../../src/client/mongodb/BaseAppServiceRepositoryImpl';
 
 describe(__filename, () => {
     test.skip('should success get document by id', async () => {
@@ -36,4 +38,17 @@ describe(__filename, () => {
             JSON.stringify(arrToUpdate),
         );
     }, 500000);
+
+    test('test', async () => {
+        const documentManager: IBaseRepository =
+            new BaseAppServiceRepositoryImpl('legajos', {
+                dataSource: 'mongodb-atlas',
+                database: 'documents',
+                apiKey: '6548ea03070967caf3c71b0f', // use as env variable
+            });
+        const result = await documentManager.getById(
+            '62c3a8e7f8e6b00012a05f68',
+        );
+        console.log(result);
+    });
 });

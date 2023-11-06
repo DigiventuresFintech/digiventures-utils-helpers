@@ -248,8 +248,9 @@ export class S3Helper {
                 .getObject({
                     Bucket: bucket_name,
                     Key: targetVersion.Key!,
-                    VersionId: targetVersion.VersionId!
-                }).promise();
+                    VersionId: targetVersion.VersionId!,
+                })
+                .promise();
             return getObjectResponse.Body;
         } catch (error) {
             console.error('error get_file_by_version', error);
