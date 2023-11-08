@@ -29,7 +29,13 @@ export class BaseAppServiceRepositoryImpl<T extends object>
                     Accept: 'application/json',
                 },
             });
-            return res?.data as T;
+            const entity = res?.data?.document;
+
+            if (!entity) {
+                throw new Error('Entity not found');
+            }
+
+            return entity as T;
         } catch (e) {
             console.error('findOne error', e);
             throw e;
