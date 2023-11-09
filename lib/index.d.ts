@@ -34,7 +34,7 @@ export * from './client/mongodb/models/Document';
 export * from './client/mongodb/MongoDBConnection';
 export * from './client/mongodb/IBaseRepository';
 export * from './client/IBaseClientConnection';
-export * from './client/mongodb/BaseMongooseRepositoryImpl';
+export * from './client/mongodb/BaseAppServiceRepositoryImpl';
 export * from './client/elasticsearch/manager/ElasticDocumentManagerImpl';
 export * from './client/elasticsearch/manager/IElasticDocumentManager';
 export * from './client/elasticsearch/models/Document';
