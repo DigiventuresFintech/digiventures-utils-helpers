@@ -7,7 +7,7 @@ export enum Mode {
 
 export interface ICoupon extends mongoose.Document {
     coupon: string;
-    tenantId: mongoose.Types.ObjectId;
+    //tenantId: mongoose.Types.ObjectId;
     used: boolean;
     createdAt: Date;
     type?: Mode;
@@ -16,7 +16,7 @@ export interface ICoupon extends mongoose.Document {
 
 const CouponSchema = new Schema({
     coupon: { type: String, required: true },
-    tenantId: { type: mongoose.Types.ObjectId, required: true },
+    //tenantId: { type: mongoose.Types.ObjectId, required: true },
     used: { type: Boolean, required: true },
     createdAt: { type: Date, required: true },
     type: { type: String, enum: Object.values(Mode), default: Mode.Auto },

@@ -5,7 +5,6 @@ export declare enum Mode {
 }
 export interface ICoupon extends mongoose.Document {
     coupon: string;
-    tenantId: mongoose.Types.ObjectId;
     used: boolean;
     createdAt: Date;
     type?: Mode;
