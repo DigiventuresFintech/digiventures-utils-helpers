@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import { Readable } from "stream";
+import { Readable } from 'stream';
 export interface IFtpClientManager {
     connect(): Promise<any>;
     close(): Promise<void>;

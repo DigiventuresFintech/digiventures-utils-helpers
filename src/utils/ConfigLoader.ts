@@ -54,11 +54,29 @@ export class ConfigLoader {
             );
             process.env.JWT_SECRET_TOKEN = output?.secret_token;
             process.env.JWT_OLD_SECRET_TOKEN = output?.old_secret_token;
-
-            console.trace('secret configuration loaded successfully');
             return output;
         } catch (e) {
             console.error(`Error loading jwt secret configuration`, e);
+            throw e;
+        }
+    }
+
+    async mongodbCredentialsLoader(): Promise<any> {
+        const MONGODB_CREDENTIALS_ARN = process.env.MONGODB_CREDENTIALS_ARN;
+        if (!MONGODB_CREDENTIALS_ARN)
+            throw new Error(`mongodb credentials not defined`);
+
+        const secretManager = new SecretManager();
+        try {
+            const output: any = await secretManager.getSecret(
+                MONGODB_CREDENTIALS_ARN,
+            );
+            console.trace('mongodb secret configuration loaded successfully');
+
+            process.env.MONGODB_CREDENTIALS = output;
+            return output;
+        } catch (e) {
+            console.error(`Error loading mongodb secret configuration`, e);
             throw e;
         }
     }

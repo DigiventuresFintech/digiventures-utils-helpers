@@ -1,5 +1,5 @@
-import { BaseMongooseRepositoryImpl } from '../BaseMongooseRepositoryImpl';
-import DocumentModel, { IDocument } from '../models/Document';
+import { BaseMongooseRepositoryImpl } from '../../BaseMongooseRepositoryImpl';
+import DocumentModel, { IDocument } from '../../models/Document';
 import { IDocumentManager } from './IDocumentManager';
 
 export class DocumentManagerImpl

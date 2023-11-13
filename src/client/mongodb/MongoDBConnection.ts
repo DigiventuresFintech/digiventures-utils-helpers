@@ -12,6 +12,10 @@ export class MongoDBConnection implements IBaseClientConnection {
      */
     private readonly workspace: string;
     /**
+     * Mongodb config options
+     */
+    private readonly options?: any;
+    /**
      * Secret manager where credentials are stored
      */
     private readonly credentialsArn: string;
@@ -24,30 +28,36 @@ export class MongoDBConnection implements IBaseClientConnection {
     constructor(options?: any) {
         this.conn = null;
         this.workspace = options?.workspace || 'default';
+        this.options = options || {};
         this.credentialsArn =
             options?.credentialsArn ||
             process.env.MONGODB_CREDENTIALS_ARN ||
             this.DEFAULT_MONGODB_CREDENTIALS_ARN;
     }
 
-    async connect(): Promise<any> {
-        if (!this.conn) {
-            const { mongodb } = await this.getCredentials();
-
-            const uri: string | undefined = mongodb?.connection?.string
-            if (!uri) {
-                throw new Error('mongodb uri not defined')
+    connect(): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            if (this.conn) {
+                resolve(this.conn);
+                return;
             }
 
             try {
+                let uri: string | undefined =
+                    this.options?.uri ??
+                    (await this.getCredentials())?.mongodb?.connection?.string;
+                if (!uri) {
+                    reject(new Error('mongodb uri not defined'));
+                    return;
+                }
                 this.conn = await mongoose.connect(uri);
                 console.log('mongodb successfully connected');
+                resolve(this.conn);
             } catch (e) {
                 console.error('error mongodb connection', e);
-                throw e;
+                reject(e);
             }
-        }
-        return this.conn;
+        });
     }
 
     /**

@@ -14,5 +14,6 @@ export declare class ConfigLoader {
      * Method that loads jwt information for authenticate request
      */
     loadJwtAuthData(): Promise<any>;
+    mongodbCredentialsLoader(): Promise<any>;
 }
 export {};

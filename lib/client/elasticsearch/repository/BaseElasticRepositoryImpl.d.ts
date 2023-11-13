@@ -1,5 +1,5 @@
-import { IElasticBaseRepository, TDoc } from "./IElasticBaseRepository";
-import { Client } from "@elastic/elasticsearch";
+import { IElasticBaseRepository, TDoc } from './IElasticBaseRepository';
+import { Client } from '@elastic/elasticsearch';
 export declare class BaseElasticRepositoryImpl<T> implements IElasticBaseRepository<T> {
     private client;
     private readonly indexName;
