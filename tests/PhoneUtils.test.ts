@@ -18,4 +18,10 @@ describe('Unit test for phone utility', function () {
         const number = new PhoneUtils().GetAreaCode(phoneNumber);
         expect(number).toEqual('2227');
     });
+
+    it('verify get area code when it has three digits with complete phone number', async () => {
+        const phoneNumber = '+5422366879099';
+        const number = new PhoneUtils().GetAreaCode(phoneNumber);
+        expect(number).toEqual('223');
+    });
 });

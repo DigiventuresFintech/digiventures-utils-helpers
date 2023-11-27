@@ -309,14 +309,14 @@ const threeDigitsCountryCodes = [
 
 export class PhoneUtils {
     GetAreaCode(phoneNumber: string) {
-        const phoneWithoutCountry = phoneNumber.replace(/^\+?54|\d/, '');
+        const phoneWithoutCountry = phoneNumber.replace(/^\+54/, '');
 
         const _twoDigitsCountryCodes = phoneWithoutCountry.substring(0, 2);
         if (twoDigitsCountryCodes.includes(_twoDigitsCountryCodes)) {
             return _twoDigitsCountryCodes;
         }
 
-        const _threeDigitsCountryCodes = phoneWithoutCountry.substring(0, 2);
+        const _threeDigitsCountryCodes = phoneWithoutCountry.substring(0, 3);
         if (threeDigitsCountryCodes.includes(_threeDigitsCountryCodes)) {
             return _threeDigitsCountryCodes;
         }
