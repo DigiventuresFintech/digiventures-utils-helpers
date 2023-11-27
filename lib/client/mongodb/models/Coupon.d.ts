@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 export declare enum Mode {
-    Manual = 'manual',
-    Auto = 'auto',
+    Manual = "manual",
+    Auto = "auto"
 }
 export interface ICoupon extends mongoose.Document {
     coupon: string;

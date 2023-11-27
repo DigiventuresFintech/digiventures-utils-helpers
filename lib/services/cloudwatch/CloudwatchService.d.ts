@@ -5,10 +5,5 @@ export declare class CloudwatchService {
     private readonly region;
     constructor();
     putLog(input: PutLogEventsCommandInput): Promise<any>;
-    putFlowsMetric(
-        value: number,
-        metricName: string,
-        flowName: string,
-        unit?: string,
-    ): Promise<any>;
+    putFlowsMetric(value: number, metricName: string, flowName: string, unit?: string): Promise<any>;
 }
