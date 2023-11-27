@@ -8,7 +8,11 @@ export declare class FtpClientManager implements IFtpClientManager {
     private workingDirectory;
     constructor(options: any);
     connect(): Promise<any>;
-    put(origin: Readable | string, dest: string, createDir?: boolean): Promise<any>;
+    put(
+        origin: Readable | string,
+        dest: string,
+        createDir?: boolean,
+    ): Promise<any>;
     createSftpDirs(path: string): Promise<string>;
     close(): Promise<void>;
 }
