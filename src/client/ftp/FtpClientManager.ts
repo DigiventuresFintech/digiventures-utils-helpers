@@ -14,13 +14,14 @@ export class FtpClientManager implements IFtpClientManager {
 
     async connect(): Promise<any> {
         try {
-            const ftpOptions: AccessOptions = {
+            let ftpOptions: AccessOptions = {
                 host: this.options.host || process.env.SFTP_HOST,
                 user: this.options.username || process.env.SFTP_USER,
                 password: this.options.password || process.env.SFTP_PASS,
                 port: this.options.port || parseInt(process.env.SFTP_PORT as string) || 22,
-                secure: this.options.secure || 'implicit',
+                secure: this.options?.secure ? (this.options.secure === 'true') : 'implicit',
             };
+
             //  Enable ftp debug logs
             this.client.ftp.verbose = true;
 
