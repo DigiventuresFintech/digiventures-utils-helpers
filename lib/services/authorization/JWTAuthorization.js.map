@@ -1,0 +1,1 @@
+{"version":3,"file":"JWTAuthorization.js","sourceRoot":"","sources":["../../../src/services/authorization/JWTAuthorization.ts"],"names":[],"mappings":";;;AAAA,iEAA8D;AAE9D,MAAa,gBAAiB,SAAQ,2CAAoB;IACtD;;;;OAIG;IACH;QACI,KAAK,CAAC,OAAO,CAAC,GAAG,CAAC,gBAA0B,CAAC,CAAC;IAClD,CAAC;CACJ;AATD,4CASC"}
