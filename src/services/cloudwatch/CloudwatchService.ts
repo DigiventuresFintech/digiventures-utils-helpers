@@ -47,29 +47,31 @@ export class CloudwatchService {
         metricName: string,
         flowName: string,
         unit?: string,
+        owner?: string
     ): Promise<any> {
-        const params: any = {
-            MetricData: [
-                {
-                    MetricName: metricName,
-                    Dimensions: [
-                        {
-                            Name: 'Flows',
-                            Value: flowName,
-                        },
-                    ],
-                    Timestamp: new Date(),
-                    Unit: unit || 'Milliseconds',
-                    Value: value,
-                },
-            ],
-            Namespace: 'FlowsMetrics',
-        };
-
-        const command = new PutMetricDataCommand(params);
         try {
+            const params: any = {
+                MetricData: [
+                    {
+                        MetricName: metricName,
+                        Dimensions: [
+                            {
+                                Name: owner || 'Flows',
+                                Value: flowName,
+                            },
+                        ],
+                        Timestamp: new Date(),
+                        Unit: unit || 'Milliseconds',
+                        Value: value,
+                    },
+                ],
+                Namespace: 'FlowsMetrics' || `${owner}Metrics`,
+            };
+
+            const command = new PutMetricDataCommand(params);
             return await this.metricsClient.send(command);
         } catch (error) {
+            console.error('error method', this.putFlowsMetric.name, error)
             throw error;
         }
     }

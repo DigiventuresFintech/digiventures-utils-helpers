@@ -1,0 +1,1 @@
+{"version":3,"file":"RequestInfo.js","sourceRoot":"","sources":["../../../../src/services/lambda/handler/RequestInfo.ts"],"names":[],"mappings":";;;AAAA,MAAa,WAAW;IAGpB,YAAY,IAAO;QACf,IAAI,CAAC,KAAK,GAAG,IAAI,CAAC;IACtB,CAAC;IAED,IAAI,IAAI;QACJ,OAAO,IAAI,CAAC,KAAK,CAAC;IACtB,CAAC;CACJ;AAVD,kCAUC"}
