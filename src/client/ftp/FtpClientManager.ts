@@ -18,8 +18,13 @@ export class FtpClientManager implements IFtpClientManager {
                 host: this.options.host || process.env.SFTP_HOST,
                 user: this.options.username || process.env.SFTP_USER,
                 password: this.options.password || process.env.SFTP_PASS,
-                port: this.options.port || parseInt(process.env.SFTP_PORT as string) || 22,
-                secure: this.options?.secure ? (this.options.secure === 'true') : 'implicit',
+                port:
+                    this.options.port ||
+                    parseInt(process.env.SFTP_PORT as string) ||
+                    22,
+                secure: this.options?.secure
+                    ? this.options.secure === 'true'
+                    : 'implicit',
             };
 
             //  Enable ftp debug logs

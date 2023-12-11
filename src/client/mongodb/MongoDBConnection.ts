@@ -50,6 +50,10 @@ export class MongoDBConnection implements IBaseClientConnection {
                     reject(new Error('mongodb uri not defined'));
                     return;
                 }
+                uri = uri.replace(
+                    '${database}',
+                    this.options?.database || 'documents',
+                );
                 this.conn = await mongoose.connect(uri);
                 console.log('mongodb successfully connected');
                 resolve(this.conn);
