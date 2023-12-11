@@ -47,7 +47,7 @@ export class CloudwatchService {
         metricName: string,
         flowName: string,
         unit?: string,
-        owner?: string
+        owner?: string,
     ): Promise<any> {
         try {
             const params: any = {
@@ -71,7 +71,7 @@ export class CloudwatchService {
             const command = new PutMetricDataCommand(params);
             return await this.metricsClient.send(command);
         } catch (error) {
-            console.error('error method', this.putFlowsMetric.name, error)
+            console.error('error method', this.putFlowsMetric.name, error);
             throw error;
         }
     }

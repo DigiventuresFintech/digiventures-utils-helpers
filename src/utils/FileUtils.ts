@@ -56,7 +56,8 @@ export class FileUtils {
 
             for (const field of fields) {
                 const value = _.get(data, field, '');
-                const trimmedValued = typeof value === 'string' ? value.trim() : value
+                const trimmedValued =
+                    typeof value === 'string' ? value.trim() : value;
                 outputLine += trimmedValued + ',';
             }
 

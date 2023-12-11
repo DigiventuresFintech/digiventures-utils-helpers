@@ -39,7 +39,7 @@ export * from './internal/ApiDocumentsService';
 export * from './client/mongodb/impl/documents/DocumentManagerImpl';
 export * from './client/mongodb/impl/documents/IDocumentManager';
 
-export * from './client/mongodb/impl/translations/TranslationsMangerImpl'
+export * from './client/mongodb/impl/translations/TranslationsMangerImpl';
 
 export * from './client/mongodb/impl/coupons/CouponManagerImpl';
 export * from './client/mongodb/impl/coupons/ICouponManager';
