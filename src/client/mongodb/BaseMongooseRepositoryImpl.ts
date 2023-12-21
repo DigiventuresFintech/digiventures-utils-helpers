@@ -123,12 +123,10 @@ export class BaseMongooseRepositoryImpl<T extends object>
         return output as any;
     }
 
-    async insertMany(
-        documents: any,
-    ): Promise<any> {
+    async insertMany(documents: any[]): Promise<any> {
         try {
             const result = await this.model.insertMany(documents);
-            return result as any;
+            return result as any[];
         } catch (error) {
             throw new Error('Error inserting documents');
         }
@@ -138,14 +136,8 @@ export class BaseMongooseRepositoryImpl<T extends object>
         conditions: Record<string, any>,
     ): Promise<any> {
         try {
-            const result = await this.model.deleteMany(conditions);
-
-            // Verifica si algún documento fue eliminado
-            if (!(result.deletedCount === 0)) {
-                throw new Error('entities not found');
-            }
-
-            return result as any;
+            const result = await this.model.deleteMany(conditions).lean();
+            return result as unknown as any[];
         } catch (error) {
             // Maneja los errores según tus necesidades
             throw new Error('Error deleting docuemnts');
