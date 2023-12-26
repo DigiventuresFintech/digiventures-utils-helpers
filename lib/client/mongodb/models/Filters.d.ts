@@ -23,16 +23,10 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 import mongoose from 'mongoose';
-export declare enum Mode {
-    Manual = "manual",
-    Auto = "auto"
+export interface IFilters extends mongoose.Document {
+    product: string;
+    identificator: string;
+    fields: any;
 }
-export interface ICoupon extends mongoose.Document {
-    coupon: string;
-    used: boolean;
-    createdAt: Date;
-    type?: Mode;
-    deleted?: string;
-}
-declare const _default: mongoose.Model<ICoupon, {}, {}, {}, any>;
+declare const _default: mongoose.Model<IFilters, {}, {}, {}, any>;
 export default _default;

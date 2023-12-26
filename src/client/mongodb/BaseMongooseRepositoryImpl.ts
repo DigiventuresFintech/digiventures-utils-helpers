@@ -139,7 +139,6 @@ export class BaseMongooseRepositoryImpl<T extends object>
             const result = await this.model.deleteMany(conditions).lean();
             return result as unknown as any[];
         } catch (error) {
-            // Maneja los errores según tus necesidades
             throw new Error('Error deleting docuemnts');
         }
     }
