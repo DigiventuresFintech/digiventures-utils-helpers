@@ -7,5 +7,5 @@ export declare class MongodbMultiConn implements IBaseClientConnection {
     get connections(): Record<string, any>;
 }
 export declare const instance: MongodbMultiConn;
-export declare function connect(): Promise<any>;
+export declare function connect(connections?: any): Promise<any>;
 export declare function close(): Promise<any>;

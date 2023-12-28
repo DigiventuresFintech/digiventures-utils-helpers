@@ -43,8 +43,8 @@ export class MongodbMultiConn implements IBaseClientConnection {
 }
 
 export const instance = new MongodbMultiConn()
-export async function connect() {
-    return instance.connect();
+export async function connect(connections?: any) {
+    return instance.connect(connections);
 }
 export async function close() {
     return instance.close();
