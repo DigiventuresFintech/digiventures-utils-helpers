@@ -1,6 +1,7 @@
 import * as mongoose from 'mongoose';
-import { Schema } from 'mongoose';
+import {Connection, Model, Schema} from 'mongoose';
 import { nanoid } from 'nanoid';
+import {ICoupon} from "./Coupon";
 
 export interface IDocument extends mongoose.Document {
     shortId: string;
@@ -705,4 +706,10 @@ const DocumentSchema = new Schema({
     navigator: Schema.Types.Mixed,
 });
 
-export default mongoose.model<IDocument>('legajo', DocumentSchema);
+function createModel(connection?: Connection): Model<IDocument> {
+    return connection
+        ? connection.model<IDocument>('legajo', DocumentSchema)
+        : mongoose.model<IDocument>('legajo', DocumentSchema);
+}
+
+export { createModel };

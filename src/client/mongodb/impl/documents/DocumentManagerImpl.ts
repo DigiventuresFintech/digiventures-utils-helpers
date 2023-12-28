@@ -1,5 +1,5 @@
 import { BaseMongooseRepositoryImpl } from '../../BaseMongooseRepositoryImpl';
-import DocumentModel, { IDocument } from '../../models/Document';
+import {createModel, IDocument} from '../../models/Document';
 import { IDocumentManager } from './IDocumentManager';
 
 export class DocumentManagerImpl
@@ -7,6 +7,8 @@ export class DocumentManagerImpl
     implements IDocumentManager
 {
     constructor() {
-        super(DocumentModel);
+        super(
+            createModel()
+        );
     }
 }
