@@ -49,3 +49,6 @@ export async function connect(connections?: any) {
 export async function close() {
     return instance.close();
 }
+export function getConnection(key: string) {
+    return instance.connections[key];
+}
