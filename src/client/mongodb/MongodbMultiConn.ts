@@ -22,12 +22,16 @@ export class MongodbMultiConn implements IBaseClientConnection {
     async connect(connections?: any): Promise<any> {
         const connectionPromises: Promise<any>[] = Object.entries(connections).map(async ([key, config]) => {
             let { string, options, defaultDatabase } = (config as any).mongodb.connection;
+            const { encryption } = (config as any).mongodb;
 
             string = string
               .replace('${database}', defaultDatabase || 'documents',);
 
             try {
-                this._connections[key] = await mongoose.createConnection(string, options as {})
+                const connection:Connection = await mongoose.createConnection(string, options as {})
+                connection.set('encryption', encryption)
+
+                this._connections[key] = connection
             } catch (err) {
                 this._connections[key] = null
                 console.error('error loading connection', key, err);

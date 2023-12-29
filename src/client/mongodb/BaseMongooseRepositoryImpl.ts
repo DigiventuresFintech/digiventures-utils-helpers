@@ -3,8 +3,8 @@ import {
     Model,
     ProjectionType,
     QueryOptions,
-    UpdateQuery,
-} from 'mongoose';
+    UpdateQuery
+} from "mongoose";
 import { IBaseRepository } from './IBaseRepository';
 
 export class BaseMongooseRepositoryImpl<T extends object>
