@@ -22,7 +22,7 @@ export class ConfigLoader {
 
         const secretManager: SecretManager = new SecretManager();
         if (ref) {
-            console.trace('loading secrets for environment', ref);
+            console.log('loading secrets for environment', ref);
 
             const pending = this.secrets
                 .split(',')
@@ -71,7 +71,7 @@ export class ConfigLoader {
             const output: any = await secretManager.getSecret(
                 MONGODB_CREDENTIALS_ARN,
             );
-            console.trace('mongodb secret configuration loaded successfully');
+            console.log('mongodb secret configuration loaded successfully');
 
             process.env.MONGODB_CREDENTIALS = output;
             return output;
