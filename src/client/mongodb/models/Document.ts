@@ -17,7 +17,7 @@ export interface IDocument extends mongoose.Document {
     referenceCode: string;
     userId: string;
     userIp: string;
-    tenantId: string;
+    tenantId: mongoose.Types.ObjectId;
     email: string;
     idNumber: string;
     idNumberCountry: string;
@@ -370,7 +370,7 @@ const DocumentSchema = new Schema({
     createdAt: Date,
     userId: String,
     userIp: String,
-    tenantId: String,
+    tenantId: { type: mongoose.Types.ObjectId },
     email: String,
     idNumber: String,
     idNumberCountry: String,
