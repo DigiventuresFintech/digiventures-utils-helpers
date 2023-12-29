@@ -21,7 +21,10 @@ export class MongodbMultiConn implements IBaseClientConnection {
 
     async connect(connections?: any): Promise<any> {
         const connectionPromises: Promise<any>[] = Object.entries(connections).map(async ([key, config]) => {
-            const { string, options } = (config as any).mongodb.connection;
+            let { string, options, defaultDatabase } = (config as any).mongodb.connection;
+
+            string = string
+              .replace('${database}', defaultDatabase || 'documents',);
 
             try {
                 this._connections[key] = await mongoose.createConnection(string, options as {})
