@@ -377,8 +377,8 @@ function createModel(connection?: Connection): Model<IDocument> {
             email: String,
             idNumber: {
                 type: String,
-                get: (v: string) => aesDecrypt(encryption.key!, encryption.iv!, v),
-                set: (v: string) => aesEncrypt(encryption.key!, encryption.iv!, v)
+                get: (v: string) => aesDecrypt(encryption.key!, encryption.iv!, String(v)),
+                set: (v: string) => aesEncrypt(encryption.key!, encryption.iv!, String(v))
             },
             idNumberCountry: String,
             additionalInformation: String,
