@@ -3,9 +3,10 @@ import {
     Model,
     ProjectionType,
     QueryOptions,
-    UpdateQuery,
-} from 'mongoose';
+    UpdateQuery
+} from "mongoose";
 import { IBaseRepository } from './IBaseRepository';
+import mongoose from "mongoose";
 
 export class BaseMongooseRepositoryImpl<T extends object>
     implements IBaseRepository<T>
@@ -60,7 +61,7 @@ export class BaseMongooseRepositoryImpl<T extends object>
                     condition as FilterQuery<T>,
                     (projection as ProjectionType<T>) || {},
                 )
-                .lean();
+                .lean({ getters: true });
 
             if (!entity) {
                 throw new Error('entity not found');

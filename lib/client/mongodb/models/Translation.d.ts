@@ -5,5 +5,7 @@ export interface ITranslations extends mongoose.Document {
     language: string;
     translations: any;
 }
-declare const _default: mongoose.Model<ITranslations, {}, {}, {}, any>;
+declare const _default: mongoose.Model<ITranslations, {}, {}, {}, mongoose.Document<unknown, {}, ITranslations> & ITranslations & {
+    _id: mongoose.Types.ObjectId;
+}, any>;
 export default _default;

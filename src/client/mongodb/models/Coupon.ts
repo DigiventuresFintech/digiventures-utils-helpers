@@ -1,4 +1,4 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, {Connection, Model, Schema} from 'mongoose';
 
 export enum Mode {
     Manual = 'manual',
@@ -23,4 +23,10 @@ const CouponSchema = new Schema({
     deleted: { type: Boolean, default: false },
 });
 
-export default mongoose.model<ICoupon>('coupons', CouponSchema);
+function createModel(connection?: Connection): Model<ICoupon> {
+    return connection
+        ? connection.model<ICoupon>('coupons', CouponSchema)
+        : mongoose.model<ICoupon>('coupons', CouponSchema);
+}
+
+export { createModel };
