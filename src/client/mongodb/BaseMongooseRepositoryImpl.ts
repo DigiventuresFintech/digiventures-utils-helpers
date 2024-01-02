@@ -61,7 +61,7 @@ export class BaseMongooseRepositoryImpl<T extends object>
                     condition as FilterQuery<T>,
                     (projection as ProjectionType<T>) || {},
                 )
-                .lean();
+                .lean({ getters: true });
 
             if (!entity) {
                 throw new Error('entity not found');
