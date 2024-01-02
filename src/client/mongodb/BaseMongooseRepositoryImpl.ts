@@ -6,6 +6,7 @@ import {
     UpdateQuery
 } from "mongoose";
 import { IBaseRepository } from './IBaseRepository';
+import mongoose from "mongoose";
 
 export class BaseMongooseRepositoryImpl<T extends object>
     implements IBaseRepository<T>

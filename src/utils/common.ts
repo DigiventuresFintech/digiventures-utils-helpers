@@ -5,7 +5,7 @@ export function getEnv() {
     return env.toUpperCase();
 }
 
-export function aesDecrypt(key: string, iv: string, base64String: string, encryptionType: string = "aes-256-cbc") {
+export function aesDecrypt(key: string, iv: string, base64String: string, encryptionType: string = "aes-256-cbc"): string {
     if (base64String === null || typeof base64String === "undefined" || base64String === "")
         return base64String;
 
@@ -23,7 +23,7 @@ export function aesDecrypt(key: string, iv: string, base64String: string, encryp
     return base64String
 }
 
-export function aesEncrypt(key: string, iv: string, base64String: string, encryptionType: string = "aes-256-cbc") {
+export function aesEncrypt(key: string, iv: string, base64String: string, encryptionType: string = "aes-256-cbc"): string {
     if (base64String === null || typeof base64String === "undefined" || base64String === "")
         return base64String;
 

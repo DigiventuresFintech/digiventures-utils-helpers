@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose';
-import { Connection, Model, Schema } from 'mongoose';
+import { Schema } from 'mongoose';
 export interface IDocument extends mongoose.Document {
     shortId: string;
     name: string;
@@ -343,5 +343,3 @@ export interface IDocument extends mongoose.Document {
     };
     navigator: Schema.Types.Mixed;
 }
-declare function createModel(connection?: Connection): Model<IDocument>;
-export { createModel };

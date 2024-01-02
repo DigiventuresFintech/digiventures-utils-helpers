@@ -43,7 +43,6 @@ export class MongodbMultiConn implements IBaseClientConnection {
         return await Promise.all(connectionPromises)
     }
 
-
     get connections(): Record<string, any> {
         return this._connections;
     }
