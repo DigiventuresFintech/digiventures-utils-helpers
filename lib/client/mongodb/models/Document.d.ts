@@ -14,7 +14,7 @@ export interface IDocument extends mongoose.Document {
     referenceCode: string;
     userId: string;
     userIp: string;
-    tenantId: mongoose.Types.ObjectId;
+    tenantId: string;
     email: string;
     idNumber: string;
     idNumberCountry: string;

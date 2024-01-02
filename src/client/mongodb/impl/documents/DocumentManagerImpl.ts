@@ -13,7 +13,7 @@ export class DocumentManagerImpl
 {
     constructor(connection?: Connection) {
         super(
-            createModel('legajo',(encryption) => {
+            createModel('legajos',(encryption) => {
                 return new Schema({
                     shortId: { type: String },
                     name: { type: String, text: true },
@@ -33,7 +33,7 @@ export class DocumentManagerImpl
                     createdAt: Date,
                     userId: String,
                     userIp: String,
-                    tenantId: { type: mongoose.Types.ObjectId },
+                    tenantId: String,
                     email: String,
                     idNumber: {
                         type: String,
