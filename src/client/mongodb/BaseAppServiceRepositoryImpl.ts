@@ -178,4 +178,17 @@ export class BaseAppServiceRepositoryImpl<T extends object>
             this.DEFAULT_MONGO_APP_SERVICE_BASE_PATH
         );
     }
+
+    async insertMany(
+        documents: any[]): Promise<any> {
+        //  TODO: Not implemented in app service
+        return Promise.resolve({} as T);
+    }
+
+    async deleteMany(
+        conditions: Record<string, any>,
+    ): Promise<any> {
+        //  TODO: Not implemented in app service
+        return Promise.resolve({} as T);
+    }
 }

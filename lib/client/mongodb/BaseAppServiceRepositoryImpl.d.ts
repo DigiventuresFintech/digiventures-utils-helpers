@@ -13,4 +13,6 @@ export declare class BaseAppServiceRepositoryImpl<T extends object> implements I
     getData(): any;
     getAppId(): string;
     getBasePath(): string;
+    insertMany(documents: any[]): Promise<any>;
+    deleteMany(conditions: Record<string, any>): Promise<any>;
 }

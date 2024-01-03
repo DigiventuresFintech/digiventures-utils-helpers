@@ -343,3 +343,7 @@ export interface IDocument extends mongoose.Document {
     };
     navigator: Schema.Types.Mixed;
 }
+declare const _default: mongoose.Model<IDocument, {}, {}, {}, mongoose.Document<unknown, {}, IDocument> & IDocument & {
+    _id: mongoose.Types.ObjectId;
+}, any>;
+export default _default;
