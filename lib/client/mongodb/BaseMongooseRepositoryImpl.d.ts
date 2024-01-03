@@ -10,4 +10,6 @@ export declare class BaseMongooseRepositoryImpl<T extends object> implements IBa
     updateMany(condition: Record<string, any>, params: Record<string, any>): Promise<any>;
     updateOne(condition: Record<string, any>, params: Record<string, any>, options?: any): Promise<T>;
     findOneAndUpdate(condition: Record<string, any>, params: Record<string, any>, options?: any): Promise<T>;
+    insertMany(documents: any[]): Promise<any>;
+    deleteMany(conditions: Record<string, any>): Promise<any>;
 }

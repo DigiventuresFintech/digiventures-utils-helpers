@@ -123,4 +123,24 @@ export class BaseMongooseRepositoryImpl<T extends object>
 
         return output as any;
     }
+
+    async insertMany(documents: any[]): Promise<any> {
+        try {
+            const result = await this.model.insertMany(documents);
+            return result as any[];
+        } catch (error) {
+            throw new Error('Error inserting documents');
+        }
+    }
+
+    async deleteMany(
+        conditions: Record<string, any>,
+    ): Promise<any> {
+        try {
+            const result = await this.model.deleteMany(conditions).lean();
+            return result as unknown as any[];
+        } catch (error) {
+            throw new Error('Error deleting docuemnts');
+        }
+    }
 }

@@ -14,9 +14,9 @@ export abstract class BaseHandlerAuthenticator<I, O>
     public requestHandler = async (
         event: APIGatewayProxyEvent,
     ): Promise<APIGatewayProxyResult> => {
-        const body: I = JSON.parse(event.body || '');
+        const body: any = JSON.parse(event.body || '{}');
         const request: ApiGatewayRequestInfo<I> = new ApiGatewayRequestInfo(
-            body,
+            body as I,
             event.headers,
             event.queryStringParameters,
         );

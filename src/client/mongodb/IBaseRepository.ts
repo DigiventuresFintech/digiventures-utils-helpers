@@ -19,4 +19,10 @@ export interface IBaseRepository<T = any> {
         params: Record<string, any>,
         options?: any,
     ): Promise<T>;
+    insertMany(
+        documents: any,
+    ): Promise<any>;
+    deleteMany(
+        conditions: Record<string, any>,
+    ): Promise<any>;
 }
