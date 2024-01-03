@@ -49,3 +49,4 @@ export * from './client/elasticsearch/repository/BaseElasticRepositoryImpl';
 export * from './client/elasticsearch/ElasticSearchConnection';
 export * from './client/ftp/IFtpClientManager';
 export * from './client/ftp/FtpClientManager';
+export * from './client/mongodb/MongodbMultiConn';
