@@ -43,6 +43,10 @@ export * from './client/mongodb/impl/translations/TranslationsMangerImpl';
 export * from './client/mongodb/impl/translations/ITranslationsManager';
 export * from './client/mongodb/models/Translation';
 
+export * from './client/mongodb/impl/documents_index/IDocumentIndexManager';
+export * from './client/mongodb/impl/documents_index/DocumentIndexManagerImpl';
+export * from './client/mongodb/models/DocumentIndex';
+
 export * from './client/mongodb/impl/filters/FiltersManagerImpl';
 export * from './client/mongodb/impl/filters/IFiltersManager';
 export * from './client/mongodb/models/Filters';
@@ -67,4 +71,4 @@ export * from './client/elasticsearch/ElasticSearchConnection';
 
 export * from './client/ftp/IFtpClientManager';
 export * from './client/ftp/FtpClientManager';
-export * from  './client/mongodb/MongodbMultiConn'
+export * from './client/mongodb/MongodbMultiConn';
