@@ -1,4 +1,4 @@
-import { BaseMongooseRepositoryImpl } from '../../BaseMongooseRepositoryImpl';
+import { BaseMongooseRepositoryImpl } from '../../repository/BaseMongooseRepositoryImpl';
 import { IDocumentIndexManager } from './IDocumentIndexManager';
 import { IDocumentIndex } from '../../models/DocumentIndex';
 import { Connection } from 'mongoose';

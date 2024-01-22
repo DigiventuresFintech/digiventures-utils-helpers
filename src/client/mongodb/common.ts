@@ -6,6 +6,9 @@ export function createModel<T extends mongoose.Document>(
     createSchema: (encryption?: any) => Schema,
     connection?: Connection,
 ): Model<T> {
+    if (mongoose.models[modelName]) {
+        return mongoose.models[modelName] as Model<T>;
+    }
     if (connection && connection.models[modelName]) {
         return connection.models[modelName] as Model<T>;
     }

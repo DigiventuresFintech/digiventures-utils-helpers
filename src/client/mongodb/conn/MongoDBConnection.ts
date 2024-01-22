@@ -1,5 +1,5 @@
-import { SecretManager } from '../../services/secret/SecretManager';
-import { IBaseClientConnection } from '../IBaseClientConnection';
+import { SecretManager } from '../../../services/secret/SecretManager';
+import { IBaseClientConnection } from '../../IBaseClientConnection';
 import * as mongoose from 'mongoose';
 
 export class MongoDBConnection implements IBaseClientConnection {
@@ -56,6 +56,7 @@ export class MongoDBConnection implements IBaseClientConnection {
                 );
                 this.conn = await mongoose.connect(uri);
                 console.log('mongodb successfully connected');
+
                 resolve(this.conn);
             } catch (e) {
                 console.error('error mongodb connection', e);

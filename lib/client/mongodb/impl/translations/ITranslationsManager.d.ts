@@ -1,4 +1,4 @@
-import { IBaseRepository } from '../../IBaseRepository';
+import { IBaseRepository } from '../../repository/IBaseRepository';
 import { ITranslations } from '../../models/Translation';
 export interface ITranslationsManager extends IBaseRepository<ITranslations> {
 }

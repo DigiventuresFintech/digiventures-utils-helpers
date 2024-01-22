@@ -1,4 +1,4 @@
-import { BaseMongooseRepositoryImpl } from '../../BaseMongooseRepositoryImpl';
+import { BaseMongooseRepositoryImpl } from '../../repository/BaseMongooseRepositoryImpl';
 import { IDocumentManager } from './IDocumentManager';
 import { Connection, Schema } from 'mongoose';
 import { createModel } from '../../common';

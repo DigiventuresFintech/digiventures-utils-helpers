@@ -1,6 +1,6 @@
-import { BaseMongooseRepositoryImpl } from '../../BaseMongooseRepositoryImpl';
+import { BaseMongooseRepositoryImpl } from '../../repository/BaseMongooseRepositoryImpl';
 import FiltersSchema, { IFilters } from '../../models/Filters';
-import { IBaseRepository } from '../../IBaseRepository';
+import { IBaseRepository } from '../../repository/IBaseRepository';
 
 export class FiltersMangerImpl
     extends BaseMongooseRepositoryImpl<IFilters>
