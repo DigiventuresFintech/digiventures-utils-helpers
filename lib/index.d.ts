@@ -25,6 +25,7 @@ export * from './services/lambda/errors/LambdaException';
 export * from './internal/ApiWebhooksService';
 export * from './internal/ApiTenantService';
 export * from './internal/ApiDocumentsService';
+export * from './client/mongodb/repository/BaseMongooseRepositoryImpl';
 export * from './client/mongodb/impl/documents/DocumentManagerImpl';
 export * from './client/mongodb/impl/documents/IDocumentManager';
 export * from './client/mongodb/impl/translations/TranslationsMangerImpl';
