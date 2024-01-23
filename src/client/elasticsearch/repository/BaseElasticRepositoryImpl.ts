@@ -48,6 +48,38 @@ export class BaseElasticRepositoryImpl<T> implements IElasticBaseRepository<T> {
         }
     }
 
+    async createAlias(aliasName: string, indexName: string[]): Promise<any> {
+        try {
+            const response = await this.client.indices.putAlias({
+                index: indexName,
+                name: aliasName,
+            });
+            console.log('alias created successfully', response);
+            return response;
+        } catch (e) {
+            console.error('alias created error', e);
+            throw e;
+        }
+    }
+
+    async addIndexToAlias(indexName: string, aliasName: string): Promise<any> {
+        try {
+            const response = await this.client.indices.updateAliases({
+                body: {
+                    actions: [{ add: { index: indexName, alias: aliasName } }],
+                },
+            });
+            console.log(
+                `Index '${indexName}' attached to alias '${aliasName}'`,
+                response,
+            );
+            return response;
+        } catch (e) {
+            console.error('error updating index', e);
+            throw e;
+        }
+    }
+
     async deleteById(id: string): Promise<any> {
         try {
             return await this.client.delete({
