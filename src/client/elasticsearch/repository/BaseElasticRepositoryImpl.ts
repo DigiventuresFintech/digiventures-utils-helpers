@@ -10,6 +10,18 @@ export class BaseElasticRepositoryImpl<T> implements IElasticBaseRepository<T> {
         this.indexName = _indexName;
     }
 
+    async insertDocument<T = Record<string, any>>(doc: T): Promise<any> {
+        try {
+            return await this.client.index({
+                index: this.indexName,
+                body: doc,
+            });
+        } catch (e) {
+            console.error('elasticsearch insert error', e);
+            throw e;
+        }
+    }
+
     async updateById(id: string, body: TDoc): Promise<any> {
         try {
             return await this.client.update({
@@ -32,6 +44,18 @@ export class BaseElasticRepositoryImpl<T> implements IElasticBaseRepository<T> {
             });
         } catch (e) {
             console.error('elasticsearch index error', e);
+            throw e;
+        }
+    }
+
+    async deleteById(id: string): Promise<any> {
+        try {
+            return await this.client.delete({
+                index: this.indexName,
+                id: id,
+            });
+        } catch (e) {
+            console.error('elasticsearch delete error', e);
             throw e;
         }
     }
