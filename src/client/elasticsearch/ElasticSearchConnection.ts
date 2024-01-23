@@ -15,6 +15,7 @@ export class ElasticSearchConnection implements IBaseClientConnection {
      * Secret manager where credentials are stored
      */
     private readonly credentialsArn: string;
+    private readonly auth?: any;
     /**
      * Default credentials arn
      */
@@ -28,35 +29,45 @@ export class ElasticSearchConnection implements IBaseClientConnection {
             options?.credentialsArn ||
             process.env.ELASTICSEARCH_CREDENTIALS_ARN ||
             this.DEFAULT_ELASTICSEARCH_CREDENTIALS_ARN;
+        this.auth = options?.auth;
     }
 
     async connect(): Promise<any> {
-        if (!this.client) {
+        if (this.client) {
+            return this.client;
+        }
+
+        let node = this.auth?.url || process.env.ELASTICSEARCH_URL;
+        let authCredentials = this.auth?.credentials || {
+            username: process.env.ELASTICSEARCH_USERNAME,
+            password: process.env.ELASTICSEARCH_PASSWORD,
+        };
+
+        if (!node) {
             const credentials = await this.getCredentials();
-
             if (credentials) {
-                const { url, credentials: auth = {} } = credentials;
-
-                this.client = new Client({
-                    node: url,
-                    auth,
-                });
-
-                try {
-                    await this.client.ping({}, { requestTimeout: 20000 });
-                    console.log(
-                        'Elasticsearch client successfully connected..',
-                    );
-                } catch (e) {
-                    console.error(
-                        'Elasticsearch client cannot be connected',
-                        e,
-                    );
-                    throw new Error('Elasticsearch client cannot be connected');
-                }
+                node = credentials.url;
+                authCredentials = credentials.credentials || {};
             }
         }
-        return this.client;
+
+        if (!node) {
+            throw new Error('Elasticsearch URL is missing');
+        }
+
+        this.client = new Client({
+            node,
+            auth: authCredentials,
+        });
+
+        try {
+            await this.client.ping({}, { requestTimeout: 20000 });
+            console.log('Elasticsearch client successfully connected..');
+            return this.client;
+        } catch (e) {
+            console.error('Elasticsearch client cannot be connected', e);
+            throw new Error('Elasticsearch client cannot be connected');
+        }
     }
 
     async close(): Promise<void> {

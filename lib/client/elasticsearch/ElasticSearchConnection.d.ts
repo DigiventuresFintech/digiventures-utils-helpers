@@ -12,6 +12,7 @@ export declare class ElasticSearchConnection implements IBaseClientConnection {
      * Secret manager where credentials are stored
      */
     private readonly credentialsArn;
+    private readonly auth?;
     /**
      * Default credentials arn
      */
