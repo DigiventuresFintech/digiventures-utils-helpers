@@ -82,6 +82,56 @@ export class ElasticSearchConnection implements IBaseClientConnection {
         }
     }
 
+    warmup = (): void => {
+        setInterval(async () => {
+            const maxRetries =
+                (process.env.ELASTICSEARCH_CONN_RETIRES
+                    ? parseInt(process.env.ELASTICSEARCH_CONN_RETIRES)
+                    : undefined) ?? 3;
+            const retryDelay =
+                (process.env.ELASTICSEARCH_CONN_RETRY_DELAY
+                    ? parseInt(process.env.ELASTICSEARCH_CONN_RETRY_DELAY)
+                    : undefined) ?? 5000;
+
+            let retries = 0;
+            while (retries < maxRetries) {
+                try {
+                    await this.client!.ping();
+                    console.log('Elasticsearch warmup OK');
+                    break;
+                } catch (error) {
+                    console.error('Elasticsearch warmup error, retrying...');
+                    retries++;
+                    await this.connect();
+
+                    if (retries < maxRetries) {
+                        /* exponential backoff retry method
+                         * https://en.wikipedia.org/wiki/Exponential_backoff */
+                        const currentRetryDelay = retries
+                            ? 0
+                            : retryDelay ?? 100;
+                        const delay =
+                            currentRetryDelay +
+                            ((Math.pow(2, retries) - 1) / 2) * 1000;
+
+                        console.log(
+                            `Waiting ${
+                                delay / 1000
+                            } seconds before retrying...`,
+                        );
+                        await new Promise(resolve => {
+                            setTimeout(resolve, delay);
+                        });
+                    }
+                }
+            }
+
+            if (retries === maxRetries) {
+                console.error('Elasticsearch warmup failed after max retries');
+            }
+        }, 10000);
+    };
+
     /**
      * Retrieves credentials asynchronously.
      *

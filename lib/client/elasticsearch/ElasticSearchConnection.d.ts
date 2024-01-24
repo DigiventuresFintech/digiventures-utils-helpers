@@ -20,6 +20,7 @@ export declare class ElasticSearchConnection implements IBaseClientConnection {
     constructor(options?: any);
     connect(): Promise<any>;
     close(): Promise<void>;
+    warmup: () => void;
     /**
      * Retrieves credentials asynchronously.
      *
