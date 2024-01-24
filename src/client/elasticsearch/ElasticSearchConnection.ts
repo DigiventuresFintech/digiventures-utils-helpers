@@ -74,6 +74,7 @@ export class ElasticSearchConnection implements IBaseClientConnection {
         if (this.client) {
             try {
                 await this.client.close();
+                this.client = null;
             } catch (e) {
                 console.error('error closing Elasticsearch client', e);
                 throw new Error('error closing Elasticsearch client');
