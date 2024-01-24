@@ -12,11 +12,15 @@ export class BaseElasticRepositoryImpl<T = any>
         this.indexName = _indexName;
     }
 
-    async insertDocument<T = Record<string, any>>(doc: T): Promise<any> {
+    async insertDocument<T = Record<string, any>>(
+        doc: T,
+        id?: string,
+    ): Promise<any> {
         try {
             return await this.client.index({
                 index: this.indexName,
                 body: doc,
+                id,
             });
         } catch (e) {
             console.error('elasticsearch insert error', e);

@@ -4,7 +4,7 @@ export declare class BaseElasticRepositoryImpl<T = any> implements IElasticBaseR
     private client;
     private readonly indexName;
     constructor(_client: Client, _indexName: string);
-    insertDocument<T = Record<string, any>>(doc: T): Promise<any>;
+    insertDocument<T = Record<string, any>>(doc: T, id?: string): Promise<any>;
     updateById(id: string, body: TDoc): Promise<any>;
     updateByIndex(id: string, body: TDoc): Promise<any>;
     createAlias(aliasName: string, indexName: string[]): Promise<any>;
