@@ -36,6 +36,10 @@ export * from './internal/ApiWebhooksService';
 export * from './internal/ApiTenantService';
 export * from './internal/ApiDocumentsService';
 
+export * from './rest/common';
+export * from './dto/AbstractValidator';
+export * from './exception/ValidationException';
+
 export * from './client/mongodb/repository/BaseMongooseRepositoryImpl';
 
 export * from './client/mongodb/impl/documents/DocumentManagerImpl';
