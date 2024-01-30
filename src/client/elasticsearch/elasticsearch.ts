@@ -16,4 +16,7 @@ export namespace Elastic {
     if (instance == null) await connect();
     return instance as Client;
   }
+  export function warmup(internal: number = 10000): void {
+    connection.warmup();
+  }
 }
