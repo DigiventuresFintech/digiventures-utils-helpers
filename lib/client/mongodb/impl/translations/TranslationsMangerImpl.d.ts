@@ -1,6 +1,6 @@
-import { BaseMongooseRepositoryImpl } from '../../BaseMongooseRepositoryImpl';
+import { BaseMongooseRepositoryImpl } from '../../repository/BaseMongooseRepositoryImpl';
 import { ITranslations } from '../../models/Translation';
-import { IBaseRepository } from '../../IBaseRepository';
+import { IBaseRepository } from '../../repository/IBaseRepository';
 export declare class TranslationsMangerImpl extends BaseMongooseRepositoryImpl<ITranslations> implements IBaseRepository<ITranslations> {
     constructor();
 }

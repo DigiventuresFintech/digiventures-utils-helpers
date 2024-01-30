@@ -1,10 +1,10 @@
 import { IBaseClientConnection } from '../../src/client/IBaseClientConnection';
-import { MongoDBConnection } from '../../src/client/mongodb/MongoDBConnection';
+import { MongoDBConnection } from '../../src/client/mongodb/conn/MongoDBConnection';
 import { DocumentManagerImpl } from '../../src/client/mongodb/impl/documents/DocumentManagerImpl';
 import { IDocumentManager } from '../../src/client/mongodb/impl/documents/IDocumentManager';
 import { IDocument } from '../../src/client/mongodb/models/Document';
 import { IBaseRepository } from '../../src';
-import { BaseAppServiceRepositoryImpl } from '../../src/client/mongodb/BaseAppServiceRepositoryImpl';
+import { BaseAppServiceRepositoryImpl } from '../../src/client/mongodb/repository/BaseAppServiceRepositoryImpl';
 
 describe(__filename, () => {
     test.skip('should success get document by id', async () => {

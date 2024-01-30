@@ -12,6 +12,7 @@ export declare class ElasticSearchConnection implements IBaseClientConnection {
      * Secret manager where credentials are stored
      */
     private readonly credentialsArn;
+    private readonly auth?;
     /**
      * Default credentials arn
      */
@@ -19,6 +20,7 @@ export declare class ElasticSearchConnection implements IBaseClientConnection {
     constructor(options?: any);
     connect(): Promise<any>;
     close(): Promise<void>;
+    warmup(internal?: number): void;
     /**
      * Retrieves credentials asynchronously.
      *

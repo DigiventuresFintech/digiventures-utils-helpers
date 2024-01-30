@@ -3,10 +3,9 @@ import {
     Model,
     ProjectionType,
     QueryOptions,
-    UpdateQuery
-} from "mongoose";
+    UpdateQuery,
+} from 'mongoose';
 import { IBaseRepository } from './IBaseRepository';
-import mongoose from "mongoose";
 
 export class BaseMongooseRepositoryImpl<T extends object>
     implements IBaseRepository<T>
@@ -133,14 +132,12 @@ export class BaseMongooseRepositoryImpl<T extends object>
         }
     }
 
-    async deleteMany(
-        conditions: Record<string, any>,
-    ): Promise<any> {
+    async deleteMany(conditions: Record<string, any>): Promise<any> {
         try {
             const result = await this.model.deleteMany(conditions).lean();
             return result as unknown as any[];
         } catch (error) {
-            throw new Error('Error deleting docuemnts');
+            throw new Error('Error deleting documents');
         }
     }
 }
