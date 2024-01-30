@@ -54,7 +54,7 @@ export * from './client/elasticsearch/models/Document';
 export * from './client/elasticsearch/repository/IElasticBaseRepository';
 export * from './client/elasticsearch/repository/BaseElasticRepositoryImpl';
 export * from './client/elasticsearch/ElasticSearchConnection';
-export * from './client/elasticsearch/elasticsearch';
+export { Elastic } from './client/elasticsearch/elasticsearch';
 export * from './client/ftp/IFtpClientManager';
 export * from './client/ftp/FtpClientManager';
 export * from './client/mongodb/conn/MongodbMultiConn';

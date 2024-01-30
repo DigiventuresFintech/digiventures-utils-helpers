@@ -1,7 +1,7 @@
 import { Client } from '@elastic/elasticsearch';
 import { ElasticSearchConnection } from './ElasticSearchConnection';
 
-namespace Elastic {
+export namespace Elastic {
   const connection = new ElasticSearchConnection();
 
   let instance: Client | null = null;
