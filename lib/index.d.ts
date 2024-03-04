@@ -58,3 +58,4 @@ export { Elastic } from './client/elasticsearch/elasticsearch';
 export * from './client/ftp/IFtpClientManager';
 export * from './client/ftp/FtpClientManager';
 export * from './client/mongodb/conn/MongodbMultiConn';
+export * from './services/sts/STS';
