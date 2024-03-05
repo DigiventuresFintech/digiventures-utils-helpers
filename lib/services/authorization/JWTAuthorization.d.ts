@@ -1,9 +1,13 @@
-import { JWTBaseAuthorization } from './JWTBaseAuthorization';
-export declare class JWTAuthorization extends JWTBaseAuthorization {
+export declare class JWTAuthorization {
+    readonly token: string;
+    constructor(_token?: string);
     /**
-     * Constructor class calls super method assigning
-     * JWT secret token loaded by secret manager on
-     * project startup
+     * Verify a JWT token generated and validates if it is not expired
+     * @param token Generated JWT
      */
-    constructor();
+    verify(token: string): any;
+    /**
+     * Generate a JWT with expiration as payload param
+     */
+    sign(payload: any): string;
 }

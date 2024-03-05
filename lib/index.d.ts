@@ -9,7 +9,6 @@ export * from './encryption/AesEncryption';
 export * from './services/secret/SecretManager';
 export * from './services/s3/S3Helper';
 export * from './services/sqs/SqsHelper';
-export * from './services/authorization/JWTBaseAuthorization';
 export * from './services/authorization/JWTAuthorization';
 export * from './services/authorization/WebhookAuthorization';
 export * from './services/lambda/authenticator/jwt/JwtAuthenticator';
