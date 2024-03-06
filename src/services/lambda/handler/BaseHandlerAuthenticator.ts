@@ -43,6 +43,7 @@ export abstract class BaseHandlerAuthenticator<I, O>
         body: response,
         headers: {
           'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
         },
       };
     } catch (error: any) {
