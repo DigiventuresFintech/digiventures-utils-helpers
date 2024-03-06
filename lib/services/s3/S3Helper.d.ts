@@ -57,4 +57,5 @@ export declare class S3Helper {
      */
     s3_file_exist: (bucket_name: string, bucket_key: string) => Promise<boolean>;
     get_file_by_version(bucket_name: string, bucket_key: string, version?: string): Promise<any>;
+    putObject(bucket: string, key: string, file: Buffer, content_type?: string): Promise<any>;
 }

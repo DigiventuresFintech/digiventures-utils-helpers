@@ -14,7 +14,6 @@ export * from './services/secret/SecretManager';
 export * from './services/s3/S3Helper';
 export * from './services/sqs/SqsHelper';
 
-export * from './services/authorization/JWTBaseAuthorization';
 export * from './services/authorization/JWTAuthorization';
 export * from './services/authorization/WebhookAuthorization';
 
@@ -79,3 +78,5 @@ export { Elastic } from './client/elasticsearch/elasticsearch';
 export * from './client/ftp/IFtpClientManager';
 export * from './client/ftp/FtpClientManager';
 export * from './client/mongodb/conn/MongodbMultiConn';
+
+export * from './services/sts/STS';
