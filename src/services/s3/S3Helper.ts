@@ -291,7 +291,7 @@ export class S3Helper {
 
       return getObjectResponse.Body;
     } catch (error) {
-      console.error('error get_file_by_version', error);
+      console.error('error getObjectByVersionId', error);
       throw error;
     }
   }
