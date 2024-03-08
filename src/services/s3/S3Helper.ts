@@ -274,4 +274,25 @@ export class S3Helper {
       throw new Error(`PutObject method error: ${error}`);
     }
   }
+
+  public async getObjectByVersionId(
+    bucket: string,
+    key: string,
+    versionId: string,
+  ): Promise<any> {
+    try {
+      const getObjectResponse = await this.s3Instance
+        .getObject({
+          Bucket: bucket,
+          Key: key,
+          VersionId: versionId,
+        })
+        .promise();
+
+      return getObjectResponse.Body;
+    } catch (error) {
+      console.error('error getObjectByVersionId', error);
+      throw error;
+    }
+  }
 }
