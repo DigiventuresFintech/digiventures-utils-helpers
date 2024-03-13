@@ -131,12 +131,14 @@ export class S3Helper {
    * @param bucket_key Key of the file to be uploaded
    * @param file Stream file buffer to be uploaded
    * @param content_type
+   * @param acl
    */
   public async upload_s3_file(
     bucket_name: string,
     bucket_key: string,
     file: Buffer,
     content_type = 'text/plain',
+    acl?: string,
   ): Promise<any> {
     try {
       return await this.s3Instance
@@ -145,6 +147,7 @@ export class S3Helper {
           Key: bucket_key,
           Body: file,
           ContentType: content_type,
+          ACL: acl,
         })
         .promise();
     } catch (error) {
