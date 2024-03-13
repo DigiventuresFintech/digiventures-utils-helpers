@@ -40,8 +40,9 @@ export declare class S3Helper {
      * @param bucket_key Key of the file to be uploaded
      * @param file Stream file buffer to be uploaded
      * @param content_type
+     * @param acl
      */
-    upload_s3_file(bucket_name: string, bucket_key: string, file: Buffer, content_type?: string): Promise<any>;
+    upload_s3_file(bucket_name: string, bucket_key: string, file: Buffer, content_type?: string, acl?: string): Promise<any>;
     /**
      * Upload a file stream onto AWS S3
      * @param bucket_name Name of the bucket
