@@ -98,6 +98,14 @@ export class DockerRunner {
     }
   }
 
+  async start(container: Dockerode.Container) {
+    try {
+      await container.start();
+    } catch (e: any) {
+      throw new Error(`[x] command [docker run]:${e.message}`);
+    }
+  }
+
   private async pullImage(params: DockerRunCommandType): Promise<void> {
     const tag = params.tag || 'latest';
     if (!this.existingImages[`${params.image}:${params.tag || 'latest'}`]) {

@@ -7,6 +7,7 @@ export declare class DockerRunner {
     constructor();
     run(params: DockerRunCommandType): Promise<any>;
     createContainer(params: DockerRunCommandType): Promise<Dockerode.Container>;
+    start(container: Dockerode.Container): Promise<void>;
     private pullImage;
     getContainerFile(container: Dockerode.Container, filePath: string): Promise<Buffer>;
     putArchive(container: Dockerode.Container, path: string, data: Buffer): Promise<void>;
