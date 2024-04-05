@@ -59,3 +59,5 @@ export * from './client/ftp/FtpClientManager';
 export * from './client/mongodb/conn/MongodbMultiConn';
 export * from './services/sts/STS';
 export * from './utils/common';
+export * from './client/docker/DockerRunner';
+export * from './client/docker/docker.types';
