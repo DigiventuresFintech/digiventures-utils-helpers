@@ -108,12 +108,14 @@ export class DockerRunner {
 
   private async pullImage(params: DockerRunCommandType): Promise<void> {
     const tag = params.tag || 'latest';
-    if (!this.existingImages[`${params.image}:${params.tag || 'latest'}`]) {
+    if (!this.existingImages[`${params.image}:${tag}`]) {
       const images = await this.dockerode.listImages({
         filters: { reference: [`${params.image}:${tag}`] },
       });
       if (images.length === 0) {
-        await this.dockerode.pull(`${params.image}:${tag}`);
+        await this.dockerode.pull(`${params.image}:${tag}`, {
+          auth: params.auth,
+        });
         while (true) {
           const images = await this.dockerode.listImages({
             filters: { reference: [`${params.image}:${tag}`] },

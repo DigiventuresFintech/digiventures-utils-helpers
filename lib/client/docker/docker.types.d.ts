@@ -12,6 +12,11 @@ export interface DockerCreateOptionsType {
     User?: string;
     AttachStdout?: boolean;
 }
+export interface DockerLoginType {
+    registry: string;
+    user: string;
+    password: string;
+}
 export interface DockerStartOptionsType {
     id: string;
 }
@@ -32,4 +37,5 @@ export interface DockerRunCommandType {
     entryPoint?: string;
     portBindings?: Map<string, Array<string>>;
     ignoreError?: boolean;
+    auth?: DockerLoginType;
 }
