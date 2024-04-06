@@ -169,6 +169,10 @@ export class DockerRunner {
         if (err) {
           reject(err);
         } else {
+          if (containers?.length === 0) {
+            return reject();
+          }
+
           resolve(containers![0].Id);
         }
       });
