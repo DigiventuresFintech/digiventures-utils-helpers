@@ -1,6 +1,9 @@
 /// <reference types="node" />
 import Dockerode from 'dockerode';
 import { DockerRunCommandType } from './docker.types';
+type Volumes = {
+    [volume: string]: {};
+};
 export declare class DockerRunner {
     private dockerode;
     private existingImages;
@@ -15,5 +18,7 @@ export declare class DockerRunner {
     getActiveContainer(name: string): Promise<Dockerode.Container | null>;
     getUID: () => number;
     getGID: () => number;
+    convertVolumes: (volumes?: string[]) => Volumes | undefined;
 }
 export declare const dockerRunner: DockerRunner;
+export {};

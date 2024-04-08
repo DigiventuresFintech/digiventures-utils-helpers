@@ -7,6 +7,8 @@ import {
 import stream from 'stream';
 import * as os from 'os';
 
+type Volumes = { [volume: string]: {} };
+
 export class DockerRunner {
   private dockerode: Dockerode;
   private existingImages: { [key: string]: boolean } = {};
@@ -76,7 +78,6 @@ export class DockerRunner {
       HostConfig: {
         AutoRemove: params.autoRemove !== undefined ? params.autoRemove : true,
         NetworkMode: params.network,
-        Binds: params.volumes,
       },
       User: params.user !== false ? `${this.getUID()}:${this.getGID()}` : '',
     };
@@ -87,6 +88,7 @@ export class DockerRunner {
         Image: `${image}:${tag || 'latest'}`,
         Cmd: commands,
         ...createOptions,
+        Volumes: this.convertVolumes(params.volumes),
         AttachStderr: true,
         AttachStdin: false,
         AttachStdout: true,
@@ -201,6 +203,15 @@ export class DockerRunner {
     return process.env.GID === undefined
       ? os.userInfo().gid
       : parseInt(process.env.GID, 10);
+  };
+
+  convertVolumes = (volumes?: string[]): Volumes | undefined => {
+    if (!volumes) return volumes;
+    const convertedVolumes: Volumes = {};
+    volumes.forEach(volume => {
+      convertedVolumes[volume] = {};
+    });
+    return convertedVolumes;
   };
 }
 
