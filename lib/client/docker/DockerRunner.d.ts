@@ -8,6 +8,7 @@ export declare class DockerRunner {
     private dockerode;
     private existingImages;
     constructor();
+    setup(): void;
     run(params: DockerRunCommandType): Promise<any>;
     createContainer(params: DockerRunCommandType): Promise<Dockerode.Container>;
     start(container: Dockerode.Container, wait?: boolean): Promise<void>;

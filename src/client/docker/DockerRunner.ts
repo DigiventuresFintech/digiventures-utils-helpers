@@ -15,7 +15,9 @@ export class DockerRunner {
 
   constructor() {
     this.dockerode = new Dockerode({ socketPath: '/var/run/docker.sock' });
+  }
 
+  setup() {
     this.dockerode
       .version()
       .then(res => console.log(`Use docker version: ${res.Version}`))
