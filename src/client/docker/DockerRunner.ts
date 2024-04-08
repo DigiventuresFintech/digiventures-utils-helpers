@@ -98,9 +98,12 @@ export class DockerRunner {
     }
   }
 
-  async start(container: Dockerode.Container) {
+  async start(container: Dockerode.Container, wait?: boolean) {
     try {
       await container.start();
+      if (wait) {
+        await container.wait();
+      }
     } catch (e: any) {
       throw new Error(`[x] command [docker run]:${e.message}`);
     }
