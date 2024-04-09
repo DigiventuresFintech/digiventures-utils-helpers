@@ -14,7 +14,9 @@ export class DockerRunner {
   private existingImages: { [key: string]: boolean } = {};
 
   constructor() {
-    this.dockerode = new Dockerode({ socketPath: '/var/run/docker.sock' });
+    //this.dockerode = new Dockerode({ socketPath: '/var/run/docker.sock' });
+    //127.0.0.1:2375
+    this.dockerode = new Dockerode({ host: '127.0.0.1', port: 2375 });
   }
 
   setup() {
