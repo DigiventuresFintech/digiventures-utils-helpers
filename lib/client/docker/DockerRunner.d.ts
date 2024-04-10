@@ -1,4 +1,5 @@
 /// <reference types="node" />
+/// <reference types="node" />
 import Dockerode from 'dockerode';
 import { DockerRunCommandType } from './docker.types';
 type Volumes = {
@@ -14,7 +15,7 @@ export declare class DockerRunner {
     start(container: Dockerode.Container, wait?: boolean): Promise<void>;
     private pullImage;
     getContainerFile(container: Dockerode.Container, filePath: string): Promise<Buffer>;
-    putArchive(container: Dockerode.Container, path: string, data: Buffer): Promise<void>;
+    putArchive(container: Dockerode.Container, path: string, data: string | Buffer | NodeJS.ReadableStream): Promise<void>;
     getContainerId(name: string): Promise<string>;
     getActiveContainer(name: string): Promise<Dockerode.Container | null>;
     getUID: () => number;

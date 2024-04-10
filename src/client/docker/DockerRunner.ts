@@ -159,7 +159,11 @@ export class DockerRunner {
     });
   }
 
-  async putArchive(container: Dockerode.Container, path: string, data: Buffer) {
+  async putArchive(
+    container: Dockerode.Container,
+    path: string,
+    data: string | Buffer | NodeJS.ReadableStream,
+  ) {
     try {
       await container.putArchive(data, { path });
     } catch (e) {
