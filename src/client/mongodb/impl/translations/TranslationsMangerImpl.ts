@@ -3,10 +3,10 @@ import TranslationsSchema, { ITranslations } from '../../models/Translation';
 import { IBaseRepository } from '../../repository/IBaseRepository';
 
 export class TranslationsMangerImpl
-    extends BaseMongooseRepositoryImpl<ITranslations>
-    implements IBaseRepository<ITranslations>
+  extends BaseMongooseRepositoryImpl<ITranslations>
+  implements IBaseRepository<ITranslations>
 {
-    constructor() {
-        super(TranslationsSchema);
-    }
+  constructor() {
+    super(TranslationsSchema);
+  }
 }

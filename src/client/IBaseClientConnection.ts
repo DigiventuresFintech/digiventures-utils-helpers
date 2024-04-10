@@ -1,4 +1,4 @@
 export interface IBaseClientConnection {
-    connect(): Promise<any>;
-    close(): Promise<void>;
+  connect(): Promise<any>;
+  close(): Promise<void>;
 }

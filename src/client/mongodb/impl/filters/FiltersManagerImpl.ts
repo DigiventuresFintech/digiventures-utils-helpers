@@ -3,10 +3,10 @@ import FiltersSchema, { IFilters } from '../../models/Filters';
 import { IBaseRepository } from '../../repository/IBaseRepository';
 
 export class FiltersMangerImpl
-    extends BaseMongooseRepositoryImpl<IFilters>
-    implements IBaseRepository<IFilters>
+  extends BaseMongooseRepositoryImpl<IFilters>
+  implements IBaseRepository<IFilters>
 {
-    constructor() {
-        super(FiltersSchema);
-    }
+  constructor() {
+    super(FiltersSchema);
+  }
 }

@@ -18,6 +18,7 @@ export declare class DockerRunner {
     putArchive(container: Dockerode.Container, path: string, data: string | Buffer | NodeJS.ReadableStream): Promise<void>;
     getContainerId(name: string): Promise<string>;
     getActiveContainer(name: string): Promise<Dockerode.Container | null>;
+    getFileFromContainerAsBase64(container: Dockerode.Container, filePath: string): Promise<string>;
     getUID: () => number;
     getGID: () => number;
     convertVolumes: (volumes?: string[]) => Volumes | undefined;

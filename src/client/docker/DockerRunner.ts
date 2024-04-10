@@ -6,6 +6,7 @@ import {
 } from './docker.types';
 import stream from 'stream';
 import * as os from 'os';
+import * as tar from 'tar-stream';
 
 type Volumes = { [volume: string]: {} };
 
@@ -199,6 +200,56 @@ export class DockerRunner {
     } catch (e) {
       return null;
     }
+  }
+
+  async getFileFromContainerAsBase64(
+    container: Dockerode.Container,
+    filePath: string,
+  ): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      const extract = tar.extract();
+      let fileBuffer: Buffer[] = [];
+
+      container.getArchive({ path: filePath }, (error, stream) => {
+        if (error) {
+          reject(error);
+          return;
+        }
+        if (!stream) {
+          reject(new Error('Stream is undefined'));
+          return;
+        }
+
+        stream.on('error', reject).pipe(extract);
+
+        extract.on(
+          'entry',
+          (
+            header: tar.Headers,
+            stream: NodeJS.ReadableStream,
+            next: () => void,
+          ) => {
+            if (header.name === filePath) {
+              stream.on('data', (chunk: Buffer) => {
+                fileBuffer.push(chunk);
+              });
+
+              stream.on('end', () => {
+                const completeFile = Buffer.concat(fileBuffer);
+                resolve(completeFile.toString('base64'));
+                next();
+              });
+
+              stream.resume();
+            } else {
+              next();
+            }
+          },
+        );
+
+        extract.on('finish', () => {});
+      });
+    });
   }
 
   getUID = () => {

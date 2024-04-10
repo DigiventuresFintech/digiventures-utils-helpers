@@ -5,19 +5,16 @@ import { IElasticDocumentManager } from '../../src/client/elasticsearch/manager/
 import { ElasticDocumentManagerImpl } from '../../src/client/elasticsearch/manager/ElasticDocumentManagerImpl';
 
 describe(__filename, () => {
-    test('should success update document by id on elastic', async () => {
-        const connection: IBaseClientConnection = new ElasticSearchConnection();
-        const client: Client = await connection.connect();
+  test('should success update document by id on elastic', async () => {
+    const connection: IBaseClientConnection = new ElasticSearchConnection();
+    const client: Client = await connection.connect();
 
-        const elasticDocumentManager: IElasticDocumentManager =
-            new ElasticDocumentManagerImpl(client);
+    const elasticDocumentManager: IElasticDocumentManager =
+      new ElasticDocumentManagerImpl(client);
 
-        let conditions: Record<string, any> = {
-            typeScoring: 'Segunda gestión',
-        };
-        await elasticDocumentManager.update(
-            '64594e48285ccf00127bef80',
-            conditions,
-        );
-    }, 50000);
+    let conditions: Record<string, any> = {
+      typeScoring: 'Segunda gestión',
+    };
+    await elasticDocumentManager.update('64594e48285ccf00127bef80', conditions);
+  }, 50000);
 });

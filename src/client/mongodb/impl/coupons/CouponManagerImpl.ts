@@ -4,10 +4,10 @@ import { ICouponManager } from './ICouponManager';
 import { Connection } from 'mongoose';
 
 export class CouponManagerImpl
-    extends BaseMongooseRepositoryImpl<ICoupon>
-    implements ICouponManager
+  extends BaseMongooseRepositoryImpl<ICoupon>
+  implements ICouponManager
 {
-    constructor(connection?: Connection) {
-        super(createModel(connection));
-    }
+  constructor(connection?: Connection) {
+    super(createModel(connection));
+  }
 }

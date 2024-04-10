@@ -4,5 +4,5 @@
  * @param payload
  */
 export default function isLambdaError(payload: any) {
-    return payload.name == 'LambdaException';
+  return payload.name == 'LambdaException';
 }
