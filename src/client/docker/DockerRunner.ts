@@ -15,9 +15,11 @@ export class DockerRunner {
   private existingImages: { [key: string]: boolean } = {};
 
   constructor() {
-    //this.dockerode = new Dockerode({ socketPath: '/var/run/docker.sock' });
-    //127.0.0.1:2375
-    this.dockerode = new Dockerode();
+    if (process.env.ENVIRONMENT === 'LOCAL') {
+      this.dockerode = new Dockerode({ socketPath: '/var/run/docker.sock' });
+    } else {
+      this.dockerode = new Dockerode();
+    }
   }
 
   setup() {
