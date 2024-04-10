@@ -206,48 +206,40 @@ export class DockerRunner {
     container: Dockerode.Container,
     filePath: string,
   ): Promise<string> {
-    return new Promise<string>((resolve, reject) => {
-      const extract = tar.extract();
-      let fileBuffer: Buffer[] = [];
-
-      container.getArchive({ path: filePath }, (error, stream) => {
-        if (error) {
-          reject(error);
-          return;
+    return new Promise((resolve, reject) => {
+      container.getArchive({ path: filePath }, (err, stream) => {
+        if (err) {
+          return reject(err);
         }
         if (!stream) {
           reject(new Error('Stream is undefined'));
           return;
         }
 
-        stream.on('error', reject).pipe(extract);
+        const extract = tar.extract();
+        let fileBuffer: any[] = [];
 
-        extract.on(
-          'entry',
-          (
-            header: tar.Headers,
-            stream: NodeJS.ReadableStream,
-            next: () => void,
-          ) => {
-            if (header.name === filePath) {
-              stream.on('data', (chunk: Buffer) => {
-                fileBuffer.push(chunk);
-              });
+        stream.pipe(extract);
 
-              stream.on('end', () => {
-                const completeFile = Buffer.concat(fileBuffer);
-                resolve(completeFile.toString('base64'));
-                next();
-              });
+        extract.on('entry', (header, stream, next) => {
+          if (header.name === filePath.split('/').pop()) {
+            stream.on('data', chunk => {
+              fileBuffer.push(chunk);
+            });
 
-              stream.resume();
-            } else {
+            stream.on('end', () => {
+              const completeFile = Buffer.concat(fileBuffer);
+              resolve(completeFile.toString('base64'));
               next();
-            }
-          },
-        );
+            });
 
-        extract.on('finish', () => {});
+            stream.resume();
+          } else {
+            next();
+          }
+        });
+
+        extract.on('error', reject);
       });
     });
   }

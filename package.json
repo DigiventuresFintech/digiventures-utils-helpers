@@ -32,6 +32,7 @@
     "mongoose": "^7.1.0",
     "mongoose-lean-getters": "^1.1.0",
     "nanoid": "^3.0.0",
+    "tar-fs": "^3.0.5",
     "tar-stream": "^3.1.7"
   },
   "devDependencies": {
