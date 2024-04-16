@@ -18,7 +18,10 @@ export class DockerRunner {
     if (process.env.ENVIRONMENT === 'LOCAL') {
       this.dockerode = new Dockerode({ socketPath: '/var/run/docker.sock' });
     } else {
-      this.dockerode = new Dockerode();
+      this.dockerode = new Dockerode({
+        host: 'tcp://dockerproxy',
+        port: 2375,
+      });
     }
   }
 
