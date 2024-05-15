@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import _ from 'lodash';
 
 export function getEnv() {
   const env = (process.env.ENVIRONMENT as string) || 'DEV';
@@ -81,4 +82,27 @@ export async function exponentialRetryOperation<T>(
   }
 
   throw new Error('client max retries reached...');
+}
+
+function getMissingFields(obj: any, args: string[]) {
+  args = ([] as string[]).concat(args);
+  if (!_.isObject(obj)) return args;
+  return _.filter(args, arg => {
+    return !obj.hasOwnProperty(arg);
+  });
+}
+
+export function checkRequired(obj: any, args: string[], cb?: (e: any) => void) {
+  const missing = getMissingFields(obj, args);
+  if (_.isEmpty(missing)) {
+    return true;
+  }
+
+  if (_.isFunction(cb)) {
+    return cb(
+      new Error('Required argument: ' + _.first(missing) + ' missing.'),
+    );
+  }
+
+  return false;
 }
