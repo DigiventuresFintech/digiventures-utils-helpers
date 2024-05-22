@@ -5,12 +5,14 @@ export interface ITranslations extends mongoose.Document {
   referenceId: string;
   language: string;
   translations: any;
+  languageInformation: string;
 }
 
 const TranslationsSchema = new Schema({
   product: { type: String, required: true },
   referenceId: { type: String, required: true },
   language: { type: String, required: true },
+  languageInformation: { type: String, required: true },
   translations: Schema.Types.Mixed,
 });
 
