@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 
 interface JWTPayload {
   [key: string]: string;
+
   expiration: string;
 }
 
@@ -41,7 +42,8 @@ export class JWTAuthorization {
   /**
    * Generate a JWT with expiration as payload param
    */
-  public sign(payload: any): string {
-    return jwt.sign(payload, this.token, { expiresIn: '2h' });
+  public sign(payload: any): string;
+  public sign(payload: any, secret?: string): string {
+    return jwt.sign(payload, secret || this.token, { expiresIn: '2h' });
   }
 }
