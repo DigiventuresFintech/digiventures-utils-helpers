@@ -7,7 +7,7 @@ describe('JWT utility class test', function () {
 
   it('verify', () => {
     const payload = JWTUtil.verify(
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE2NjQyMTk4MTYsImV4cCI6MTY5NTc1NTgxNiwiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIkdpdmVuTmFtZSI6IkpvaG5ueSIsIlN1cm5hbWUiOiJSb2NrZXQiLCJFbWFpbCI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJSb2xlIjpbIk1hbmFnZXIiLCJQcm9qZWN0IEFkbWluaXN0cmF0b3IiXX0.myrILBkoOxo3P5tfuNjBdvM3GCMAfSKKo1TyYIk9UTI',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTcxNjE4MDAsImV4cCI6MTcxNzE2OTAwMH0.Xd4ZDwAAuLWWLyN8saSb5fDlunH6_BgkjhczouzIxZM',
     );
     expect(payload.iss).toEqual('Online JWT Builder');
   });
