@@ -45,7 +45,10 @@ export class ConfigLoader {
    */
   async loadJwtAuthData() {
     const AUTHENTICATION_ARN = process.env.AUTHENTICATION_ARN;
-    if (!AUTHENTICATION_ARN) throw new Error(`secret not defined`);
+    if (!AUTHENTICATION_ARN)
+      throw new Error(
+        `JWT credentials arn not defined. You must define the 'AUTHENTICATION_ARN' environment variable`,
+      );
 
     const secretManager = new SecretManager();
     try {
@@ -62,7 +65,9 @@ export class ConfigLoader {
   async mongodbCredentialsLoader(): Promise<any> {
     const MONGODB_CREDENTIALS_ARN = process.env.MONGODB_CREDENTIALS_ARN;
     if (!MONGODB_CREDENTIALS_ARN)
-      throw new Error(`mongodb credentials not defined`);
+      throw new Error(
+        `MongoDB credentials arn not defined. You must define the 'MONGODB_CREDENTIALS_ARN' environment variable`,
+      );
 
     const secretManager = new SecretManager();
     try {
@@ -75,6 +80,28 @@ export class ConfigLoader {
       return output;
     } catch (e) {
       console.error(`Error loading mongodb secret configuration`, e);
+      throw e;
+    }
+  }
+
+  async bigQueryCredentialsLoader(): Promise<any> {
+    const BIGQUERY_CREDENTIALS_ARN = process.env.BIGQUERY_CREDENTIALS_ARN;
+    if (!BIGQUERY_CREDENTIALS_ARN)
+      throw new Error(
+        `BigQuery credentials arn not defined. You must define the 'BIGQUERY_CREDENTIALS_ARN' environment variable`,
+      );
+
+    const secretManager = new SecretManager();
+    try {
+      const output: any = await secretManager.getSecret(
+        BIGQUERY_CREDENTIALS_ARN,
+      );
+      console.log('bigquery configuration loaded successfully');
+
+      process.env.BIGQUERY_CREDENTIALS = JSON.stringify(output);
+      return output;
+    } catch (e) {
+      console.error(`Error loading bigquery configuration`, e);
       throw e;
     }
   }
