@@ -9,5 +9,5 @@ export declare class JWTAuthorization {
     /**
      * Generate a JWT with expiration as payload param
      */
-    sign(payload: any): string;
+    sign(payload: any, secret?: string): string;
 }

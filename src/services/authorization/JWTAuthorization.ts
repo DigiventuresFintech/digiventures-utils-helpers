@@ -42,7 +42,6 @@ export class JWTAuthorization {
   /**
    * Generate a JWT with expiration as payload param
    */
-  public sign(payload: any): string;
   public sign(payload: any, secret?: string): string {
     return jwt.sign(payload, secret || this.token, { expiresIn: '2h' });
   }

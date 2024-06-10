@@ -15,5 +15,6 @@ export declare class ConfigLoader {
      */
     loadJwtAuthData(): Promise<any>;
     mongodbCredentialsLoader(): Promise<any>;
+    bigQueryCredentialsLoader(): Promise<any>;
 }
 export {};
