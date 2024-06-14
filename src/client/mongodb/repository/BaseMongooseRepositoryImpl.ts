@@ -74,10 +74,12 @@ export class BaseMongooseRepositoryImpl<T extends object>
   async updateMany(
     condition: Record<string, any>,
     params: Record<string, any>,
+    options?: any,
   ): Promise<any> {
     const output = await this.model.updateMany(
       condition as FilterQuery<T>,
       params as UpdateQuery<T>,
+      (options as QueryOptions<T>) || null,
     );
 
     if (!output) {
