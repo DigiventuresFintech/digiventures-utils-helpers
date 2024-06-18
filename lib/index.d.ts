@@ -29,6 +29,7 @@ export * from './dto/AbstractValidator';
 export * from './exception/ValidationException';
 export * from './client/mongodb/repository/BaseMongooseRepositoryImpl';
 export * from './client/mongodb/impl/documents/DocumentManagerImpl';
+export * from './client/mongodb/impl/documents/DocumentMongooseElasticManagerImpl';
 export * from './client/mongodb/impl/documents/IDocumentManager';
 export * from './client/mongodb/impl/translations/TranslationsMangerImpl';
 export * from './client/mongodb/impl/translations/ITranslationsManager';

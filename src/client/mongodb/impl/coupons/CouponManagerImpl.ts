@@ -1,13 +1,14 @@
 import { BaseMongooseRepositoryImpl } from '../../repository/BaseMongooseRepositoryImpl';
-import { createModel, ICoupon } from '../../models/Coupon';
+import { CreateCouponSchema, ICoupon } from '../../models/Coupon';
 import { ICouponManager } from './ICouponManager';
 import { Connection } from 'mongoose';
+import { createModel } from '../../common';
 
 export class CouponManagerImpl
   extends BaseMongooseRepositoryImpl<ICoupon>
   implements ICouponManager
 {
   constructor(connection?: Connection) {
-    super(createModel(connection));
+    super(createModel('coupons', CreateCouponSchema, connection));
   }
 }

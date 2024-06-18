@@ -6,10 +6,10 @@ export interface IFilters extends mongoose.Document {
   fields: any;
 }
 
-const FiltersSchema = new Schema({
-  product: { type: String, required: true },
-  identificator: { type: String, required: true },
-  fields: Schema.Types.Mixed,
-});
-
-export default mongoose.model<IFilters>('filters', FiltersSchema);
+export const CreateFiltersSchema = () => {
+  return new Schema({
+    product: { type: String, required: true },
+    identificator: { type: String, required: true },
+    fields: Schema.Types.Mixed,
+  });
+};

@@ -343,3 +343,4 @@ export interface IDocument extends mongoose.Document {
     };
     navigator: Schema.Types.Mixed;
 }
+export declare const CreateDocumentSchema: (encryption: any) => Schema;

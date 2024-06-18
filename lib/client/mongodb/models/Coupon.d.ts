@@ -1,4 +1,4 @@
-import mongoose, { Connection, Model } from 'mongoose';
+import mongoose from 'mongoose';
 export declare enum Mode {
     Manual = "manual",
     Auto = "auto"
@@ -10,5 +10,24 @@ export interface ICoupon extends mongoose.Document {
     type?: Mode;
     deleted?: string;
 }
-declare function createModel(connection?: Connection): Model<ICoupon>;
-export { createModel };
+export declare const CreateCouponSchema: () => mongoose.Schema<any, mongoose.Model<any, any, any, any, any, any>, {}, {}, {}, {}, mongoose.DefaultSchemaOptions, {
+    type: Mode;
+    createdAt: Date;
+    deleted: boolean;
+    coupon: string;
+    used: boolean;
+}, mongoose.Document<unknown, {}, mongoose.FlatRecord<{
+    type: Mode;
+    createdAt: Date;
+    deleted: boolean;
+    coupon: string;
+    used: boolean;
+}>> & mongoose.FlatRecord<{
+    type: Mode;
+    createdAt: Date;
+    deleted: boolean;
+    coupon: string;
+    used: boolean;
+}> & {
+    _id: mongoose.Types.ObjectId;
+}>;
