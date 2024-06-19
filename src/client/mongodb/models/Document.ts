@@ -352,7 +352,7 @@ export interface IDocument extends mongoose.Document {
   navigator: Schema.Types.Mixed;
 }
 
-const createSchema = (encryption: any): Schema => {
+export const CreateDocumentSchema = (encryption: any): Schema => {
   const schema = new Schema({
     shortId: { type: String },
     name: { type: String, text: true },
@@ -716,14 +716,3 @@ const createSchema = (encryption: any): Schema => {
   schema.plugin(mongooseLeanGetters);
   return schema;
 };
-
-function createModel2(connection?: Connection): Model<IDocument> {
-  if (connection && connection.models['legajo']) {
-    return connection.models['legajo'];
-  }
-
-  const encryption: any = connection?.get('encryption');
-  return connection
-    ? connection.model<IDocument>('legajo', createSchema(encryption))
-    : mongoose.model<IDocument>('legajo', createSchema(encryption));
-}

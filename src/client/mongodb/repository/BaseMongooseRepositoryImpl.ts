@@ -18,27 +18,11 @@ export class BaseMongooseRepositoryImpl<T extends object>
     this.populate = populate;
   }
 
-  async getById(id: string): Promise<T> {
-    const entity = await this.model
-      .findOne({ _id: id } as FilterQuery<T>)
-      .populate(this.populate)
-      .lean();
-
-    if (!entity) {
-      throw new Error('entity not found');
-    }
-
-    return entity as any;
-  }
-
-  async findOne(
-    condition: Record<string, any>,
-    projection?: Record<string, any>,
-  ): Promise<T> {
+  async getById(id: string, options?: any): Promise<T> {
     const entity = await this.model
       .findOne(
-        condition as FilterQuery<T>,
-        (projection as ProjectionType<T>) || {},
+        { _id: id } as FilterQuery<T>,
+        (options?.projection as ProjectionType<T>) || {},
       )
       .populate(this.populate)
       .lean();
@@ -50,15 +34,28 @@ export class BaseMongooseRepositoryImpl<T extends object>
     return entity as any;
   }
 
-  async getBy(
-    condition: Record<string, any>,
-    projection?: Record<string, any>,
-  ): Promise<T[]> {
+  async findOne(condition: Record<string, any>, options?: any): Promise<T> {
+    const entity = await this.model
+      .findOne(
+        condition as FilterQuery<T>,
+        (options?.projection as ProjectionType<T>) || {},
+      )
+      .populate(this.populate)
+      .lean();
+
+    if (!entity) {
+      throw new Error('entity not found');
+    }
+
+    return entity as any;
+  }
+
+  async getBy(condition: Record<string, any>, options?: any): Promise<T[]> {
     try {
       const entity = await this.model
         .find(
           condition as FilterQuery<T>,
-          (projection as ProjectionType<T>) || {},
+          (options?.projection as ProjectionType<T>) || {},
         )
         .lean({ getters: true });
 
@@ -94,11 +91,13 @@ export class BaseMongooseRepositoryImpl<T extends object>
     params: Record<string, any>,
     options?: any,
   ): Promise<T> {
-    const output = await this.model.updateOne(
-      condition as FilterQuery<T>,
-      params as UpdateQuery<T>,
-      (options as QueryOptions<T>) || null,
-    );
+    const output = await this.model
+      .updateOne(
+        condition as FilterQuery<T>,
+        params as UpdateQuery<T>,
+        (options as QueryOptions<T>) || null,
+      )
+      .lean();
 
     if (!output) {
       throw new Error('entities not found');
@@ -112,11 +111,13 @@ export class BaseMongooseRepositoryImpl<T extends object>
     params: Record<string, any>,
     options?: any,
   ): Promise<T> {
-    const output = await this.model.findOneAndUpdate(
-      condition as FilterQuery<T>,
-      params as UpdateQuery<T>,
-      (options as QueryOptions<T>) || null,
-    );
+    const output = await this.model
+      .findOneAndUpdate(
+        condition as FilterQuery<T>,
+        params as UpdateQuery<T>,
+        (options as QueryOptions<T>) || null,
+      )
+      .lean();
 
     if (!output) {
       throw new Error('entities not found');
@@ -142,4 +143,14 @@ export class BaseMongooseRepositoryImpl<T extends object>
       throw new Error('Error deleting documents');
     }
   }
+
+  convertStringToProjection = (projectionString: string) => {
+    const fields = projectionString.split(' ');
+    const projection: any = {};
+
+    fields.forEach(field => {
+      projection[field] = 1;
+    });
+    return projection;
+  };
 }

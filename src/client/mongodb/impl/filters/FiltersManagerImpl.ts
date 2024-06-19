@@ -1,12 +1,14 @@
 import { BaseMongooseRepositoryImpl } from '../../repository/BaseMongooseRepositoryImpl';
-import FiltersSchema, { IFilters } from '../../models/Filters';
+import { CreateFiltersSchema, IFilters } from '../../models/Filters';
 import { IBaseRepository } from '../../repository/IBaseRepository';
+import { Connection } from 'mongoose';
+import { createModel } from '../../common';
 
 export class FiltersMangerImpl
   extends BaseMongooseRepositoryImpl<IFilters>
   implements IBaseRepository<IFilters>
 {
-  constructor() {
-    super(FiltersSchema);
+  constructor(connection?: Connection) {
+    super(createModel('filters', CreateFiltersSchema, connection));
   }
 }

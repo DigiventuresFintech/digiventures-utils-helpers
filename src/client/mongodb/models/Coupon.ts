@@ -14,19 +14,13 @@ export interface ICoupon extends mongoose.Document {
   deleted?: string;
 }
 
-const CouponSchema = new Schema({
-  coupon: { type: String, required: true },
-  //tenantId: { type: mongoose.Types.ObjectId, required: true },
-  used: { type: Boolean, required: true },
-  createdAt: { type: Date, required: true },
-  type: { type: String, enum: Object.values(Mode), default: Mode.Auto },
-  deleted: { type: Boolean, default: false },
-});
-
-function createModel(connection?: Connection): Model<ICoupon> {
-  return connection
-    ? connection.model<ICoupon>('coupons', CouponSchema)
-    : mongoose.model<ICoupon>('coupons', CouponSchema);
-}
-
-export { createModel };
+export const CreateCouponSchema = () => {
+  return new Schema({
+    coupon: { type: String, required: true },
+    //tenantId: { type: mongoose.Types.ObjectId, required: true },
+    used: { type: Boolean, required: true },
+    createdAt: { type: Date, required: true },
+    type: { type: String, enum: Object.values(Mode), default: Mode.Auto },
+    deleted: { type: Boolean, default: false },
+  });
+};

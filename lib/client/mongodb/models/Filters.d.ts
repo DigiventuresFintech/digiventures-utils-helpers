@@ -4,7 +4,18 @@ export interface IFilters extends mongoose.Document {
     identificator: string;
     fields: any;
 }
-declare const _default: mongoose.Model<IFilters, {}, {}, {}, mongoose.Document<unknown, {}, IFilters> & IFilters & {
+export declare const CreateFiltersSchema: () => mongoose.Schema<any, mongoose.Model<any, any, any, any, any, any>, {}, {}, {}, {}, mongoose.DefaultSchemaOptions, {
+    product: string;
+    identificator: string;
+    fields?: any;
+}, mongoose.Document<unknown, {}, mongoose.FlatRecord<{
+    product: string;
+    identificator: string;
+    fields?: any;
+}>> & mongoose.FlatRecord<{
+    product: string;
+    identificator: string;
+    fields?: any;
+}> & {
     _id: mongoose.Types.ObjectId;
-}, any>;
-export default _default;
+}>;

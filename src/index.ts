@@ -1,3 +1,5 @@
+import { DocumentMongooseElasticManagerImpl } from './client/mongodb/impl/documents/DocumentMongooseElasticManagerImpl';
+
 export * from './utils/ConfigLoader';
 export * from './utils/JSONUtils';
 export * from './utils/PhoneUtils';
@@ -42,6 +44,7 @@ export * from './exception/ValidationException';
 export * from './client/mongodb/repository/BaseMongooseRepositoryImpl';
 
 export * from './client/mongodb/impl/documents/DocumentManagerImpl';
+export * from './client/mongodb/impl/documents/DocumentMongooseElasticManagerImpl';
 export * from './client/mongodb/impl/documents/IDocumentManager';
 
 export * from './client/mongodb/impl/translations/TranslationsMangerImpl';
