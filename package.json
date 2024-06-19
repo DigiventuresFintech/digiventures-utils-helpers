@@ -10,7 +10,7 @@
     "build": "tsc",
     "format": "prettier --write \"**/*.ts\"",
     "test": "npm run unit",
-    "unit": "jest"
+    "unit": "jest --detectOpenHandles"
   },
   "repository": "https://github.com/DigiventuresFintech/digiventures-utils-helpers",
   "author": "Juan M. Beccaceci <Digiventures Tech>",
