@@ -7,7 +7,7 @@
   "description": "Fast, generic javascript utility functions",
   "main": "lib/index.js",
   "scripts": {
-    "build": "pika-pack build",
+    "build": "tsc",
     "format": "prettier --write \"**/*.ts\"",
     "test": "npm run unit",
     "unit": "jest"

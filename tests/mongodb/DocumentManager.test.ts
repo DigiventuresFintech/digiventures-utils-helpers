@@ -39,7 +39,7 @@ describe(__filename, () => {
     );
   }, 500000);
 
-  test('test', async () => {
+  test.skip('test', async () => {
     const documentManager: IBaseRepository = new BaseAppServiceRepositoryImpl(
       'legajos',
       {

@@ -7,9 +7,9 @@ describe('JWT utility class test', function () {
 
   it('verify', () => {
     const payload = JWTUtil.verify(
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTcxNjE4MDAsImV4cCI6MTcxNzE2OTAwMH0.Xd4ZDwAAuLWWLyN8saSb5fDlunH6_BgkjhczouzIxZM',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSnVhbiIsImlhdCI6MTcxODc2MTEzMSwiZXhwIjoxNzE4NzY4MzMxfQ.Ihqt-aXaQGbk5NkmW9315fHNtdlydn9lVQ2tkYLl5HA',
     );
-    expect(payload.iss).toEqual('Online JWT Builder');
+    expect(payload.name).toEqual('Juan');
   });
 
   it('sign and verify', () => {

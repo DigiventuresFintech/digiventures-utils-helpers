@@ -1,5 +1,5 @@
-import { FtpClientManager } from '../lib';
 import { exponentialRetryOperation } from '../src/utils/common';
+import { FtpClientManager } from '../src';
 
 describe(__filename, () => {
   describe('suite for retry operation method', () => {

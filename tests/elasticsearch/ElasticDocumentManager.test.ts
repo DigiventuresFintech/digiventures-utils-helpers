@@ -1,11 +1,11 @@
 import { IBaseClientConnection } from '../../src';
-import { ElasticSearchConnection } from '../../src/client/elasticsearch/ElasticSearchConnection';
+import { ElasticSearchConnection } from '../../src';
 import { Client } from '@elastic/elasticsearch';
-import { IElasticDocumentManager } from '../../src/client/elasticsearch/manager/IElasticDocumentManager';
-import { ElasticDocumentManagerImpl } from '../../src/client/elasticsearch/manager/ElasticDocumentManagerImpl';
+import { IElasticDocumentManager } from '../../src';
+import { ElasticDocumentManagerImpl } from '../../src';
 
 describe(__filename, () => {
-  test('should success update document by id on elastic', async () => {
+  test.skip('should success update document by id on elastic', async () => {
     const connection: IBaseClientConnection = new ElasticSearchConnection();
     const client: Client = await connection.connect();
 

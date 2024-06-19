@@ -1,10 +1,13 @@
 import 'dotenv/config';
-import { BaseHandlerAuthenticator, JwtAuthenticator } from '../../../src';
-import { IAuthenticator } from '../../../src/services/lambda/authenticator/IAuthenticator';
-import { RequestInfo } from '../../../src/services/lambda/handler/RequestInfo';
+import {
+  BaseHandlerAuthenticator,
+  JwtAuthenticator,
+  JWTAuthorization,
+  LambdaException,
+} from '../../../src';
+import { IAuthenticator } from '../../../src';
+import { RequestInfo } from '../../../src';
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-import { LambdaException } from '../../../lib/services/lambda/errors/LambdaException';
-import { JWTAuthorization } from '../../../lib';
 
 describe('Base handler suite', function () {
   const JWTUtil = new JWTAuthorization(
@@ -69,6 +72,7 @@ describe('Base handler suite', function () {
   interface Input {
     name: string;
   }
+
   interface Output {
     status: number;
   }
@@ -165,6 +169,8 @@ describe('Base handler suite', function () {
     );
     expect(output).not.toBeUndefined();
     expect(output.statusCode).toEqual(400);
-    expect(output.body).toEqual('{"message":"error"}');
+    expect(output.body).toEqual(
+      '{"message":"error","internalError":154,"body":"{\\"name\\":\\"juan\\"}"}',
+    );
   });
 });

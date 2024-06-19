@@ -2,7 +2,7 @@ import {
   AbstractValidator,
   ValidationMap,
   ValidationRequiredFields,
-} from '../../src/dto/AbstractValidator';
+} from '../../src';
 
 class ValidatorTest1 extends AbstractValidator {
   private readonly propertyA: string;
