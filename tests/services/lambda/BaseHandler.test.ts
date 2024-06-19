@@ -115,7 +115,7 @@ describe('Base handler suite', function () {
   };
 
   test('test lambda authorized success', async () => {
-    const baseEvent: APIGatewayProxyEvent = Object.assign({}, this.getEvent());
+    const baseEvent: APIGatewayProxyEvent = Object.assign({}, getEvent());
     const handler: BaseHandlerTest = new BaseHandlerTest();
     const output: APIGatewayProxyResult = await handler.requestHandler(
       baseEvent,
@@ -126,7 +126,7 @@ describe('Base handler suite', function () {
   });
 
   test('test when auth token is invalid', async () => {
-    let baseEvent: APIGatewayProxyEvent = Object.assign({}, this.getEvent());
+    let baseEvent: APIGatewayProxyEvent = Object.assign({}, getEvent());
     baseEvent.headers = {};
 
     const handler: BaseHandlerTest = new BaseHandlerTest();
@@ -139,7 +139,7 @@ describe('Base handler suite', function () {
   });
 
   test('test when jwt token is invalid', async () => {
-    let baseEvent: APIGatewayProxyEvent = Object.assign({}, this.getEvent());
+    let baseEvent: APIGatewayProxyEvent = Object.assign({}, getEvent());
     baseEvent.headers = {
       Authorization: '1234',
     };
@@ -154,7 +154,7 @@ describe('Base handler suite', function () {
   });
 
   test('test handler error propagation', async () => {
-    const baseEvent: APIGatewayProxyEvent = Object.assign({}, this.getEvent());
+    const baseEvent: APIGatewayProxyEvent = Object.assign({}, getEvent());
     const handler: BaseHandlerFailedTest = new BaseHandlerFailedTest();
     const output: APIGatewayProxyResult = await handler.requestHandler(
       baseEvent,
@@ -165,7 +165,7 @@ describe('Base handler suite', function () {
   });
 
   test('test handler lambda exception', async () => {
-    const baseEvent: APIGatewayProxyEvent = Object.assign({}, this.getEvent());
+    const baseEvent: APIGatewayProxyEvent = Object.assign({}, getEvent());
     const handler: BaseHandlerFailedLambdaException =
       new BaseHandlerFailedLambdaException();
     const output: APIGatewayProxyResult = await handler.requestHandler(
