@@ -1,7 +1,4 @@
-import {
-  connect,
-  getConnection,
-} from '../../src/client/mongodb/conn/MongodbMultiConn';
+import { connect, getConnection } from '../../src';
 import { DocumentManagerImpl, IDocument, IDocumentManager } from '../../src';
 
 describe(__filename, () => {

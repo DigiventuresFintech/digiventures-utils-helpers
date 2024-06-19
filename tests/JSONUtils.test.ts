@@ -1,4 +1,4 @@
-import { JSONUtils } from '../lib';
+import { JSONUtils } from '../src';
 
 describe('Suit for json difference method', function () {
   test('happy path', () => {

@@ -1,1 +1,0 @@
-{"version":3,"file":"TranslationsMangerImpl.js","sourceRoot":"","sources":["../../../../../src/client/mongodb/impl/translations/TranslationsMangerImpl.ts"],"names":[],"mappings":";;;AAAA,4FAAyF;AACzF,0DAGkC;AAGlC,yCAA2C;AAE3C,MAAa,sBACX,SAAQ,uDAAyC;IAGjD,YAAY,UAAuB;QACjC,KAAK,CAAC,IAAA,oBAAW,EAAC,cAAc,EAAE,sCAAwB,EAAE,UAAU,CAAC,CAAC,CAAC;IAC3E,CAAC;CACF;AAPD,wDAOC"}

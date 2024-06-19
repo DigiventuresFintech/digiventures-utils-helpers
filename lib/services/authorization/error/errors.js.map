@@ -1,1 +1,0 @@
-{"version":3,"file":"errors.js","sourceRoot":"","sources":["../../../../src/services/authorization/error/errors.ts"],"names":[],"mappings":";;;AAAA;;GAEG;AACH,MAAa,iBAAkB,SAAQ,KAAK;IAC1C;QACE,KAAK,EAAE,CAAC;QACR,IAAI,CAAC,OAAO,GAAG,cAAc,CAAC;IAChC,CAAC;IAED;;OAEG;IACH,IAAW,KAAK;QACd,OAAO,IAAI,CAAC,OAAO,CAAC;IACtB,CAAC;CACF;AAZD,8CAYC"}
