@@ -10,64 +10,10 @@ import { RequestInfo } from '../../../src';
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 
 describe('Base handler suite', function () {
-  const JWTUtil = new JWTAuthorization(
-    'bf4c1a0d46b76bd5210f8ffa9f810f1a6c9a2318b23a4acf385d4cfca6f58397',
-  );
-
-  const input = {
-    name: 'Juan',
-  };
-  const event: APIGatewayProxyEvent = {
-    httpMethod: 'get',
-    body: JSON.stringify(input),
-    headers: {
-      Authorization: JWTUtil.sign({}),
-    },
-    isBase64Encoded: false,
-    multiValueHeaders: {},
-    multiValueQueryStringParameters: {},
-    path: '/hello',
-    pathParameters: {},
-    queryStringParameters: {},
-    requestContext: {
-      accountId: '123456789012',
-      apiId: '1234',
-      authorizer: {},
-      httpMethod: 'get',
-      identity: {
-        accessKey: '',
-        accountId: '',
-        apiKey: '',
-        apiKeyId: '',
-        caller: '',
-        clientCert: {
-          clientCertPem: '',
-          issuerDN: '',
-          serialNumber: '',
-          subjectDN: '',
-          validity: { notAfter: '', notBefore: '' },
-        },
-        cognitoAuthenticationProvider: '',
-        cognitoAuthenticationType: '',
-        cognitoIdentityId: '',
-        cognitoIdentityPoolId: '',
-        principalOrgId: '',
-        sourceIp: '',
-        user: '',
-        userAgent: '',
-        userArn: '',
-      },
-      path: '/hello',
-      protocol: 'HTTP/1.1',
-      requestId: 'c6af9ac6-7b61-11e6-9a41-93e8deadbeef',
-      requestTimeEpoch: 1428582896000,
-      resourceId: '123456',
-      resourcePath: '/hello',
-      stage: 'dev',
-    },
-    resource: '',
-    stageVariables: {},
-  };
+  beforeEach(() => {
+    process.env.JWT_SECRET_TOKEN =
+      'bf4c1a0d46b76bd5210f8ffa9f810f1a6c9a2318b23a4acf385d4cfca6f58397';
+  });
 
   interface Input {
     name: string;
@@ -110,8 +56,66 @@ describe('Base handler suite', function () {
     }
   }
 
+  const getEvent = () => {
+    const input = {
+      name: 'Juan',
+    };
+    const event: APIGatewayProxyEvent = {
+      httpMethod: 'get',
+      body: JSON.stringify(input),
+      headers: {
+        Authorization: new JWTAuthorization().sign({}),
+      },
+      isBase64Encoded: false,
+      multiValueHeaders: {},
+      multiValueQueryStringParameters: {},
+      path: '/hello',
+      pathParameters: {},
+      queryStringParameters: {},
+      requestContext: {
+        accountId: '123456789012',
+        apiId: '1234',
+        authorizer: {},
+        httpMethod: 'get',
+        identity: {
+          accessKey: '',
+          accountId: '',
+          apiKey: '',
+          apiKeyId: '',
+          caller: '',
+          clientCert: {
+            clientCertPem: '',
+            issuerDN: '',
+            serialNumber: '',
+            subjectDN: '',
+            validity: { notAfter: '', notBefore: '' },
+          },
+          cognitoAuthenticationProvider: '',
+          cognitoAuthenticationType: '',
+          cognitoIdentityId: '',
+          cognitoIdentityPoolId: '',
+          principalOrgId: '',
+          sourceIp: '',
+          user: '',
+          userAgent: '',
+          userArn: '',
+        },
+        path: '/hello',
+        protocol: 'HTTP/1.1',
+        requestId: 'c6af9ac6-7b61-11e6-9a41-93e8deadbeef',
+        requestTimeEpoch: 1428582896000,
+        resourceId: '123456',
+        resourcePath: '/hello',
+        stage: 'dev',
+      },
+      resource: '',
+      stageVariables: {},
+    };
+    return event;
+  };
+
   test('test lambda authorized success', async () => {
-    const baseEvent: APIGatewayProxyEvent = Object.assign({}, event);
+    const baseEvent: APIGatewayProxyEvent = Object.assign({}, this.getEvent());
     const handler: BaseHandlerTest = new BaseHandlerTest();
     const output: APIGatewayProxyResult = await handler.requestHandler(
       baseEvent,
@@ -122,7 +126,7 @@ describe('Base handler suite', function () {
   });
 
   test('test when auth token is invalid', async () => {
-    let baseEvent: APIGatewayProxyEvent = Object.assign({}, event);
+    let baseEvent: APIGatewayProxyEvent = Object.assign({}, this.getEvent());
     baseEvent.headers = {};
 
     const handler: BaseHandlerTest = new BaseHandlerTest();
@@ -135,7 +139,7 @@ describe('Base handler suite', function () {
   });
 
   test('test when jwt token is invalid', async () => {
-    let baseEvent: APIGatewayProxyEvent = Object.assign({}, event);
+    let baseEvent: APIGatewayProxyEvent = Object.assign({}, this.getEvent());
     baseEvent.headers = {
       Authorization: '1234',
     };
@@ -150,7 +154,7 @@ describe('Base handler suite', function () {
   });
 
   test('test handler error propagation', async () => {
-    const baseEvent: APIGatewayProxyEvent = Object.assign({}, event);
+    const baseEvent: APIGatewayProxyEvent = Object.assign({}, this.getEvent());
     const handler: BaseHandlerFailedTest = new BaseHandlerFailedTest();
     const output: APIGatewayProxyResult = await handler.requestHandler(
       baseEvent,
@@ -161,7 +165,7 @@ describe('Base handler suite', function () {
   });
 
   test('test handler lambda exception', async () => {
-    const baseEvent: APIGatewayProxyEvent = Object.assign({}, event);
+    const baseEvent: APIGatewayProxyEvent = Object.assign({}, this.getEvent());
     const handler: BaseHandlerFailedLambdaException =
       new BaseHandlerFailedLambdaException();
     const output: APIGatewayProxyResult = await handler.requestHandler(
