@@ -7,7 +7,7 @@ describe('JWT utility class test', function () {
 
   it('verify', () => {
     const payload = JWTUtil.verify(
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSnVhbiIsImlhdCI6MTcxODc2MTEzMSwiZXhwIjoxNzE4NzY4MzMxfQ.Ihqt-aXaQGbk5NkmW9315fHNtdlydn9lVQ2tkYLl5HA',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSnVhbiIsImlhdCI6MTcxODgwMTEwNn0.7BhTdg59HPHmHMuW2Y051I13DVtOl6ghHGF9NXTarzk',
     );
     expect(payload.name).toEqual('Juan');
   });
@@ -16,6 +16,7 @@ describe('JWT utility class test', function () {
     const token = JWTUtil.sign({
       name: 'Juan',
     });
+    console.log(token);
     expect(token).not.toBeNull();
 
     const payload = JWTUtil.verify(token);
