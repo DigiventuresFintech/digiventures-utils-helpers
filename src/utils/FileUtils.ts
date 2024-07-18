@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { Readable } from 'stream';
 
 export class FileUtils {
   /**
@@ -73,3 +74,11 @@ export class FileUtils {
     return output.join('\n');
   }
 }
+
+export const streamToBuffer = (stream: Readable): Promise<Buffer> =>
+  new Promise((resolve, reject) => {
+    const chunks: any[] = [];
+    stream.on('data', chunk => chunks.push(chunk));
+    stream.on('end', () => resolve(Buffer.concat(chunks)));
+    stream.on('error', reject);
+  });

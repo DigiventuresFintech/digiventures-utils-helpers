@@ -2,8 +2,8 @@ import {
   CloudWatchLogsClient,
   CreateLogStreamCommand,
   PutLogEventsCommand,
+  PutLogEventsCommandInput,
 } from '@aws-sdk/client-cloudwatch-logs';
-import { PutLogEventsCommandInput } from '@aws-sdk/client-cloudwatch-logs/dist-types/commands/PutLogEventsCommand';
 import {
   CloudWatchClient,
   PutMetricDataCommand,

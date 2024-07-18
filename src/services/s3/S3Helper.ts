@@ -1,126 +1,52 @@
-import AWS from 'aws-sdk';
-import S3, {
-  GetObjectRequest,
-  ListObjectVersionsOutput,
-} from 'aws-sdk/clients/s3';
-import * as fs from 'fs';
-import { Credentials, CredentialsOptions } from 'aws-sdk/lib/credentials';
+import {
+  GetObjectCommand,
+  PutObjectCommand,
+  PutObjectCommandInput,
+  S3Client,
+  ObjectCannedACL,
+  HeadObjectCommand,
+  ListObjectVersionsCommand,
+} from '@aws-sdk/client-s3';
+import { Readable } from 'stream';
+import { streamToBuffer } from '../../utils/FileUtils';
 
 export class S3Helper {
   readonly aws_default_region: string = 'us-east-1';
-  readonly aws_default_profile_name: string = 'digiventures-operaciones-prod';
-  readonly s3Instance: S3;
+  readonly client: S3Client;
 
-  constructor(credentials?: Credentials | CredentialsOptions, region?: string) {
+  constructor(credentials?: any, region?: string) {
     if (credentials) {
-      this.s3Instance = new S3({
+      this.client = new S3Client({
         credentials: credentials,
         region: region || this.aws_default_region,
       });
     } else {
-      this.s3Instance = new S3({
+      this.client = new S3Client({
         region: region || this.aws_default_region,
       });
     }
   }
 
   /**
-   * Generate aws credentials by profile
-   * @returns Credentials object
-   */
-  private getCredentials(profile?: string): any {
-    return new AWS.SharedIniFileCredentials({
-      profile: profile || this.aws_default_profile_name,
-    });
-  }
-
-  /**
    * Async get file from S3
    * @param bucket_name Bucket name
    * @param bucket_key Bucket key
    * @returns S3 file data
    */
-  public async get_s3_file(
+  public async getObject(
     bucket_name: string,
     bucket_key: string,
-  ): Promise<any> {
+  ): Promise<Buffer> {
     try {
-      const data = await this.s3Instance
-        .getObject({
-          Bucket: bucket_name,
-          Key: bucket_key,
-        })
-        .promise();
-
-      return data.Body;
-    } catch (e) {
-      throw e;
-    }
-  }
-
-  /**
-   * Async get file from S3
-   * @param bucket_name Bucket name
-   * @param bucket_key Bucket key
-   * @param file_name
-   * @returns S3 file data
-   */
-  public async get_s3_file_buffer(
-    bucket_name: string,
-    bucket_key: string,
-    file_name: string,
-  ): Promise<any> {
-    try {
-      const params: GetObjectRequest = {
+      const command = new GetObjectCommand({
         Bucket: bucket_name,
         Key: bucket_key,
-      };
-
-      const file = fs.createWriteStream(file_name);
-      return new Promise<void>((resolve, reject) => {
-        this.s3Instance
-          .getObject(params)
-          .createReadStream()
-          .on('end', () => {
-            console.error('get_s3_file_buffer end success');
-            return resolve();
-          })
-          .on('error', error => {
-            console.error(`get_s3_file_buffer error + ${error}`);
-            return reject(error);
-          })
-          .pipe(file);
       });
-    } catch (e) {
-      console.error(`get_s3_file_buffer + ${e}`);
-      throw e;
-    }
-  }
 
-  /**
-   * Async get file from S3
-   * @param bucket_name Bucket name
-   * @param bucket_key Bucket key
-   * @param file_path
-   * @returns S3 file data
-   */
-  public async get_s3_file_as_zip(
-    bucket_name: string,
-    bucket_key: string,
-    file_path: string,
-  ): Promise<any> {
-    try {
-      console.log(`Creating writeable zip file ${file_path}`);
-      const data = await this.s3Instance
-        .getObject({
-          Bucket: bucket_name,
-          Key: bucket_key,
-        })
-        .promise();
-      console.log('File created');
-      return data;
+      const { Body } = await this.client.send(command);
+      const response = await Body?.transformToByteArray();
+      return Buffer.from(response!);
     } catch (e) {
-      console.error(`get_s3_file_as_zip + ${e}`);
       throw e;
     }
   }
@@ -133,51 +59,25 @@ export class S3Helper {
    * @param content_type
    * @param acl
    */
-  public async upload_s3_file(
+  public async putObject(
     bucket_name: string,
     bucket_key: string,
     file: Buffer,
     content_type = 'text/plain',
-    acl?: string,
+    acl?: ObjectCannedACL,
   ): Promise<any> {
     try {
-      return await this.s3Instance
-        .upload({
-          Bucket: bucket_name,
-          Key: bucket_key,
-          Body: file,
-          ContentType: content_type,
-          ACL: acl,
-        })
-        .promise();
-    } catch (error) {
-      throw new Error(`Could not upload file to S3: ${error}`);
-    }
-  }
+      const params: PutObjectCommandInput = {
+        Bucket: bucket_name,
+        Key: bucket_key,
+        Body: file,
+        ContentType: content_type,
+        ACL: acl,
+      };
 
-  /**
-   * Upload a file stream onto AWS S3
-   * @param bucket_name Name of the bucket
-   * @param bucket_key Key of the file to be uploaded
-   * @param file_path
-   * @param content_type
-   */
-  public async upload_s3_file_path(
-    bucket_name: string,
-    bucket_key: string,
-    file_path: string,
-    content_type = 'text/plain',
-  ): Promise<any> {
-    try {
-      const stream = fs.createReadStream(file_path);
-      return await this.s3Instance
-        .upload({
-          Bucket: bucket_name,
-          Key: bucket_key,
-          ContentType: content_type,
-          Body: stream,
-        })
-        .promise();
+      const command = new PutObjectCommand(params);
+
+      return await this.client.send(command);
     } catch (error) {
       throw new Error(`Could not upload file to S3: ${error}`);
     }
@@ -188,23 +88,25 @@ export class S3Helper {
    * @param bucket_name
    * @param bucket_key
    */
-  public s3_file_exist = async (bucket_name: string, bucket_key: string) => {
+  public async s3_file_exist(
+    bucket_name: string,
+    bucket_key: string,
+  ): Promise<boolean> {
     try {
-      await this.s3Instance
-        .headObject({
-          Bucket: bucket_name,
-          Key: bucket_key,
-        })
-        .promise();
+      const command = new HeadObjectCommand({
+        Bucket: bucket_name,
+        Key: bucket_key,
+      });
+
+      await this.client.send(command);
       return true;
     } catch (err) {
-      // @ts-ignore
-      if (err.code === 'NotFound') {
+      if (err instanceof Error && err.name === 'NotFound') {
         return false;
       }
       throw err;
     }
-  };
+  }
 
   public async get_file_by_version(
     bucket_name: string,
@@ -212,9 +114,11 @@ export class S3Helper {
     version?: string,
   ): Promise<any> {
     try {
-      const listObjectVersionsResponse = await this.s3Instance
-        .listObjectVersions({ Bucket: bucket_name, Prefix: bucket_key })
-        .promise();
+      const listCommand = new ListObjectVersionsCommand({
+        Bucket: bucket_name,
+        Prefix: bucket_key,
+      });
+      const listObjectVersionsResponse = await this.client.send(listCommand);
 
       let targetVersion;
 
@@ -244,37 +148,18 @@ export class S3Helper {
         throw new Error(`latest s3 file version not found`);
       }
 
-      const getObjectResponse = await this.s3Instance
-        .getObject({
-          Bucket: bucket_name,
-          Key: targetVersion.Key!,
-          VersionId: targetVersion.VersionId!,
-        })
-        .promise();
-      return getObjectResponse.Body;
+      const getObjectCommand = new GetObjectCommand({
+        Bucket: bucket_name,
+        Key: targetVersion.Key!,
+        VersionId: targetVersion.VersionId!,
+      });
+
+      const getObjectResponse = await this.client.send(getObjectCommand);
+
+      return streamToBuffer(getObjectResponse.Body as Readable);
     } catch (error) {
       console.error('error get_file_by_version', error);
       throw error;
-    }
-  }
-
-  public async putObject(
-    bucket: string,
-    key: string,
-    file: Buffer,
-    content_type = 'application/json',
-  ): Promise<any> {
-    try {
-      return await this.s3Instance
-        .putObject({
-          Bucket: bucket,
-          Key: key,
-          Body: file,
-          ContentType: content_type,
-        })
-        .promise();
-    } catch (error) {
-      throw new Error(`PutObject method error: ${error}`);
     }
   }
 
@@ -282,17 +167,17 @@ export class S3Helper {
     bucket: string,
     key: string,
     versionId: string,
-  ): Promise<any> {
+  ): Promise<Buffer> {
     try {
-      const getObjectResponse = await this.s3Instance
-        .getObject({
-          Bucket: bucket,
-          Key: key,
-          VersionId: versionId,
-        })
-        .promise();
+      const getObjectCommand = new GetObjectCommand({
+        Bucket: bucket,
+        Key: key,
+        VersionId: versionId,
+      });
 
-      return getObjectResponse.Body;
+      const getObjectResponse = await this.client.send(getObjectCommand);
+
+      return streamToBuffer(getObjectResponse.Body as Readable);
     } catch (error) {
       console.error('error getObjectByVersionId', error);
       throw error;

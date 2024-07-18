@@ -1,10 +1,10 @@
-import { SQS } from 'aws-sdk';
+import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs';
 
 export class SqsHelper {
-  private runner: SQS;
+  private runner: SQSClient;
 
   constructor() {
-    this.runner = new SQS({
+    this.runner = new SQSClient({
       apiVersion: '2012-11-05',
       region: 'us-east-1',
     });
@@ -17,16 +17,15 @@ export class SqsHelper {
       QueueUrl: arn,
     };
 
-    return new Promise(async (resolve, reject) => {
-      this.runner.sendMessage(params, (err, data) => {
-        if (err) {
-          console.error('Sqs send message error...', err);
-          reject(err);
-        }
-        console.log('Sqs send message successfully', data);
-        resolve(data);
-      });
-    });
+    try {
+      const command = new SendMessageCommand(params);
+      const data = await this.runner.send(command);
+      console.log('Sqs send message successfully', data);
+      return data;
+    } catch (err) {
+      console.error('Sqs send message error...', err);
+      throw err;
+    }
   }
 
   async sendFifo(arn: string, input: any, groupId: string): Promise<any> {
@@ -37,15 +36,14 @@ export class SqsHelper {
       QueueUrl: arn,
     };
 
-    return new Promise(async (resolve, reject) => {
-      this.runner.sendMessage(params, (err, data) => {
-        if (err) {
-          console.error('Sqs send message error...', err);
-          reject(err);
-        }
-        console.log('Sqs send message successfully', data);
-        resolve(data);
-      });
-    });
+    try {
+      const command = new SendMessageCommand(params);
+      const data = await this.runner.send(command);
+      console.log('Sqs send message successfully', data);
+      return data;
+    } catch (err) {
+      console.error('Sqs send message error...', err);
+      throw err;
+    }
   }
 }
