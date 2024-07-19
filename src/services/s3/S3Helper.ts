@@ -58,21 +58,28 @@ export class S3Helper {
    * @param file Stream file buffer to be uploaded
    * @param content_type
    * @param acl
+   * @param metadata
    */
   public async putObject(
     bucket_name: string,
     bucket_key: string,
     file: Buffer,
     content_type = 'text/plain',
-    acl?: ObjectCannedACL,
+    acl?: string,
+    metadata?: Record<string, string>,
   ): Promise<any> {
     try {
+      const ACL: ObjectCannedACL = acl
+        ? (acl as ObjectCannedACL)
+        : ObjectCannedACL.private;
+
       const params: PutObjectCommandInput = {
         Bucket: bucket_name,
         Key: bucket_key,
         Body: file,
         ContentType: content_type,
-        ACL: acl,
+        ACL,
+        Metadata: metadata,
       };
 
       const command = new PutObjectCommand(params);
