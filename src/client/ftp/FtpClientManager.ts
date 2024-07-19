@@ -8,6 +8,8 @@ export class FtpClientManager implements IFtpClientManager {
   private workingDirectory: string;
 
   constructor(options: any) {
+    const log = options.logger || console.log;
+
     const timeout = options?.timeout
       ? parseInt(options.timeout)
       : undefined ?? 60000;
@@ -18,10 +20,10 @@ export class FtpClientManager implements IFtpClientManager {
     this.workingDirectory = '';
     this.client.ftp.verbose = true;
     this.client.trackProgress(info => {
-      console.log('File', info.name);
-      console.log('Type', info.type);
-      console.log('Transferred', info.bytes);
-      console.log('Transferred Overall', info.bytesOverall);
+      log(`File: ${info.name}`);
+      log(`Type: ${info.type}`);
+      log(`Transferred: ${info.bytes}`);
+      log(`Transferred Overall: ${info.bytesOverall}`);
     });
   }
 

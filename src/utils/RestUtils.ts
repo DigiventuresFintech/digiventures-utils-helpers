@@ -75,7 +75,7 @@ export class RestUtils {
     const s3Helper: S3Helper = new S3Helper();
     let response: any;
     try {
-      response = await s3Helper.get_s3_file(bucketName, bucketKey);
+      response = await s3Helper.getObject(bucketName, bucketKey);
     } catch (e) {
       console.error(e);
       throw e;

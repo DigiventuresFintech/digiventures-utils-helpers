@@ -149,8 +149,21 @@ export class BaseMongooseRepositoryImpl<T extends object>
     const projection: any = {};
 
     fields.forEach(field => {
-      projection[field] = 1;
+      const parts = field.split('.');
+      let current = projection;
+
+      parts.forEach((part, index) => {
+        if (index === parts.length - 1) {
+          current[part] = 1;
+        } else {
+          if (!current[part] || typeof current[part] !== 'object') {
+            current[part] = {};
+          }
+          current = current[part];
+        }
+      });
     });
+
     return projection;
   };
 }
