@@ -54,6 +54,7 @@ export interface IDocument extends mongoose.Document {
   installmentValue: number;
   userDeviceInfo: Schema.Types.Mixed;
   createdAt: Date;
+  updatedAt: Date;
   /*
     location: {
         accuracy: number,
@@ -370,6 +371,7 @@ export const CreateDocumentSchema = (encryption: any): Schema => {
       default: () => nanoid(12),
     },
     createdAt: Date,
+    updatedAt: Date,
     userId: String,
     userIp: String,
     tenantId: String,
