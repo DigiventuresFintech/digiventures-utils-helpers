@@ -42,7 +42,7 @@ export class FileUtils {
   public static generateCSV(csv: string, data: any): string {
     const lines: string[] = csv.split('\n');
 
-    if (lines.length !== 2) {
+    if (lines.length < 2) {
       throw new Error('CSV is invalid');
     }
 
@@ -56,8 +56,7 @@ export class FileUtils {
 
       for (const field of fields) {
         const value = _.get(data, field, '');
-        const trimmedValued = typeof value === 'string' ? value.trim() : value;
-        outputLine += trimmedValued + ',';
+        outputLine += value.trim() + ',';
       }
 
       return outputLine.substring(0, outputLine.length - 1);
