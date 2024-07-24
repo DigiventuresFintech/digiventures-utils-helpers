@@ -8,7 +8,7 @@ interface LambdaResponse {
   body: string;
 }
 
-export abstract class BaseHandlerAuthenticator<I, O>
+export abstract class ApiGatewayBaseHandler<I, O>
   implements IRequestHandler<I, LambdaResponse>
 {
   /**

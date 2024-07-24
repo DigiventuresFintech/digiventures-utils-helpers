@@ -49,8 +49,7 @@ export abstract class BaseHandlerAuthenticator<I, O>
     } catch (error: any) {
       console.error('lambda execution error', error);
       if (isLambdaError(error)) {
-        console.error(error.trace);
-        return error.buildApiResponse;
+        return error.buildApiResponse();
       }
       return this.buildExceptionError(error);
     }
