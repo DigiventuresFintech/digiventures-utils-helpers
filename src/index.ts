@@ -25,6 +25,7 @@ export * from './services/lambda/handler/IRequestHandler';
 
 export * from './services/lambda/handler/RequestInfo';
 export * from './services/lambda/handler/ApiGatewayRequestInfo';
+export * from './services/lambda/handler/LambdaResponse';
 
 export * from './services/lambda/authenticator/IAuthenticator';
 export * from './services/cloudwatch/CloudwatchService';
