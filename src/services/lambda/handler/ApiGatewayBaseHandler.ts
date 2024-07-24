@@ -3,11 +3,7 @@ import isLambdaError from '../../authorization/error/utils';
 import { RequestInfo } from './RequestInfo';
 import { LambdaException } from '../errors/LambdaException';
 import { Context } from 'aws-lambda';
-
-interface LambdaResponse {
-  httpStatus: number;
-  body: string;
-}
+import { LambdaResponse } from './LambdaResponse';
 
 export abstract class ApiGatewayBaseHandler<I, O>
   implements IRequestHandler<I, LambdaResponse>
