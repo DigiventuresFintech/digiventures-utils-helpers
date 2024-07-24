@@ -48,7 +48,7 @@ describe('Base handler suite', function () {
     Output
   > {
     handler(input: RequestInfo<Input>): Promise<Output> {
-      throw new LambdaException(`error`, 154, { name: 'juan' });
+      throw new LambdaException(`error`, 154, 1);
     }
 
     getAuthenticator(): IAuthenticator {
@@ -171,10 +171,9 @@ describe('Base handler suite', function () {
     const output: APIGatewayProxyResult = await handler.requestHandler(
       baseEvent,
     );
+    console.log(output);
     expect(output).not.toBeUndefined();
-    expect(output.statusCode).toEqual(400);
-    expect(output.body).toEqual(
-      '{"message":"error","internalError":154,"body":"{\\"name\\":\\"juan\\"}"}',
-    );
+    expect(output.statusCode).toEqual(154);
+    expect(output.body).toEqual('{"message":"error","code":1}');
   });
 });
