@@ -32,6 +32,7 @@ export * from './services/cloudwatch/CloudwatchService';
 export * from './services/lambda/handler/BaseHandlerAuthenticator';
 export * from './services/lambda/handler/SQSBaseHandler';
 export * from './services/lambda/errors/LambdaException';
+export * from './services/lambda/handler/ApiGatewayBaseHandler';
 
 export * from './internal/ApiWebhooksService';
 export * from './internal/ApiTenantService';
