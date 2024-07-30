@@ -64,12 +64,23 @@ export class RestUtils {
     }
 
     const regex = /(https:\/\/s3.amazonaws.com)(\/.*?\/)(.*)/;
-    const matchedUrl = document.match(regex);
-    if (!matchedUrl) {
-      throw new Error('Error match s3 utl');
+    const bucketInSubdomainRegex = /https:\/\/(.*)\.s3\.amazonaws\.com\/(.*)/;
+
+    let matchedUrl = document.match(bucketInSubdomainRegex);
+
+    let bucketName
+    let bucketKey
+    if (matchedUrl) {
+    bucketName = matchedUrl[1];
+    bucketKey = matchedUrl[2];
+  } else {
+      matchedUrl = document.match(regex);
+      if (!matchedUrl) {
+        throw new Error('Error match s3 url');
+      }
+      bucketName = matchedUrl[2].replace(/\//g, '');
+      bucketKey = matchedUrl[3];
     }
-    const bucketName = matchedUrl[2].replace(/\//g, '');
-    const bucketKey = matchedUrl[3];
     console.log('get from bucket and key', bucketName, bucketKey);
 
     const s3Helper: S3Helper = new S3Helper();
