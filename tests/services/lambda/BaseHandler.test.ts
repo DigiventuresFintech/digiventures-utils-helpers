@@ -7,13 +7,34 @@ import {
 } from '../../../src';
 import { IAuthenticator } from '../../../src';
 import { RequestInfo } from '../../../src';
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
+import {
+  APIGatewayProxyEvent,
+  APIGatewayProxyResult,
+  Context,
+} from 'aws-lambda';
 
 describe('Base handler suite', function () {
   beforeEach(() => {
     process.env.JWT_SECRET_TOKEN =
       'bf4c1a0d46b76bd5210f8ffa9f810f1a6c9a2318b23a4acf385d4cfca6f58397';
   });
+
+  const context: Context = {
+    done(error?: Error, result?: any): void {},
+    fail(error: Error | string): void {},
+    getRemainingTimeInMillis(): number {
+      return 0;
+    },
+    succeed(message: any, object?: any): void {},
+    callbackWaitsForEmptyEventLoop: true,
+    functionName: '',
+    functionVersion: '',
+    invokedFunctionArn: '',
+    memoryLimitInMB: '',
+    awsRequestId: '',
+    logGroupName: '',
+    logStreamName: '',
+  };
 
   interface Input {
     name: string;
@@ -119,6 +140,7 @@ describe('Base handler suite', function () {
     const handler: BaseHandlerTest = new BaseHandlerTest();
     const output: APIGatewayProxyResult = await handler.requestHandler(
       baseEvent,
+      context,
     );
     expect(output).not.toBeUndefined();
     expect(output.statusCode).toEqual(200);
@@ -132,6 +154,7 @@ describe('Base handler suite', function () {
     const handler: BaseHandlerTest = new BaseHandlerTest();
     const output: APIGatewayProxyResult = await handler.requestHandler(
       baseEvent,
+      context,
     );
     expect(output).not.toBeUndefined();
     expect(output.statusCode).toEqual(401);
@@ -147,6 +170,7 @@ describe('Base handler suite', function () {
     const handler: BaseHandlerTest = new BaseHandlerTest();
     const output: APIGatewayProxyResult = await handler.requestHandler(
       baseEvent,
+      context,
     );
     expect(output).not.toBeUndefined();
     expect(output.statusCode).toEqual(401);
@@ -158,6 +182,7 @@ describe('Base handler suite', function () {
     const handler: BaseHandlerFailedTest = new BaseHandlerFailedTest();
     const output: APIGatewayProxyResult = await handler.requestHandler(
       baseEvent,
+      context,
     );
     expect(output).not.toBeUndefined();
     expect(output.statusCode).toEqual(400);
@@ -170,6 +195,7 @@ describe('Base handler suite', function () {
       new BaseHandlerFailedLambdaException();
     const output: APIGatewayProxyResult = await handler.requestHandler(
       baseEvent,
+      context,
     );
     console.log(output);
     expect(output).not.toBeUndefined();
