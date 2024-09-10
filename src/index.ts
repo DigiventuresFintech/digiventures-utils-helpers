@@ -90,3 +90,6 @@ export * from './utils/common';
 export * from './client/docker/DockerRunner';
 export * from './client/docker/docker.types';
 export * from './services/bigquery/BigQueryService';
+
+export * from './services/ssm/ssm';
+export * from './services/ec2/ec2';

@@ -1,6 +1,6 @@
 {
   "name": "@digiventures.stack/utils-helper",
-  "version": "2.0.9",
+  "version": "2.0.10",
   "publishConfig": {
     "access": "public"
   },
@@ -18,9 +18,11 @@
   "dependencies": {
     "@aws-sdk/client-cloudwatch": "^3.445.0",
     "@aws-sdk/client-cloudwatch-logs": "^3.425.0",
+    "@aws-sdk/client-ec2": "^3.641.0",
     "@aws-sdk/client-s3": "^3.614.0",
     "@aws-sdk/client-secrets-manager": "^3.620.1",
     "@aws-sdk/client-sqs": "^3.614.0",
+    "@aws-sdk/client-ssm": "^3.637.0",
     "@aws-sdk/client-sts": "^3.614.0",
     "@elastic/elasticsearch": "7.9.0",
     "@google-cloud/bigquery": "^7.7.1",
