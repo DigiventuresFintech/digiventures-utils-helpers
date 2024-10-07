@@ -5,13 +5,13 @@ import {
 } from '../../models/Translation';
 import { IBaseRepository } from '../../repository/IBaseRepository';
 import { Connection } from 'mongoose';
-import { createModel } from '../../common';
+import { CreateModel } from '../../common';
 
 export class TranslationsMangerImpl
   extends BaseMongooseRepositoryImpl<ITranslations>
   implements IBaseRepository<ITranslations>
 {
   constructor(connection?: Connection) {
-    super(createModel('translations', CreateTranslationsSchema, connection));
+    super(CreateModel('translations', CreateTranslationsSchema, connection));
   }
 }

@@ -1,7 +1,7 @@
 import { BaseMongooseRepositoryImpl } from '../../repository/BaseMongooseRepositoryImpl';
 import { IDocumentManager } from './IDocumentManager';
 import { Connection } from 'mongoose';
-import { createModel } from '../../common';
+import { CreateModel } from '../../common';
 import { CreateDocumentSchema, IDocument } from '../../models/Document';
 
 export class DocumentManagerImpl
@@ -10,7 +10,7 @@ export class DocumentManagerImpl
 {
   constructor(connection?: Connection) {
     super(
-      createModel(
+      CreateModel(
         'legajos',
         encryption => CreateDocumentSchema(encryption),
         connection,
@@ -19,14 +19,6 @@ export class DocumentManagerImpl
   }
 
   async getById(id: string, options?: any): Promise<IDocument> {
-    if (options?.projection && typeof options.projection === 'string') {
-      const projection = options.projection;
-      options = {
-        ...options,
-        projection: this.convertStringToProjection(projection),
-      };
-    }
-
     return await super.getById(id, options);
   }
 
@@ -34,14 +26,6 @@ export class DocumentManagerImpl
     condition: Record<string, any>,
     options?: any,
   ): Promise<IDocument> {
-    if (options?.projection && typeof options.projection === 'string') {
-      const projection = options.projection;
-      options = {
-        ...options,
-        projection: this.convertStringToProjection(projection),
-      };
-    }
-
     return await super.findOne(condition, options);
   }
 
@@ -49,14 +33,6 @@ export class DocumentManagerImpl
     condition: Record<string, any>,
     options?: any,
   ): Promise<IDocument[]> {
-    if (options?.projection && typeof options.projection === 'string') {
-      const projection = options.projection;
-      options = {
-        ...options,
-        projection: this.convertStringToProjection(projection),
-      };
-    }
-
     return super.getBy(condition, options);
   }
 
@@ -65,14 +41,6 @@ export class DocumentManagerImpl
     params: Record<string, any>,
     options?: any,
   ): Promise<IDocument> {
-    if (options?.projection && typeof options.projection === 'string') {
-      const projection = options.projection;
-      options = {
-        ...options,
-        projection: this.convertStringToProjection(projection),
-      };
-    }
-
     return await super.updateOne(condition, params, options);
   }
 
@@ -81,14 +49,6 @@ export class DocumentManagerImpl
     params: Record<string, any>,
     options?: any,
   ): Promise<IDocument> {
-    if (options?.projection && typeof options.projection === 'string') {
-      const projection = options.projection;
-      options = {
-        ...options,
-        projection: this.convertStringToProjection(projection),
-      };
-    }
-
     return await super.findOneAndUpdate(condition, params, options);
   }
 }

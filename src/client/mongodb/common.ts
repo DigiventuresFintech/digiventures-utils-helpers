@@ -1,7 +1,7 @@
 import mongoose, { Connection, Model, Schema } from 'mongoose';
 import mongooseLeanGetters from 'mongoose-lean-getters';
 
-export function createModel<T extends mongoose.Document>(
+export function CreateModel<T extends mongoose.Document>(
   modelName: string,
   createSchema: (encryption?: any) => Schema,
   connection?: Connection,

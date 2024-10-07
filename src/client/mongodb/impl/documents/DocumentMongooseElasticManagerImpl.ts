@@ -2,7 +2,7 @@ import { BaseMongooseRepositoryImpl } from '../../repository/BaseMongooseReposit
 import { CreateDocumentSchema, IDocument } from '../../models/Document';
 import { IDocumentManager } from './IDocumentManager';
 import { Connection } from 'mongoose';
-import { createModel } from '../../common';
+import { CreateModel } from '../../common';
 import { IElasticDocumentManager } from '../../../elasticsearch/manager/IElasticDocumentManager';
 
 export class DocumentMongooseElasticManagerImpl
@@ -14,7 +14,7 @@ export class DocumentMongooseElasticManagerImpl
     connection?: Connection,
   ) {
     super(
-      createModel(
+      CreateModel(
         'legajos',
         encryption => CreateDocumentSchema(encryption),
         connection,
@@ -23,14 +23,6 @@ export class DocumentMongooseElasticManagerImpl
   }
 
   async getById(id: string, options?: any): Promise<IDocument> {
-    if (options?.projection && typeof options.projection === 'string') {
-      const projection = options.projection;
-      options = {
-        ...options,
-        projection: this.convertStringToProjection(projection),
-      };
-    }
-
     return await super.getById(id, options);
   }
 
@@ -38,14 +30,6 @@ export class DocumentMongooseElasticManagerImpl
     condition: Record<string, any>,
     options?: any,
   ): Promise<IDocument> {
-    if (options?.projection && typeof options.projection === 'string') {
-      const projection = options.projection;
-      options = {
-        ...options,
-        projection: this.convertStringToProjection(projection),
-      };
-    }
-
     return await super.findOne(condition, options);
   }
 
@@ -53,14 +37,6 @@ export class DocumentMongooseElasticManagerImpl
     condition: Record<string, any>,
     options?: any,
   ): Promise<IDocument[]> {
-    if (options?.projection && typeof options.projection === 'string') {
-      const projection = options.projection;
-      options = {
-        ...options,
-        projection: this.convertStringToProjection(projection),
-      };
-    }
-
     return super.getBy(condition, options);
   }
 
@@ -70,14 +46,6 @@ export class DocumentMongooseElasticManagerImpl
     options?: any,
   ): Promise<IDocument> {
     options = { ...options, new: true };
-
-    if (options?.projection && typeof options.projection === 'string') {
-      const projection = options.projection;
-      options = {
-        ...options,
-        projection: this.convertStringToProjection(projection),
-      };
-    }
 
     const result = await super.findOneAndUpdate(condition, params, options);
     try {
@@ -103,14 +71,6 @@ export class DocumentMongooseElasticManagerImpl
     options?: any,
   ): Promise<IDocument> {
     options = { ...options, new: true };
-
-    if (options?.projection && typeof options.projection === 'string') {
-      const projection = options.projection;
-      options = {
-        ...options,
-        projection: this.convertStringToProjection(projection),
-      };
-    }
 
     const result = await super.updateOne(condition, params, options);
     try {

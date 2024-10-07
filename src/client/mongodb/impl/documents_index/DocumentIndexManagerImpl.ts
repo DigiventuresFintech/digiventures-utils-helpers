@@ -2,7 +2,7 @@ import { BaseMongooseRepositoryImpl } from '../../repository/BaseMongooseReposit
 import { IDocumentIndexManager } from './IDocumentIndexManager';
 import { IDocumentIndex } from '../../models/DocumentIndex';
 import mongoose, { Connection, Schema } from 'mongoose';
-import { createModel } from '../../common';
+import { CreateModel } from '../../common';
 
 export class DocumentIndexManagerImpl
   extends BaseMongooseRepositoryImpl<IDocumentIndex>
@@ -10,7 +10,7 @@ export class DocumentIndexManagerImpl
 {
   constructor(connection?: Connection) {
     super(
-      createModel(
+      CreateModel(
         'documents_index',
         () => {
           return new Schema(
