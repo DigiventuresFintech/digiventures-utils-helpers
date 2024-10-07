@@ -61,7 +61,7 @@ export interface ValidationRequiredFields {
  * ```
  */
 export abstract class AbstractValidator {
-  private readonly validations: ValidationMap;
+  readonly validations: ValidationMap;
 
   protected constructor() {
     this.validations = new Map();

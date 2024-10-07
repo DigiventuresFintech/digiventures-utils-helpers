@@ -19,6 +19,14 @@ export class BaseMongooseRepositoryImpl<T extends object>
   }
 
   async getById(id: string, options?: any): Promise<T> {
+    if (options?.projection && typeof options.projection === 'string') {
+      const projection = options.projection;
+      options = {
+        ...options,
+        projection: this.convertStringToProjection(projection),
+      };
+    }
+
     const entity = await this.model
       .findOne(
         { _id: id } as FilterQuery<T>,
@@ -35,6 +43,14 @@ export class BaseMongooseRepositoryImpl<T extends object>
   }
 
   async findOne(condition: Record<string, any>, options?: any): Promise<T> {
+    if (options?.projection && typeof options.projection === 'string') {
+      const projection = options.projection;
+      options = {
+        ...options,
+        projection: this.convertStringToProjection(projection),
+      };
+    }
+
     const entity = await this.model
       .findOne(
         condition as FilterQuery<T>,
@@ -51,6 +67,14 @@ export class BaseMongooseRepositoryImpl<T extends object>
   }
 
   async getBy(condition: Record<string, any>, options?: any): Promise<T[]> {
+    if (options?.projection && typeof options.projection === 'string') {
+      const projection = options.projection;
+      options = {
+        ...options,
+        projection: this.convertStringToProjection(projection),
+      };
+    }
+
     try {
       const entity = await this.model
         .find(
