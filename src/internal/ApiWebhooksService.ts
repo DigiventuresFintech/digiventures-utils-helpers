@@ -13,7 +13,7 @@ export class ApiWebhooksService {
       workspace: options?.workspace || '62195d46c8b99af141555eb6',
     });
 
-    const url = `${this.API_WEBHOOKS_BASE_URL}/1.0/legajo/`;
+    const url = `${this.API_WEBHOOKS_BASE_URL}/1.0/legajo`;
     let response = null;
     try {
       response = await axios.post(url, data, {
