@@ -5,6 +5,7 @@ export interface Trigger extends mongoose.Document {
   source: string;
   action: string;
   notifierId: mongoose.Types.ObjectId;
+  def: string;
   validations: any;
   validations_keys?: string[];
   external_validations_keys?: string[];
@@ -105,6 +106,10 @@ export const CreateTriggerSchema = () => {
     },
     notifierId: {
       type: mongoose.Schema.Types.ObjectId,
+      required: true,
+    },
+    def: {
+      type: String,
       required: true,
     },
     validations: {
