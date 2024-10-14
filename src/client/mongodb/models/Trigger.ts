@@ -1,11 +1,14 @@
 import mongoose, { Schema } from 'mongoose';
 
 export interface Trigger extends mongoose.Document {
-  provider: string;
+  providerId: mongoose.Types.ObjectId;
   source: string;
   action: string;
-  notifierId: mongoose.Types.ObjectId;
-  def: string;
+  notification: {
+    notifierId: mongoose.Types.ObjectId;
+    def: string;
+    data?: any;
+  };
   validations: any;
   validations_keys?: string[];
   external_validations_keys?: string[];
@@ -18,21 +21,6 @@ export interface ReferenceKeyFormat {
 }
 
 export type ExternalReferenceFormat = Record<string, string>;
-
-export function getValidationKeys(trigger: Trigger): void {
-  trigger.validations_keys = [];
-
-  if (trigger.validations) {
-    try {
-      const validationsString = JSON.stringify(trigger.validations);
-
-      let match;
-      while ((match = /"var":\s*"([^"]+)"/g.exec(validationsString)) !== null) {
-        trigger.validations_keys.push(match[1]);
-      }
-    } catch (_) {}
-  }
-}
 
 export function mergeValidationsKeys(
   triggers: Trigger[],
@@ -92,8 +80,8 @@ export function mergeExternalValidationsKeys(
 
 export const CreateTriggerSchema = () => {
   return new Schema({
-    provider: {
-      type: String,
+    providerId: {
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
     },
     source: {
@@ -104,13 +92,16 @@ export const CreateTriggerSchema = () => {
       type: String,
       required: true,
     },
-    notifierId: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-    },
-    def: {
-      type: String,
-      required: true,
+    notification: {
+      notifierId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+      },
+      def: {
+        type: String,
+        required: true,
+      },
+      data: { type: Schema.Types.Mixed },
     },
     validations: {
       type: Schema.Types.Mixed,
