@@ -152,7 +152,7 @@ export class BaseMongooseRepositoryImpl<T extends object>
 
   async insertMany(documents: any[]): Promise<any> {
     try {
-      const result = await this.model.insertMany(documents);
+      const result = await this.model.insertMany(documents, { lean: true });
       return result as any[];
     } catch (error) {
       throw new Error('Error inserting documents');
