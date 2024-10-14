@@ -12,7 +12,7 @@ export class TriggerManagerImpl
     super(CreateModel('triggers', CreateTriggerSchema, connection));
   }
 
-  async createTrigger(trigger: Trigger): Promise<void> {
+  async createTrigger(trigger: Trigger): Promise<any[]> {
     let results = [];
     try {
       results = await this.insertMany([trigger]);
