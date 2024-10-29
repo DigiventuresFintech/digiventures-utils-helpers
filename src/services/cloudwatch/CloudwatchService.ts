@@ -75,4 +75,14 @@ export class CloudwatchService {
       throw error;
     }
   }
+
+  public async putMetric(params: any): Promise<any> {
+    try {
+      const command = new PutMetricDataCommand(params);
+      return await this.metricsClient.send(command);
+    } catch (error) {
+      console.error('error method', this.putMetric.name, error);
+      throw error;
+    }
+  }
 }
