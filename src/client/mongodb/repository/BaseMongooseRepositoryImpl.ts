@@ -155,7 +155,7 @@ export class BaseMongooseRepositoryImpl<T extends object>
       const result = await this.model.insertMany(documents, { lean: true });
       return result as any[];
     } catch (error) {
-      throw new Error('Error inserting documents');
+      throw error;
     }
   }
 
@@ -164,7 +164,7 @@ export class BaseMongooseRepositoryImpl<T extends object>
       const result = await this.model.deleteMany(conditions).lean();
       return result as unknown as any[];
     } catch (error) {
-      throw new Error('Error deleting documents');
+      throw error;
     }
   }
 
