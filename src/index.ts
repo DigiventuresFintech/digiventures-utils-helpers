@@ -38,6 +38,7 @@ export * from './services/lambda/handler/ApiGatewayBaseHandler';
 export * from './internal/ApiWebhooksService';
 export * from './internal/ApiTenantService';
 export * from './internal/ApiDocumentsService';
+export * from './internal/ApiBuyerService';
 
 export * from './rest/common';
 export * from './dto/AbstractValidator';
