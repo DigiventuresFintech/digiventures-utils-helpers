@@ -1,4 +1,3 @@
-import { JSONUtils } from '../utils/JSONUtils';
 import axios from 'axios';
 
 interface QueryParams {
@@ -78,15 +77,9 @@ export class ApiBuyerService {
         filter = '{}',
       } = queryParams;
 
-      let parsedFilter = JSON.parse(filter);
-      if (user.role !== 'SuperAdministrador') {
-        parsedFilter['owners._id'] = user._id;
-      }
-      const filterString = JSON.stringify(parsedFilter);
-
       const { data } = await axios.get(
         `${this.API_DOCUMENTS_BASE_URL}/buyers?filter=${encodeURIComponent(
-          filterString,
+          filter,
         )}&sort=${sort}&fields=${fields}&page=${page}&limit=${limit}`,
         {
           headers: { workspace },
@@ -125,14 +118,12 @@ export class ApiBuyerService {
         error.response?.data?.message ||
         'Error en la actualización del comprador';
 
-      const errorResponse: ErrorResponse = {
+      throw {
         code: error.response?.data?.code || 'UNKNOWN_ERROR',
         message: errorMessage,
         reason: error.response?.data?.reason || 'No reason provided',
         buyer: error.response?.data?.buyer || null,
       };
-
-      throw errorResponse;
     }
   }
 
