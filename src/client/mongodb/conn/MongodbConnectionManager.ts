@@ -3,15 +3,20 @@ import mongoose, { Connection } from 'mongoose';
 export class MongodbConnectionManager {
   private clusterPool: Map<string, Connection>;
   private dbClusterMap: Map<string, string>;
+  private dbCredentials: Map<string, any>;
 
   constructor() {
     this.clusterPool = new Map();
     this.dbClusterMap = new Map();
+    this.dbCredentials = new Map();
   }
 
-  async init(clusters: string[]): Promise<void> {
+  async init(clusters: string[], credentials: any = {}): Promise<void> {
     for (const cluster of clusters) {
       await this.generateDbClusterMapping(cluster);
+    }
+    for (const [key, value] of Object.entries(credentials)) {
+      this.dbCredentials.set(key, value);
     }
   }
 
@@ -21,7 +26,13 @@ export class MongodbConnectionManager {
       throw new Error(`No cluster URI found for database: ${dbName}`);
     }
 
-    const clusterConnection = await this.initClusterConnection(clusterUri);
+    const clusterConnection: Connection = await this.initClusterConnection(
+      clusterUri,
+    );
+    const encryption = this.dbCredentials.get(dbName);
+    if (encryption !== undefined) {
+      clusterConnection.set('encryption', encryption);
+    }
 
     return clusterConnection.useDb(dbName);
   }
