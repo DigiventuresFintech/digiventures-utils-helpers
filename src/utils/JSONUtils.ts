@@ -29,6 +29,10 @@ export class JSONUtils {
   }
 
   public static flattenObject(obj: any, prefix = 'information.documentacion') {
+    if (obj == null || typeof obj !== 'object') {
+      return { [prefix]: obj };
+    }
+
     return Object.keys(obj).reduce((acc: acc, k) => {
       const pre: any = prefix.length ? prefix + '.' : '';
       if (typeof obj[k] === 'object' && !Array.isArray(obj[k]))
