@@ -85,8 +85,11 @@ export class MongodbConnectionManager {
 export namespace ConnectionManager {
   const instance = new MongodbConnectionManager();
 
-  export async function init(clusters: string[]): Promise<void> {
-    return instance.init(clusters);
+  export async function init(
+    clusters: string[],
+    credentials: any = {},
+  ): Promise<void> {
+    return instance.init(clusters, credentials);
   }
 
   export async function getConnection(dbName: string): Promise<Connection> {
