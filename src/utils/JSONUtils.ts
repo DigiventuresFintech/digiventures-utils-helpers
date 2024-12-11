@@ -29,15 +29,17 @@ export class JSONUtils {
   }
 
   public static flattenObject(obj: any, prefix = 'information.documentacion') {
-    if (obj == null || typeof obj !== 'object') {
-      return { [prefix]: obj };
-    }
-
-    return Object.keys(obj).reduce((acc: acc, k) => {
-      const pre: any = prefix.length ? prefix + '.' : '';
-      if (typeof obj[k] === 'object' && !Array.isArray(obj[k]))
+    return Object.keys(obj).reduce((acc: any, k) => {
+      const pre: string = prefix.length ? prefix + '.' : '';
+      if (
+        obj[k] !== null &&
+        typeof obj[k] === 'object' &&
+        !Array.isArray(obj[k])
+      ) {
         Object.assign(acc, this.flattenObject(obj[k], pre + k));
-      else acc[pre + k] = obj[k];
+      } else {
+        acc[pre + k] = obj[k];
+      }
       return acc;
     }, {});
   }
