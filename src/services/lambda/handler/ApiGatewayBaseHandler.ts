@@ -1,9 +1,11 @@
 import { IRequestHandler } from './IRequestHandler';
-import isLambdaError from '../../authorization/error/utils';
 import { RequestInfo } from './RequestInfo';
-import { LambdaException } from '../errors/LambdaException';
 import { Context } from 'aws-lambda';
-import { LambdaResponse } from './LambdaResponse';
+import {
+  createErrorResponse,
+  createResponse,
+  LambdaResponse,
+} from './LambdaResponse';
 
 export abstract class ApiGatewayBaseHandler<I, O>
   implements IRequestHandler<I, LambdaResponse>
@@ -24,29 +26,10 @@ export abstract class ApiGatewayBaseHandler<I, O>
       const output: O = await this.handler(request, context);
 
       console.log('lambda generates output', output);
-      return {
-        httpStatus: 200,
-        body: JSON.stringify(output),
-      };
+      return createResponse(200, JSON.stringify(output));
     } catch (error: any) {
       console.error('lambda execution error', error);
-      if (isLambdaError(error) || error instanceof LambdaException) {
-        return {
-          httpStatus: error.httpStatus!,
-          body: JSON.stringify({
-            message: error?.message || 'Unknown error',
-            code: error?.code || 1,
-          }),
-        };
-      }
-
-      return {
-        httpStatus: 400,
-        body: JSON.stringify({
-          message: error?.message || 'Unknown error',
-          code: error?.code || 1,
-        }),
-      };
+      return createErrorResponse(error);
     }
   };
 

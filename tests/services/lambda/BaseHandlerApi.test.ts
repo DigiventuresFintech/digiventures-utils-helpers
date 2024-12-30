@@ -75,7 +75,7 @@ describe(__filename, () => {
       context,
     );
     expect(output).not.toBeUndefined();
-    expect(output.httpStatus).toEqual(200);
+    expect(output.statusCode).toEqual(200);
   });
 
   test('test when auth token is invalid', async () => {
@@ -87,7 +87,7 @@ describe(__filename, () => {
       context,
     );
     expect(output).not.toBeUndefined();
-    expect(output.httpStatus).toEqual(400);
+    expect(output.statusCode).toEqual(400);
   });
 
   test('test handler lambda exception', async () => {
@@ -100,7 +100,7 @@ describe(__filename, () => {
       context,
     );
     expect(output).not.toBeUndefined();
-    expect(output.httpStatus).toEqual(154);
+    expect(output.statusCode).toEqual(154);
     expect(output.body).toEqual('{"message":"error","code":1}');
   });
 });
