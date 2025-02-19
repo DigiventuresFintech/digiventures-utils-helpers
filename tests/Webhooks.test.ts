@@ -2,10 +2,10 @@ import { ApiWebhooksService } from '../src';
 
 describe(__filename, () => {
   const credentials: any = {
-    app_id: process.env.APPLICATION_ID || '6408c4f48583c50012d0303c',
+    app_id: process.env.APPLICATION_ID || '67b38dd21e4953abaec0d559',
     secret:
       process.env.SECRET_TOKEN ||
-      'sk_live_82a93afe-982e-4d63-8a93-22d0c2cfa7f1',
+      'sk_live_8a8c2213-eeb4-4a44-8e96-6ce1077f3f44',
   };
 
   it.skip('should update document', async () => {
@@ -42,6 +42,17 @@ describe(__filename, () => {
 
     const output = await new ApiWebhooksService().getDocumentByQuery(
       'idNumber=482185266',
+      Object.assign({}, credentials),
+    );
+
+    console.log(output.results[0] || []);
+  });
+
+  it('should get document list', async () => {
+    process.env.API_WEBHOOKS_BASE_URL = 'https://api.qa.digiventures.la';
+
+    const output = await new ApiWebhooksService().getDocumentsListByQuery(
+      'query={"$and":[{"tenantId":"65fd787c7556d70012b1b6d2"},{"updatedAt":{"$gte":"2025-02-01T00:00:00.000Z"}},{"typeScoring":{"$ne":"Nuevo"}}]}',
       Object.assign({}, credentials),
     );
 
