@@ -29,16 +29,21 @@ export class FtpClientManager implements IFtpClientManager {
 
   async connect(): Promise<any> {
     try {
+      const resolvedSecure =
+        this.options?.secure === undefined || this.options?.secure === null
+          ? 'implicit'
+          : typeof this.options.secure === 'string'
+          ? this.options.secure === 'true'
+          : Boolean(this.options.secure);
+
       let ftpOptions: AccessOptions = {
         host: this.options.host || process.env.SFTP_HOST,
         user: this.options.username || process.env.SFTP_USER,
         password: this.options.password || process.env.SFTP_PASS,
         port:
           this.options.port || parseInt(process.env.SFTP_PORT as string) || 22,
-        secure: this.options?.secure
-          ? this.options.secure === 'true'
-          : 'implicit',
-        secureOptions: this.options?.secureOptions,
+        secure: resolvedSecure,
+        secureOptions: resolvedSecure ? this.options?.secureOptions : undefined,
       };
 
       await this.client.access(ftpOptions);
