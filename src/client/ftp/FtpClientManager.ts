@@ -38,6 +38,7 @@ export class FtpClientManager implements IFtpClientManager {
         secure: this.options?.secure
           ? this.options.secure === 'true'
           : 'implicit',
+        secureOptions: this.options?.secureOptions,
       };
 
       await this.client.access(ftpOptions);
